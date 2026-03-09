@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AERION · Home</title>
-  <!-- modern font stack -->
+  <title>AERION · Blog</title>
+ <!-- modern font stack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none;
+      cursor: none; /* hide default cursor – we'll use custom */
     }
 
     html {
@@ -760,9 +760,110 @@
       background: var(--gold);
       color: #030305;
     }
+  
+    /* Additional blog styles */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .blog-card {
+      padding: 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+    .blog-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+    }
+    .blog-card h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--gold);
+    }
+    .blog-date {
+      color: #b0b8cc;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .blog-excerpt {
+      color: #d0d8ec;
+      margin-bottom: 1.5rem;
+    }
+    .read-more {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .read-more:hover {
+      background: var(--gold);
+      color: #030305;
+    }
+
+    /* Modal for full post */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: var(--glass-bg);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: #eceff2;
+    }
+    .modal-content h2 {
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .modal-date {
+      color: #b0b8cc;
+      margin-bottom: 2rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      color: var(--gold);
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .modal-close:hover {
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
+  <!-- same cursor, canvases, navbar (active on Blog) -->
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scroll-top" id="scrollTop">↑</div>
   <canvas id="three-canvas"></canvas>
@@ -770,117 +871,126 @@
 
   <nav class="navbar">
     <div class="logo-group">
-      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
+      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small">
       <span class="brand-name">AERION</span>
     </div>
     <div class="nav-links">
-      <a href="index.html" class="nav-link active">Home</a>
+      <a href="index.html" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <a href="services.html" class="nav-link">Services</a>
       <a href="projects.html" class="nav-link">Projects</a>
-      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
       <a href="contact.html" class="nav-cta">soar</a>
     </div>
   </nav>
 
+  <!-- Modal for full post -->
+  <div class="modal" id="blogModal">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <div class="modal-content" id="modalContent">
+      <h2 id="modalTitle"></h2>
+      <div class="modal-date" id="modalDate"></div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
   <main>
-    <section class="hero">
-      <div class="logo-container">
-        <canvas id="bgParticles"></canvas>
-        <canvas id="rings"></canvas>
-        <img src="assets/sleek-golden-eagle-emblem.png" id="eagleLogo" alt="AERION Eagle Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
-        <div class="static-fallback">
-          <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION emblem">
-          <div class="static-ring"></div>
-        </div>
-      </div>
-      <h1>AERION</h1>
-      <div class="hero-tagline">Rise Above. Build Beyond.</div>
-      <a href="contact.html" class="btn-primary">start a project</a>
-    </section>
-
-    <section class="section-container" id="about">
-      <div class="about-grid fade-up">
-        <div class="about-content">
-          <h2>About AERION</h2>
-          <p>We are the architects of the digital future — building websites, web applications, and breakthrough experiences that help businesses soar above storms. Inspired by the eagle, we embody resilience, vision, and unstoppable innovation.</p>
-          <div class="gold-chip">✦ mission: transform complexity into clarity</div>
-        </div>
-        <div class="about-visual" id="parallaxAbout">
-          <div class="eagle-glow glass-card float" style="padding: 2rem;">
-            <img src="assets/sleek-golden-eagle-emblem.png" alt="eagle" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
-          </div>
-        </div>
-      </div>
+    <section class="page-header" style="padding-top: calc(var(--navbar-height) + 4rem); text-align: center;">
+      <h1>Thoughts & Ideas</h1>
+      <p class="lead" style="font-size: 1.5rem; max-width: 800px; margin: 1rem auto;">Design, tech, and building a studio at 15.</p>
     </section>
 
     <section class="section-container">
-      <h2 class="fade-up">Services</h2>
-      <div class="services-grid">
-        <div class="service-card glass-card fade-up"><div class="service-icon">🖥️</div><h3>Website Development</h3><p>High‑performance, narrative‑driven sites that convert.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">⚡</div><h3>Web Applications</h3><p>Scalable, intelligent apps with real‑time magic.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">🌀</div><h3>Digital Innovation</h3><p>R&D, AI products, and futuristic prototypes.</p></div>
+      <div class="blog-grid" id="blogGrid">
+        <!-- Posts will be injected by JavaScript -->
       </div>
     </section>
+  </main>
 
-    <section class="section-container">
-      <h2 class="fade-up">Why AERION</h2>
-      <div class="why-grid">
-        <div class="why-item glass-card fade-up"><strong>Speed</strong>Lightning delivery without cutting corners.</div>
-        <div class="why-item glass-card fade-up"><strong>Design excellence</strong>Pixel‑perfect, award‑worthy aesthetics.</div>
-        <div class="why-item glass-card fade-up"><strong>Reliability</strong>99.99% uptime, bank‑grade security.</div>
-        <div class="why-item glass-card fade-up"><strong>Forward innovation</strong>AI‑native, future‑proof architectures.</div>
-      </div>
-    </section>
+  
 
-    <section class="section-container">
-      <h2 class="fade-up">Selected work</h2>
-      <div class="projects-grid" id="projectGrid">
-        <div class="project-card fade-up" data-tilt><h3>ORION platform</h3><p>web app · 2026</p></div>
-        <div class="project-card fade-up" data-tilt><h3>STORM intelligence</h3><p>AI dashboard · 2025</p></div>
-        <div class="project-card fade-up" data-tilt><h3>AETHER commerce</h3><p>headless ecosystem · 2026</p></div>
-        <div class="project-card fade-up" data-tilt><h3>NOVA OS</h3><p>design system · 2026</p></div>
-      </div>
-    </section>
+  <script>
+    // ---------- BLOG POSTS DATA (Markdown‑style content) ----------
+    const posts = [
+      {
+        title: "Why I Started AERION at 15",
+        date: "March 9, 2026",
+        excerpt: "Everyone told me I was too young. That's exactly why I had to do it.",
+        content: `
+          <p>When I told people I was starting a digital innovation studio at 15, the reactions were predictable: "You're too young," "Get some experience first," "Wait until you're older." But I've always believed that age is just a number – vision and execution are what matter.</p>
+          <p>AERION was born from a frustration with mediocre websites and apps that looked good but didn't work. I wanted to build things that were not only beautiful but also fast, secure, and a joy to use. And I wanted to prove that the next generation is already here, building at a level that rivals the best.</p>
+          <p>Today, AERION is more than a company – it's a statement. We don't just build websites; we build digital experiences that help businesses rise above the noise. And we're just getting started.</p>
+        `
+      },
+      {
+        title: "The Future of Web Design: 2027 Trends",
+        date: "March 5, 2026",
+        excerpt: "Spatial design, AI integration, and the return of maximalism – here's what's coming.",
+        content: `
+          <p>If 2026 was the year of glassmorphism and volumetric light, 2027 will be about spatial design and AI co‑creation. We're already experimenting with 3D elements that react to user presence and layouts that adapt in real‑time based on user behaviour.</p>
+          <p>Another trend I'm excited about is the fusion of digital and physical – websites that feel like living spaces, with ambient light, sound, and even haptic feedback (on supported devices).</p>
+          <p>At AERION, we're always pushing the envelope. The Innovation Lab is already working on projects that won't see the light of day until 2028. Stay tuned.</p>
+        `
+      },
+      {
+        title: "How to Compete with Giants as a Solo Founder",
+        date: "February 28, 2026",
+        excerpt: "You don't need a huge team to make a huge impact. Here's my strategy.",
+        content: `
+          <p>When you're up against agencies with 50+ people, it's easy to feel small. But I've learned that being small is actually a superpower. You can move faster, make decisions instantly, and build deeper relationships with clients.</p>
+          <p>The key is to focus on quality over quantity. One masterpiece is worth more than a hundred mediocre projects. That's why AERION takes on only a handful of projects at a time – each one gets our full attention.</p>
+          <p>Also, leverage modern tools. With AI coding assistants, no‑code tools for certain tasks, and world‑class frameworks, one person can do what used to take a team. It's an exciting time to be a builder.</p>
+        `
+      }
+    ];
 
-    <section class="section-container">
-      <h2 class="fade-up">client reviews</h2>
-      <div class="testimonials-grid">
-        <div class="testimonial-card glass-card fade-up"><p>“AERION didn’t just build a platform — they redefined our entire digital future. The world‑class quality is undeniable.”</p><span class="client-name">— E. Vance, CEO OmniCore</span></div>
-        <div class="testimonial-card glass-card fade-up"><p>“Unmatched vision and execution. Every detail feels like it belongs in a museum of modern design.”</p><span class="client-name">— M. Keller, CPO Nexus</span></div>
-        <div class="testimonial-card glass-card fade-up"><p>“They are the gold standard. Working with them is like collaborating with the future.”</p><span class="client-name">— J. Park, founder Luma</span></div>
-      </div>
-    </section>
+    // Render blog posts
+    const blogGrid = document.getElementById('blogGrid');
+    posts.forEach((post, index) => {
+      const card = document.createElement('div');
+      card.className = 'blog-card fade-up';
+      card.innerHTML = `
+        <h3>${post.title}</h3>
+        <div class="blog-date">${post.date}</div>
+        <p class="blog-excerpt">${post.excerpt}</p>
+        <button class="read-more" data-index="${index}">Read more</button>
+      `;
+      blogGrid.appendChild(card);
+    });
 
-    <section class="section-container">
-      <h2 class="fade-up">by the numbers</h2>
-      <div class="stats-grid" id="statSection">
-        <div class="stat-item fade-up"><div class="stat-number" data-target="220">0</div><div class="stat-label">websites launched</div></div>
-        <div class="stat-item fade-up"><div class="stat-number" data-target="310">0</div><div class="stat-label">projects completed</div></div>
-        <div class="stat-item fade-up"><div class="stat-number" data-target="128">0</div><div class="stat-label">clients served</div></div>
-      </div>
-    </section>
+    // Modal functionality
+    const modal = document.getElementById('blogModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDate = document.getElementById('modalDate');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
 
-    <section class="section-container">
-      <h2 class="fade-up">innovation lab</h2>
-      <div class="lab-grid">
-        <div class="lab-card fade-up"><div class="coming-soon">✦ QUANTUM UI</div><p style="margin-top:1.5rem">neural interface · 2027</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ EDGE AI</div><p style="margin-top:1.5rem">federated learning OS</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ AERION OS</div><p style="margin-top:1.5rem">ambient computing layer</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ SPATIAL WEB</div><p style="margin-top:1.5rem">augmented reality protocols</p></div>
-      </div>
-    </section>
+    document.querySelectorAll('.read-more').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = e.target.getAttribute('data-index');
+        const post = posts[index];
+        modalTitle.textContent = post.title;
+        modalDate.textContent = post.date;
+        modalBody.innerHTML = post.content;
+        modal.classList.add('visible');
+      });
+    });
 
-    <section class="section-container" id="contact">
-      <div class="contact-center fade-up">
-        <h2 style="text-align:center; display:block;">start a project</h2>
-        <p style="margin-bottom:2.5rem; font-size:1.4rem;">Let’s build something unstoppable together.</p>
-        <a href="mailto:soar@aeriontech.com" class="contact-email">soar@aeriontech.com</a>
-        <div style="margin-top:3.5rem;"><a href="contact.html" class="btn-primary">send a message</a></div>
-      </div>
-    </section>
+    modalClose.addEventListener('click', () => {
+      modal.classList.remove('visible');
+    });
 
-    <footer>
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('visible');
+      }
+    });
+
+    // ---------- Copy all other scripts from index.html (cursor, magnetic, etc.) ----------
+    // (Include the full script block from index.html here)
+  </script>
+
+  <footer>
       <span>© 2026 AERION — digital innovation studio</span>
       <span style="color:var(--gold);">🦅 rise above storms</span>
       <span>privacy · terms · careers</span>
@@ -995,109 +1105,108 @@
     })();
   </script>
 
-  <!-- THREE.JS BACKGROUND (particle field only – eagle removed) -->
-  <script>
-    (function() {
-      const canvas = document.getElementById('three-canvas');
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x030305);
+  <!-- THREE.JS BACKGROUND (particle field only) -->
+<script>
+  (function() {
+    const canvas = document.getElementById('three-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x030305);
 
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 30;
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 30;
 
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // ---------- PARTICLE FIELD ----------
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 2000;
+    const posArray = new Float32Array(particlesCount * 3);
+    const colorArray = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i += 3) {
+      const radius = 20;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+      posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
+      posArray[i+2] = radius * Math.cos(phi);
+
+      const mix = Math.random();
+      const r = 212/255 + (192/255 - 212/255) * mix;
+      const g = 175/255 + (192/255 - 175/255) * mix;
+      const b = 55/255 + (192/255 - 55/255) * mix;
+      colorArray[i] = r;
+      colorArray[i+1] = g;
+      colorArray[i+2] = b;
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+    function createParticleTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 32;
+      canvas.height = 32;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(16, 16, 16, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-atop';
+      const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      gradient.addColorStop(0, 'rgba(255,255,255,1)');
+      gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
+      gradient.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 32, 32);
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.15,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      map: createParticleTexture()
+    });
+
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+
+    // Ambient light
+    const ambientLight = new THREE.AmbientLight(0x404060);
+    scene.add(ambientLight);
+
+    // Mouse interaction
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      particlesMesh.rotation.y += 0.0005;
+      particlesMesh.rotation.x += 0.0002;
+      particlesMesh.rotation.y += mouseX * 0.0005;
+      particlesMesh.rotation.x += mouseY * 0.0005;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      // ---------- PARTICLE FIELD ----------
-      const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 2000;
-      const posArray = new Float32Array(particlesCount * 3);
-      const colorArray = new Float32Array(particlesCount * 3);
-
-      for (let i = 0; i < particlesCount * 3; i += 3) {
-        const radius = 20;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
-        posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
-        posArray[i+2] = radius * Math.cos(phi);
-
-        const mix = Math.random();
-        const r = 212/255 + (192/255 - 212/255) * mix;
-        const g = 175/255 + (192/255 - 175/255) * mix;
-        const b = 55/255 + (192/255 - 55/255) * mix;
-        colorArray[i] = r;
-        colorArray[i+1] = g;
-        colorArray[i+2] = b;
-      }
-
-      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-      particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-      function createParticleTexture() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(16, 16, 16, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.globalCompositeOperation = 'source-atop';
-        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-        gradient.addColorStop(0, 'rgba(255,255,255,1)');
-        gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
-        gradient.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, 32, 32);
-        return new THREE.CanvasTexture(canvas);
-      }
-
-      const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.15,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending,
-        map: createParticleTexture()
-      });
-
-      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-      scene.add(particlesMesh);
-
-      // Ambient light (so particles are visible)
-      const ambientLight = new THREE.AmbientLight(0x404060);
-      scene.add(ambientLight);
-
-      // Mouse interaction
-      let mouseX = 0, mouseY = 0;
-      window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-      });
-
-      // Animation loop
-      function animate() {
-        requestAnimationFrame(animate);
-
-        // Rotate particles slightly with mouse
-        particlesMesh.rotation.y += 0.0005;
-        particlesMesh.rotation.x += 0.0002;
-        particlesMesh.rotation.y += mouseX * 0.0005;
-        particlesMesh.rotation.x += mouseY * 0.0005;
-
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-    })();
-  </script>
+    });
+  })();
+</script>
 
   <!-- VOLUMETRIC LIGHT SHADER (unchanged) -->
   <script>
@@ -1248,7 +1357,7 @@
     })();
   </script>
 
-  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top -->
+  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top (unchanged) -->
   <script>
     (function() {
       const cursor = document.getElementById('cursorGlow');

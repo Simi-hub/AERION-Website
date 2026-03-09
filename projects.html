@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AERION · Home</title>
+  <title>AERION · Projects</title>
   <!-- modern font stack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none;
+      cursor: none; /* hide default cursor – we'll use custom */
     }
 
     html {
@@ -761,126 +761,105 @@
       color: #030305;
     }
   </style>
+  <style>
+    /* Lightbox styles (add to existing CSS) */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid var(--gold);
+      border-radius: 20px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      color: var(--gold);
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .lightbox-close:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
+  <!-- same navbar, active on Projects -->
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scroll-top" id="scrollTop">↑</div>
   <canvas id="three-canvas"></canvas>
   <canvas id="volumetric-canvas"></canvas>
 
-  <nav class="navbar">
+   <nav class="navbar">
     <div class="logo-group">
       <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
       <span class="brand-name">AERION</span>
     </div>
     <div class="nav-links">
-      <a href="index.html" class="nav-link active">Home</a>
+      <a href="index.html" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <a href="services.html" class="nav-link">Services</a>
-      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="projects.html" class="nav-link active">Projects</a>
       <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-cta">soar</a>
     </div>
   </nav>
 
+  <!-- Lightbox container -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+
   <main>
-    <section class="hero">
-      <div class="logo-container">
-        <canvas id="bgParticles"></canvas>
-        <canvas id="rings"></canvas>
-        <img src="assets/sleek-golden-eagle-emblem.png" id="eagleLogo" alt="AERION Eagle Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
-        <div class="static-fallback">
-          <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION emblem">
-          <div class="static-ring"></div>
-        </div>
-      </div>
-      <h1>AERION</h1>
-      <div class="hero-tagline">Rise Above. Build Beyond.</div>
-      <a href="contact.html" class="btn-primary">start a project</a>
+    <section class="page-header" style="padding-top: calc(var(--navbar-height) + 4rem); text-align: center;">
+      <h1>Our Work</h1>
+      <p class="lead" style="font-size: 1.5rem; max-width: 800px; margin: 1rem auto;">Real projects that made a real difference. Click to enlarge.</p>
     </section>
 
-    <section class="section-container" id="about">
-      <div class="about-grid fade-up">
-        <div class="about-content">
-          <h2>About AERION</h2>
-          <p>We are the architects of the digital future — building websites, web applications, and breakthrough experiences that help businesses soar above storms. Inspired by the eagle, we embody resilience, vision, and unstoppable innovation.</p>
-          <div class="gold-chip">✦ mission: transform complexity into clarity</div>
+    <section class="section-container">
+      <div class="projects-grid">
+        <!-- Each project card has a data-image attribute with a placeholder image URL -->
+        <div class="project-card fade-up" data-tilt data-image="https://via.placeholder.com/800x600/1a1c28/D4AF37?text=ORION+Platform">
+          <h3>ORION platform</h3>
+          <p>web app · 2026</p>
         </div>
-        <div class="about-visual" id="parallaxAbout">
-          <div class="eagle-glow glass-card float" style="padding: 2rem;">
-            <img src="assets/sleek-golden-eagle-emblem.png" alt="eagle" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
-          </div>
+        <div class="project-card fade-up" data-tilt data-image="https://via.placeholder.com/800x600/1a1c28/D4AF37?text=STORM+Intelligence">
+          <h3>STORM intelligence</h3>
+          <p>AI dashboard · 2025</p>
+        </div>
+        <div class="project-card fade-up" data-tilt data-image="https://via.placeholder.com/800x600/1a1c28/D4AF37?text=AETHER+Commerce">
+          <h3>AETHER commerce</h3>
+          <p>headless ecosystem · 2026</p>
+        </div>
+        <div class="project-card fade-up" data-tilt data-image="https://via.placeholder.com/800x600/1a1c28/D4AF37?text=NOVA+OS">
+          <h3>NOVA OS</h3>
+          <p>design system · 2026</p>
         </div>
       </div>
     </section>
+  </main>
 
-    <section class="section-container">
-      <h2 class="fade-up">Services</h2>
-      <div class="services-grid">
-        <div class="service-card glass-card fade-up"><div class="service-icon">🖥️</div><h3>Website Development</h3><p>High‑performance, narrative‑driven sites that convert.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">⚡</div><h3>Web Applications</h3><p>Scalable, intelligent apps with real‑time magic.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">🌀</div><h3>Digital Innovation</h3><p>R&D, AI products, and futuristic prototypes.</p></div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="fade-up">Why AERION</h2>
-      <div class="why-grid">
-        <div class="why-item glass-card fade-up"><strong>Speed</strong>Lightning delivery without cutting corners.</div>
-        <div class="why-item glass-card fade-up"><strong>Design excellence</strong>Pixel‑perfect, award‑worthy aesthetics.</div>
-        <div class="why-item glass-card fade-up"><strong>Reliability</strong>99.99% uptime, bank‑grade security.</div>
-        <div class="why-item glass-card fade-up"><strong>Forward innovation</strong>AI‑native, future‑proof architectures.</div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="fade-up">Selected work</h2>
-      <div class="projects-grid" id="projectGrid">
-        <div class="project-card fade-up" data-tilt><h3>ORION platform</h3><p>web app · 2026</p></div>
-        <div class="project-card fade-up" data-tilt><h3>STORM intelligence</h3><p>AI dashboard · 2025</p></div>
-        <div class="project-card fade-up" data-tilt><h3>AETHER commerce</h3><p>headless ecosystem · 2026</p></div>
-        <div class="project-card fade-up" data-tilt><h3>NOVA OS</h3><p>design system · 2026</p></div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="fade-up">client reviews</h2>
-      <div class="testimonials-grid">
-        <div class="testimonial-card glass-card fade-up"><p>“AERION didn’t just build a platform — they redefined our entire digital future. The world‑class quality is undeniable.”</p><span class="client-name">— E. Vance, CEO OmniCore</span></div>
-        <div class="testimonial-card glass-card fade-up"><p>“Unmatched vision and execution. Every detail feels like it belongs in a museum of modern design.”</p><span class="client-name">— M. Keller, CPO Nexus</span></div>
-        <div class="testimonial-card glass-card fade-up"><p>“They are the gold standard. Working with them is like collaborating with the future.”</p><span class="client-name">— J. Park, founder Luma</span></div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="fade-up">by the numbers</h2>
-      <div class="stats-grid" id="statSection">
-        <div class="stat-item fade-up"><div class="stat-number" data-target="220">0</div><div class="stat-label">websites launched</div></div>
-        <div class="stat-item fade-up"><div class="stat-number" data-target="310">0</div><div class="stat-label">projects completed</div></div>
-        <div class="stat-item fade-up"><div class="stat-number" data-target="128">0</div><div class="stat-label">clients served</div></div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="fade-up">innovation lab</h2>
-      <div class="lab-grid">
-        <div class="lab-card fade-up"><div class="coming-soon">✦ QUANTUM UI</div><p style="margin-top:1.5rem">neural interface · 2027</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ EDGE AI</div><p style="margin-top:1.5rem">federated learning OS</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ AERION OS</div><p style="margin-top:1.5rem">ambient computing layer</p></div>
-        <div class="lab-card fade-up"><div class="coming-soon">✦ SPATIAL WEB</div><p style="margin-top:1.5rem">augmented reality protocols</p></div>
-      </div>
-    </section>
-
-    <section class="section-container" id="contact">
-      <div class="contact-center fade-up">
-        <h2 style="text-align:center; display:block;">start a project</h2>
-        <p style="margin-bottom:2.5rem; font-size:1.4rem;">Let’s build something unstoppable together.</p>
-        <a href="mailto:soar@aeriontech.com" class="contact-email">soar@aeriontech.com</a>
-        <div style="margin-top:3.5rem;"><a href="contact.html" class="btn-primary">send a message</a></div>
-      </div>
-    </section>
-
-    <footer>
+<footer>
       <span>© 2026 AERION — digital innovation studio</span>
       <span style="color:var(--gold);">🦅 rise above storms</span>
       <span>privacy · terms · careers</span>
@@ -995,7 +974,7 @@
     })();
   </script>
 
-  <!-- THREE.JS BACKGROUND (particle field only – eagle removed) -->
+  <!-- THREE.JS BACKGROUND (particle field) -->
   <script>
     (function() {
       const canvas = document.getElementById('three-canvas');
@@ -1009,7 +988,6 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // ---------- PARTICLE FIELD ----------
       const particlesGeometry = new THREE.BufferGeometry();
       const particlesCount = 2000;
       const posArray = new Float32Array(particlesCount * 3);
@@ -1066,27 +1044,18 @@
       const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
       scene.add(particlesMesh);
 
-      // Ambient light (so particles are visible)
-      const ambientLight = new THREE.AmbientLight(0x404060);
-      scene.add(ambientLight);
-
-      // Mouse interaction
       let mouseX = 0, mouseY = 0;
       window.addEventListener('mousemove', (e) => {
         mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       });
 
-      // Animation loop
       function animate() {
         requestAnimationFrame(animate);
-
-        // Rotate particles slightly with mouse
         particlesMesh.rotation.y += 0.0005;
         particlesMesh.rotation.x += 0.0002;
         particlesMesh.rotation.y += mouseX * 0.0005;
         particlesMesh.rotation.x += mouseY * 0.0005;
-
         renderer.render(scene, camera);
       }
       animate();
@@ -1099,7 +1068,7 @@
     })();
   </script>
 
-  <!-- VOLUMETRIC LIGHT SHADER (unchanged) -->
+  <!-- VOLUMETRIC LIGHT SHADER -->
   <script>
     (function() {
       const canvas = document.getElementById('volumetric-canvas');
@@ -1251,6 +1220,7 @@
   <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top -->
   <script>
     (function() {
+      // ---------- CUSTOM CURSOR ----------
       const cursor = document.getElementById('cursorGlow');
       if (cursor) {
         document.addEventListener('mousemove', (e) => {
@@ -1264,6 +1234,7 @@
         });
       }
 
+      // ---------- MAGNETIC BUTTONS ----------
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
       magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
@@ -1277,6 +1248,7 @@
         });
       });
 
+      // ---------- 3D TILT ON PROJECT CARDS ----------
       const tiltCards = document.querySelectorAll('[data-tilt]');
       tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -1294,6 +1266,7 @@
         });
       });
 
+      // ---------- SCROLL PARALLAX (About section) ----------
       const aboutVisual = document.querySelector('.about-visual');
       if (aboutVisual) {
         window.addEventListener('scroll', () => {
@@ -1304,6 +1277,7 @@
         });
       }
 
+      // ---------- SCROLL TO TOP BUTTON ----------
       const scrollTopBtn = document.getElementById('scrollTop');
       window.addEventListener('scroll', () => {
         if (window.scrollY > 500) {
@@ -1316,6 +1290,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
+      // ---------- FADE-UP OBSERVER ----------
       const faders = document.querySelectorAll('.fade-up');
       const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1326,6 +1301,7 @@
       }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
       faders.forEach(el => fadeObserver.observe(el));
 
+      // ---------- STATS COUNTERS ----------
       const statNumbers = document.querySelectorAll('.stat-number');
       const counterObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -1351,6 +1327,7 @@
       }, { threshold: 0.6 });
       statNumbers.forEach(el => counterObserver.observe(el));
 
+      // ---------- SMOOTH SCROLL FOR ANCHOR LINKS ----------
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
@@ -1364,5 +1341,35 @@
       });
     })();
   </script>
+
+  <!-- Add lightbox functionality -->
+  <script>
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const projectCards = document.querySelectorAll('.project-card[data-image]');
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const imgUrl = card.getAttribute('data-image');
+          lightboxImg.src = imgUrl;
+          lightbox.classList.add('visible');
+        });
+      });
+
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('visible');
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('visible');
+        }
+      });
+    })();
+  </script>
+
+  <!-- Copy all other scripts from index.html -->
 </body>
 </html>
