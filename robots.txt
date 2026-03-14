@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aerion-website-sed1.vercel.app/sitemap.xml
