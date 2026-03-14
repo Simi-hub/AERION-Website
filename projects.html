@@ -94,16 +94,68 @@
     }
 
     /* ---------- BACKGROUND CANVASES ---------- */
-    #three-canvas, #volumetric-canvas {
+    /* Volumetric light – behind everything */
+    #volumetric-canvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: -1;
+      z-index: 0;
       pointer-events: none;
+      opacity: 0.8;
     }
-    #volumetric-canvas { z-index: 0; }
+
+    /* Three.js particle sphere – floats freely, centered, with mobile offset */
+    #three-canvas {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(80vmin, 900px);
+      height: min(80vmin, 900px);
+      z-index: 1;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* Logo animation container – not used on projects, but kept for consistency */
+    .logo-container {
+      position: relative;
+      width: min(500px, 70vw);
+      height: min(500px, 70vw);
+      margin-bottom: 1.5rem;
+      z-index: 10;
+    }
+
+    /* ---------- NAVBAR LOGO ANIMATION ---------- */
+    @keyframes logoFloat {
+      0% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 12px var(--gold));
+      }
+      50% {
+        transform: translateY(-4px) scale(1.02);
+        filter: drop-shadow(0 0 20px var(--gold-light));
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 12px var(--gold));
+      }
+    }
+
+    .logo-small {
+      width: 80px;
+      height: auto;
+      filter: drop-shadow(0 0 12px var(--gold));
+      transition: transform 0.3s ease;
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    .logo-small:hover {
+      animation: none;
+      transform: scale(1.05);
+    }
 
     /* ---------- TYPOGRAPHY ---------- */
     h1, h2, h3 {
@@ -148,7 +200,7 @@
       margin: 0 auto;
       padding: 7rem 2rem;
       position: relative;
-      z-index: 2;
+      z-index: 5;
     }
     @media (min-width: 768px) {
       .section-container {
@@ -201,7 +253,7 @@
       transform: translateY(20px);
       animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
       position: relative;
-      z-index: 2;
+      z-index: 5;
     }
     .btn-primary:hover {
       background: var(--gold);
@@ -237,17 +289,6 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-    }
-
-    .logo-small {
-      width: 80px;
-      height: auto;
-      filter: drop-shadow(0 0 12px var(--gold));
-      transition: transform 0.3s ease;
-    }
-
-    .logo-small:hover {
-      transform: scale(1.05);
     }
 
     .brand-name {
@@ -324,7 +365,7 @@
       box-shadow: 0 0 30px var(--gold);
     }
 
-    /* Hamburger menu styles */
+    /* Hamburger menu (hidden on desktop) */
     .ui-hamburger {
       display: none;
       all: unset;
@@ -607,6 +648,7 @@
       
       .logo-small {
         width: 40px;
+        animation: logoFloat 4s ease-in-out infinite;
       }
       
       .brand-name {
@@ -619,6 +661,13 @@
       
       .ui-hamburger {
         display: flex;
+      }
+      
+      /* Sphere matches logo container size on mobile (same as index) */
+      #three-canvas {
+        width: min(250px, 60vw);
+        height: min(250px, 60vw);
+        top: calc(50% + var(--navbar-height)/2);
       }
       
       .page-header h1 {
@@ -652,7 +701,7 @@
       }
       
       #volumetric-canvas {
-        display: none;
+        opacity: 0.5;
       }
     }
 
@@ -783,28 +832,35 @@
     })();
   </script>
 
-  <!-- THREE.JS BACKGROUND (optimized) -->
+  <!-- THREE.JS BACKGROUND – soft 3D sphere -->
   <script>
     (function() {
       const canvas = document.getElementById('three-canvas');
+      const resizeRenderer = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (width === 0 || height === 0) return;
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x030305);
 
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 30;
+      const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+      camera.position.set(0, 0, 35);
+      camera.lookAt(0, 0, 0);
 
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, powerPreference: "high-performance" });
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // OPTIMIZED PARTICLE FIELD (800 particles)
       const particlesGeometry = new THREE.BufferGeometry();
       const particlesCount = 800;
       const posArray = new Float32Array(particlesCount * 3);
       const colorArray = new Float32Array(particlesCount * 3);
 
       for (let i = 0; i < particlesCount * 3; i += 3) {
-        const radius = 20;
+        const radius = 15;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(2 * Math.random() - 1);
         posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
@@ -828,14 +884,9 @@
         canvas.width = 32;
         canvas.height = 32;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(16, 16, 16, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.globalCompositeOperation = 'source-atop';
         const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
         gradient.addColorStop(0, 'rgba(255,255,255,1)');
-        gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.7)');
         gradient.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 32, 32);
@@ -843,12 +894,14 @@
       }
 
       const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.15,
+        size: 0.35,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.7,
         blending: THREE.AdditiveBlending,
-        map: createParticleTexture()
+        map: createParticleTexture(),
+        depthWrite: false,
+        sizeAttenuation: true
       });
 
       const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -871,17 +924,17 @@
         particlesMesh.rotation.x += mouseY * 0.0005;
         renderer.render(scene, camera);
       }
+
+      resizeRenderer();
       animate();
 
       window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        resizeRenderer();
       });
     })();
   </script>
 
-  <!-- VOLUMETRIC LIGHT SHADER (optimized – 16 steps) -->
+  <!-- VOLUMETRIC LIGHT SHADER (dimmed) -->
   <script>
     (function() {
       const canvas = document.getElementById('volumetric-canvas');
@@ -998,7 +1051,7 @@
             vec3 color = gold * lightIntensity;
             color += vec3(mouse.x * 0.03, mouse.y * 0.03, 0.0);
             
-            gl_FragColor = vec4(color, lightIntensity * 0.5);
+            gl_FragColor = vec4(color, lightIntensity * 0.25);
           }
         `,
         transparent: true
@@ -1155,7 +1208,7 @@
       }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
       faders.forEach(el => fadeObserver.observe(el));
 
-      // Stats counters (none on this page, but keep for consistency)
+      // Stats counters (none on projects)
       const statNumbers = document.querySelectorAll('.stat-number');
       const counterObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
