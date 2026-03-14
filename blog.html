@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AERION Blog · Insights on Design, Tech & Startup Life</title>
-<meta name="description" content="Read articles from AERION's founder on web design trends, AI, and building a studio at 15. Fresh perspectives from the future.">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-M9EGZLSRY9');
-</script>
- <!-- modern font stack -->
+  <meta name="description" content="Read articles from AERION's founder on web design trends, AI, and building a studio at 15. Fresh perspectives from the future.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9EGZLSRY9');
+  </script>
+  <!-- modern font stack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
@@ -26,7 +25,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none; /* hide default cursor – we'll use custom */
     }
 
     html {
@@ -59,7 +57,7 @@
       --navbar-height: 90px;
     }
 
-    /* ---------- CUSTOM CURSOR ---------- */
+    /* ---------- CUSTOM CURSOR (disabled on mobile) ---------- */
     .cursor-glow {
       position: fixed;
       width: 40px;
@@ -175,7 +173,6 @@
       border-radius: 80px;
       font-weight: 600;
       font-size: 1.3rem;
-      cursor: none;
       transition: var(--transition);
       text-decoration: none;
       display: inline-block;
@@ -288,7 +285,6 @@
       transition: var(--transition);
       text-decoration: none;
       font-size: 1rem;
-      cursor: none;
     }
     .nav-cta:hover {
       background: var(--gold);
@@ -311,87 +307,6 @@
       z-index: 2;
     }
 
-    /* ---------- LOGO ANIMATION CONTAINER ---------- */
-    .logo-container {
-      position: relative;
-      width: min(500px, 70vw);
-      height: min(500px, 70vw);
-      margin-bottom: 1.5rem;
-      z-index: 3;
-    }
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    #eagleLogo {
-      position: absolute;
-      width: 85%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      animation: eagleEntrance 2.2s cubic-bezier(.17,.67,.4,1.3) forwards;
-      filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
-    }
-    @keyframes eagleEntrance {
-      0% {
-        transform: translate(-50%,-50%) scale(3);
-        opacity: 0;
-        filter: blur(20px);
-      }
-      60% {
-        transform: translate(-50%,-50%) scale(0.7);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%,-50%) scale(1);
-        filter: blur(0);
-      }
-    }
-
-    /* static fallback for reduced motion */
-    .static-fallback {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-    }
-    .static-fallback img {
-      width: 60%;
-      filter: drop-shadow(0 0 15px #ffd70066);
-    }
-    .static-fallback .static-ring {
-      position: absolute;
-      width: 80%;
-      height: 80%;
-      border: 2px solid transparent;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #ffd700, #c0c0c0) border-box;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .logo-container canvas,
-      .logo-container #eagleLogo {
-        display: none;
-      }
-      .logo-container .static-fallback {
-        display: flex;
-      }
-    }
-
     .hero-tagline {
       font-size: clamp(1.8rem, 5vw, 2.8rem);
       font-weight: 300;
@@ -404,7 +319,7 @@
       animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
     }
 
-    /* ---------- ABOUT (homepage preview) ---------- */
+    /* ---------- ABOUT ---------- */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -689,7 +604,6 @@
       justify-content: center;
       color: var(--gold);
       font-size: 2rem;
-      cursor: none;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s;
@@ -714,6 +628,8 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Mobile optimizations */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 70px;
@@ -743,10 +659,6 @@
       .contact-email {
         font-size: 2rem;
       }
-      .logo-container {
-        width: min(200px, 50vw);
-        height: min(200px, 50vw);
-      }
       .scroll-top {
         width: 50px;
         height: 50px;
@@ -754,13 +666,16 @@
         bottom: 1rem;
         right: 1rem;
       }
-      body, .btn-primary, .nav-cta, .scroll-top {
-        cursor: auto;
-      }
+      /* Disable heavy effects on mobile */
       .cursor-glow {
         display: none;
       }
+      #volumetric-canvas {
+        display: none; /* too heavy for mobile */
+      }
     }
+
+    /* Keep cursor on desktop */
     @media (min-width: 701px) {
       body, .btn-primary, .nav-cta, .scroll-top {
         cursor: none;
@@ -770,7 +685,7 @@
       background: var(--gold);
       color: #030305;
     }
-  
+
     /* Additional blog styles */
     .blog-grid {
       display: grid;
@@ -873,7 +788,7 @@
   </style>
 </head>
 <body>
-  <!-- same cursor, canvases, navbar (active on Blog) -->
+  <!-- custom cursor glow (only visible on desktop) -->
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scroll-top" id="scrollTop">↑</div>
   <canvas id="three-canvas"></canvas>
@@ -917,57 +832,53 @@
     </section>
   </main>
 
-  
+  <footer>
+    <span>© 2026 AERION — digital innovation studio</span>
+    <span style="color:var(--gold);">🦅 rise above storms</span>
+    <span>privacy · terms · careers</span>
+  </footer>
 
   <script>
-    // ---------- BLOG POSTS DATA (Markdown‑style content) ----------
-   const posts = [
-  {
-    title: "Why I Started AERION at 15 – A Founder's Story",
-    date: "March 14, 2026",
-    excerpt: "Age is just a number. Vision and execution are what matter. Here's my journey.",
-    content: `
-      <h2>The Question Everyone Asks</h2>
-      <p>"You're 15. Why are you starting a company?"</p>
-      <p>I've lost count of how many times I've heard that. Teachers, family friends, even strangers – they all look at me with the same mix of curiosity and doubt. A 15‑year‑old running a digital innovation studio? It doesn't fit the usual story.</p>
-      <p>But here's the truth I've learned: <strong>age is just a number. Vision and execution are what matter.</strong></p>
-
-      <h2>Where It Started</h2>
-      <p>I've always loved building things. When I was 12, I taught myself to code by watching YouTube tutorials and reading forums. I built my first website – a simple fansite for my favourite game – and I was hooked. The idea that I could create something from nothing, put it on the internet, and anyone in the world could see it… that felt like magic.</p>
-      <p>Over the next few years, I kept learning. HTML, CSS, JavaScript, then frameworks like React. I started noticing patterns: so many businesses had websites that looked good but didn't work well. They were slow, hard to use, and didn't actually help the business grow. I knew I could do better.</p>
-
-      <h2>The Moment AERION Was Born</h2>
-      <p>Late 2025, I was talking to a family friend who owned a small business. He'd paid thousands for a website that looked nice but got zero sales. "I don't know what to do," he said. "I just wanted something that works."</p>
-      <p>That conversation changed everything. I realised that <strong>businesses don't need just a website – they need a digital presence that actually delivers results.</strong> They need speed, reliability, and design that converts visitors into customers. They need someone who cares as much about their success as they do.</p>
-      <p>And that's when I decided: I'm going to build that. Not when I'm older. Not after university. <strong>Right now.</strong></p>
-      <p>AERION was born.</p>
-
-      <h2>The Name</h2>
-      <p>I wanted a name that meant something. An eagle soars above storms – it doesn't avoid them, it rises above. That's how I want AERION to be: resilient, unstoppable, always climbing higher no matter what challenges come. The eagle represents strength, vision, and the ability to see the bigger picture. That's exactly how I want to build this company.</p>
-
-      <h2>The First Months</h2>
-      <p>Starting a company at 15 isn't easy. I won't pretend it is. I'm balancing school, learning, and building. I've had to teach myself about marketing, client communication, and running a business – things they don't teach in class. I've made mistakes. I've had projects that didn't go as planned. But every setback taught me something.</p>
-      <p>The website you're looking at right now? I built every line of code. Every animation, every interaction, every pixel – crafted with the same care I'd give to a client's project. Because I believe that if you're going to do something, you do it at the highest level possible.</p>
-
-      <h2>What AERION Stands For</h2>
-      <ul>
-        <li><strong>Quality without compromise.</strong> We don't cut corners. Every project gets our full attention.</li>
-        <li><strong>Innovation that matters.</strong> We use the latest technology, but only when it serves the client's goals.</li>
-        <li><strong>Partnership, not just service.</strong> We're not just building websites – we're helping businesses grow.</li>
-      </ul>
-
-      <h2>What's Next</h2>
-      <p>This is just the beginning. I have big plans for AERION – more services, more projects, and eventually a team of people who share the same vision. I want to work with startups, established businesses, and anyone who has a dream they want to build online.</p>
-      <p>But more than that, I want to show that <strong>age doesn't define what you can achieve.</strong> If you have a vision and you're willing to work for it, you can build something incredible – at 15, 25, or 75.</p>
-
-      <h2>A Message to You</h2>
-      <p>If you're reading this and thinking about starting your own project – whether it's a website, an app, or any kind of business – my advice is simple: <strong>start now.</strong> You don't need to wait for the perfect moment. You don't need to be older or more experienced. You just need to take the first step.</p>
-      <p>And if you ever need help building something amazing, you know where to find me. 🦅</p>
-
-      <p><em>Thanks for reading. If this resonated with you, reach out – I'd love to hear your story too.</em></p>
-      <p><strong>– Similoluwa Odubajo, Founder of AERION</strong></p>
-    `
-  },
+    // ---------- BLOG POSTS DATA ----------
+    const posts = [
+      {
+        title: "Why I Started AERION at 15 – A Founder's Story",
+        date: "March 14, 2026",
+        excerpt: "Age is just a number. Vision and execution are what matter. Here's my journey.",
+        content: `
+          <h2>The Question Everyone Asks</h2>
+          <p>"You're 15. Why are you starting a company?"</p>
+          <p>I've lost count of how many times I've heard that. Teachers, family friends, even strangers – they all look at me with the same mix of curiosity and doubt. A 15‑year‑old running a digital innovation studio? It doesn't fit the usual story.</p>
+          <p>But here's the truth I've learned: <strong>age is just a number. Vision and execution are what matter.</strong></p>
+          <h2>Where It Started</h2>
+          <p>I've always loved building things. When I was 12, I taught myself to code by watching YouTube tutorials and reading forums. I built my first website – a simple fansite for my favourite game – and I was hooked. The idea that I could create something from nothing, put it on the internet, and anyone in the world could see it… that felt like magic.</p>
+          <p>Over the next few years, I kept learning. HTML, CSS, JavaScript, then frameworks like React. I started noticing patterns: so many businesses had websites that looked good but didn't work well. They were slow, hard to use, and didn't actually help the business grow. I knew I could do better.</p>
+          <h2>The Moment AERION Was Born</h2>
+          <p>Late 2025, I was talking to a family friend who owned a small business. He'd paid thousands for a website that looked nice but got zero sales. "I don't know what to do," he said. "I just wanted something that works."</p>
+          <p>That conversation changed everything. I realised that <strong>businesses don't need just a website – they need a digital presence that actually delivers results.</strong> They need speed, reliability, and design that converts visitors into customers. They need someone who cares as much about their success as they do.</p>
+          <p>And that's when I decided: I'm going to build that. Not when I'm older. Not after university. <strong>Right now.</strong></p>
+          <p>AERION was born.</p>
+          <h2>The Name</h2>
+          <p>I wanted a name that meant something. An eagle soars above storms – it doesn't avoid them, it rises above. That's how I want AERION to be: resilient, unstoppable, always climbing higher no matter what challenges come. The eagle represents strength, vision, and the ability to see the bigger picture. That's exactly how I want to build this company.</p>
+          <h2>The First Months</h2>
+          <p>Starting a company at 15 isn't easy. I won't pretend it is. I'm balancing school, learning, and building. I've had to teach myself about marketing, client communication, and running a business – things they don't teach in class. I've made mistakes. I've had projects that didn't go as planned. But every setback taught me something.</p>
+          <p>The website you're looking at right now? I built every line of code. Every animation, every interaction, every pixel – crafted with the same care I'd give to a client's project. Because I believe that if you're going to do something, you do it at the highest level possible.</p>
+          <h2>What AERION Stands For</h2>
+          <ul>
+            <li><strong>Quality without compromise.</strong> We don't cut corners. Every project gets our full attention.</li>
+            <li><strong>Innovation that matters.</strong> We use the latest technology, but only when it serves the client's goals.</li>
+            <li><strong>Partnership, not just service.</strong> We're not just building websites – we're helping businesses grow.</li>
+          </ul>
+          <h2>What's Next</h2>
+          <p>This is just the beginning. I have big plans for AERION – more services, more projects, and eventually a team of people who share the same vision. I want to work with startups, established businesses, and anyone who has a dream they want to build online.</p>
+          <p>But more than that, I want to show that <strong>age doesn't define what you can achieve.</strong> If you have a vision and you're willing to work for it, you can build something incredible – at 15, 25, or 75.</p>
+          <h2>A Message to You</h2>
+          <p>If you're reading this and thinking about starting your own project – whether it's a website, an app, or any kind of business – my advice is simple: <strong>start now.</strong> You don't need to wait for the perfect moment. You don't need to be older or more experienced. You just need to take the first step.</p>
+          <p>And if you ever need help building something amazing, you know where to find me. 🦅</p>
+          <p><em>Thanks for reading. If this resonated with you, reach out – I'd love to hear your story too.</em></p>
+          <p><strong>– Similoluwa Odubajo, Founder of AERION</strong></p>
+        `
+      },
       {
         title: "The Future of Web Design: 2027 Trends",
         date: "March 5, 2026",
@@ -1031,236 +942,116 @@
         modal.classList.remove('visible');
       }
     });
-
-    // ---------- Copy all other scripts from index.html (cursor, magnetic, etc.) ----------
-    // (Include the full script block from index.html here)
   </script>
 
-  <footer>
-      <span>© 2026 AERION — digital innovation studio</span>
-      <span style="color:var(--gold);">🦅 rise above storms</span>
-      <span>privacy · terms · careers</span>
-    </footer>
-  </main>
-
-  <!-- CUSTOM ANIMATION SCRIPT (particles + rings) -->
+  <!-- THREE.JS BACKGROUND (optimized) -->
   <script>
     (function() {
-      const pCanvas = document.getElementById("bgParticles");
-      if (!pCanvas) return;
-      const pCtx = pCanvas.getContext("2d");
-      const ringsCanvas = document.getElementById("rings");
-      const ctx = ringsCanvas.getContext("2d");
-      const container = document.querySelector('.logo-container');
-      const resizeCanvases = () => {
-        if (!container) return;
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-        pCanvas.width = w;
-        pCanvas.height = h;
-        ringsCanvas.width = w;
-        ringsCanvas.height = h;
-      };
-      window.addEventListener('resize', resizeCanvases);
-      resizeCanvases();
-      let particles = [];
-      for(let i = 0; i < 60; i++) {
-        particles.push({
-          x: Math.random() * pCanvas.width,
-          y: Math.random() * pCanvas.height,
-          size: Math.random() * 2,
-          speed: Math.random() * 0.3 + 0.1
-        });
+      const canvas = document.getElementById('three-canvas');
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x030305);
+
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 30;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // ---------- OPTIMIZED PARTICLE FIELD (800 particles instead of 2000) ----------
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 800; // Reduced for performance
+      const posArray = new Float32Array(particlesCount * 3);
+      const colorArray = new Float32Array(particlesCount * 3);
+
+      for (let i = 0; i < particlesCount * 3; i += 3) {
+        const radius = 20;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+        posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
+        posArray[i+2] = radius * Math.cos(phi);
+
+        const mix = Math.random();
+        const r = 212/255 + (192/255 - 212/255) * mix;
+        const g = 175/255 + (192/255 - 175/255) * mix;
+        const b = 55/255 + (192/255 - 55/255) * mix;
+        colorArray[i] = r;
+        colorArray[i+1] = g;
+        colorArray[i+2] = b;
       }
-      function drawParticles() {
-        if (!pCtx) return;
-        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-        particles.forEach(p => {
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          pCtx.fillStyle = "rgba(212,175,55,0.6)";
-          pCtx.fill();
-          p.y -= p.speed;
-          if (p.y < 0) {
-            p.y = pCanvas.height;
-          }
-        });
-        requestAnimationFrame(drawParticles);
-      }
-      drawParticles();
-      let angle = 0;
-      let baseSize = 340;
-      function energyLines(cx, cy) {
-        let lineLength = 170 * (ringsCanvas.width / baseSize);
-        for (let i = 0; i < 4; i++) {
-          ctx.beginPath();
-          ctx.moveTo(cx, cy);
-          let x = cx + Math.cos(i * Math.PI / 2) * lineLength;
-          let y = cy + Math.sin(i * Math.PI / 2) * lineLength;
-          ctx.lineTo(x, y);
-          ctx.strokeStyle = "rgba(212,175,55,0.3)";
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        }
-      }
-      function shimmer(cx, cy) {
-        let inner = 20 * (ringsCanvas.width / baseSize);
-        let outer = 120 * (ringsCanvas.width / baseSize);
-        let grad = ctx.createRadialGradient(cx, cy, inner, cx, cy, outer);
-        grad.addColorStop(0, "rgba(255,255,255,0.6)");
-        grad.addColorStop(1, "rgba(255,255,255,0)");
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+      function createParticleTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(cx, cy, outer, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
+        ctx.arc(16, 16, 16, 0, 2 * Math.PI);
         ctx.fill();
+        ctx.globalCompositeOperation = 'source-atop';
+        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        return new THREE.CanvasTexture(canvas);
       }
-      function draw() {
-        ctx.clearRect(0, 0, ringsCanvas.width, ringsCanvas.height);
-        let cx = ringsCanvas.width / 2;
-        let cy = ringsCanvas.height / 2;
-        let goldRingRadius = 120 * (ringsCanvas.width / baseSize);
-        let silverRingRadius = 150 * (ringsCanvas.width / baseSize);
-        energyLines(cx, cy);
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle);
-        ctx.beginPath();
-        ctx.arc(0, 0, goldRingRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = "#D4AF37";
-        ctx.lineWidth = 4;
-        ctx.shadowColor = "#D4AF37";
-        ctx.shadowBlur = 20;
-        ctx.stroke();
-        ctx.restore();
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(-angle * 1.2);
-        ctx.beginPath();
-        ctx.arc(0, 0, silverRingRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = "#C0C0C0";
-        ctx.lineWidth = 3;
-        ctx.shadowColor = "#C0C0C0";
-        ctx.shadowBlur = 15;
-        ctx.stroke();
-        ctx.restore();
-        shimmer(cx, cy);
-        angle += 0.01;
-        requestAnimationFrame(draw);
+
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.15,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        map: createParticleTexture()
+      });
+
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+
+      // Ambient light
+      const ambientLight = new THREE.AmbientLight(0x404060);
+      scene.add(ambientLight);
+
+      // Mouse interaction
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+        particlesMesh.rotation.y += 0.0005;
+        particlesMesh.rotation.x += 0.0002;
+        particlesMesh.rotation.y += mouseX * 0.0005;
+        particlesMesh.rotation.x += mouseY * 0.0005;
+        renderer.render(scene, camera);
       }
-      draw();
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     })();
   </script>
 
-  <!-- THREE.JS BACKGROUND (particle field only) -->
-<script>
-  (function() {
-    const canvas = document.getElementById('three-canvas');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x030305);
-
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 30;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // ---------- PARTICLE FIELD ----------
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 2000;
-    const posArray = new Float32Array(particlesCount * 3);
-    const colorArray = new Float32Array(particlesCount * 3);
-
-    for (let i = 0; i < particlesCount * 3; i += 3) {
-      const radius = 20;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
-      posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
-      posArray[i+2] = radius * Math.cos(phi);
-
-      const mix = Math.random();
-      const r = 212/255 + (192/255 - 212/255) * mix;
-      const g = 175/255 + (192/255 - 175/255) * mix;
-      const b = 55/255 + (192/255 - 55/255) * mix;
-      colorArray[i] = r;
-      colorArray[i+1] = g;
-      colorArray[i+2] = b;
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-    function createParticleTexture() {
-      const canvas = document.createElement('canvas');
-      canvas.width = 32;
-      canvas.height = 32;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(16, 16, 16, 0, 2 * Math.PI);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-atop';
-      const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-      gradient.addColorStop(0, 'rgba(255,255,255,1)');
-      gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
-      gradient.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 32, 32);
-      return new THREE.CanvasTexture(canvas);
-    }
-
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.15,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      map: createParticleTexture()
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Ambient light
-    const ambientLight = new THREE.AmbientLight(0x404060);
-    scene.add(ambientLight);
-
-    // Mouse interaction
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-
-      particlesMesh.rotation.y += 0.0005;
-      particlesMesh.rotation.x += 0.0002;
-      particlesMesh.rotation.y += mouseX * 0.0005;
-      particlesMesh.rotation.x += mouseY * 0.0005;
-
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  })();
-</script>
-
-  <!-- VOLUMETRIC LIGHT SHADER (unchanged) -->
+  <!-- VOLUMETRIC LIGHT SHADER (optimized – fewer steps) -->
   <script>
     (function() {
       const canvas = document.getElementById('volumetric-canvas');
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Limit pixel ratio for performance
 
       const scene = new THREE.Scene();
       const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -1359,7 +1150,7 @@
             vec3 rayOrigin = vec3(lightPos, 0.0);
             
             float density = 0.0;
-            float steps = 32.0;
+            float steps = 16.0; // Reduced from 32 for performance
             for (float i = 0.0; i < steps; i++) {
               float t = i / steps * 2.0;
               vec3 pos = rayOrigin + rayDir * t;
@@ -1403,11 +1194,11 @@
     })();
   </script>
 
-  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top (unchanged) -->
+  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top -->
   <script>
     (function() {
       const cursor = document.getElementById('cursorGlow');
-      if (cursor) {
+      if (cursor && window.innerWidth > 700) { // Only enable on desktop
         document.addEventListener('mousemove', (e) => {
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
@@ -1422,6 +1213,7 @@
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
       magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return; // Skip on mobile
           const rect = btn.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
@@ -1435,6 +1227,7 @@
       const tiltCards = document.querySelectorAll('[data-tilt]');
       tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return; // Skip on mobile
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
