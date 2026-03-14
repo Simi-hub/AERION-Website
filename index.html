@@ -55,6 +55,23 @@
       --radius-md: 20px;
       --transition: all 0.5s cubic-bezier(0.2, 0.75, 0.3, 1);
       --navbar-height: 90px;
+
+      /* Hamburger variables – adjust as needed */
+      --hamburger-size: 40px;
+      --hamburger-line-height: 3px;
+      --hamburger-line-width: 30px;
+      --hamburger-line-color: var(--gold);
+      --hamburger-transition-duration: 0.3s;
+      --hamburger-transition-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --hamburger-spacing: 8px;
+      --hamburger-border-radius: 4px;
+      --hamburger-focus-outline: 2px solid var(--gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --hamburger-transition-duration: 0s;
+      }
     }
 
     /* ---------- CUSTOM CURSOR ---------- */
@@ -215,20 +232,24 @@
       transition: var(--transition);
       height: var(--navbar-height);
     }
+
     .logo-group {
       display: flex;
       align-items: center;
       gap: 0.8rem;
     }
+
     .logo-small {
       width: 80px;
       height: auto;
       filter: drop-shadow(0 0 12px var(--gold));
       transition: transform 0.3s ease;
     }
+
     .logo-small:hover {
       transform: scale(1.05);
     }
+
     .brand-name {
       font-size: 2rem;
       font-weight: 600;
@@ -237,14 +258,18 @@
       -webkit-text-fill-color: transparent;
       transition: text-shadow 0.3s;
     }
+
     .brand-name:hover {
       text-shadow: 0 0 20px var(--gold);
     }
+
+    /* Desktop navigation */
     .nav-links {
       display: flex;
       gap: 2rem;
       align-items: center;
     }
+
     .nav-link {
       color: #b0b8cc;
       text-decoration: none;
@@ -253,6 +278,7 @@
       transition: var(--transition);
       position: relative;
     }
+
     .nav-link::after {
       content: '';
       position: absolute;
@@ -263,18 +289,23 @@
       background: var(--gold);
       transition: width 0.3s;
     }
+
     .nav-link:hover {
       color: white;
     }
+
     .nav-link:hover::after {
       width: 100%;
     }
+
     .nav-link.active {
       color: var(--gold);
     }
+
     .nav-link.active::after {
       width: 100%;
     }
+
     .nav-cta {
       border: 1.5px solid var(--gold);
       background: transparent;
@@ -286,10 +317,129 @@
       text-decoration: none;
       font-size: 1rem;
     }
+
     .nav-cta:hover {
       background: var(--gold);
       color: #030305;
       box-shadow: 0 0 30px var(--gold);
+    }
+
+    /* Hamburger menu (hidden on desktop) */
+    .ui-hamburger {
+      display: none;
+      all: unset; /* reset button styles */
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: var(--hamburger-size);
+      height: var(--hamburger-size);
+      padding: calc((var(--hamburger-size) - var(--hamburger-line-height)*3 - var(--hamburger-spacing)*2) / 2);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      box-sizing: content-box;
+      transition: background-color 0.2s;
+      border-radius: var(--hamburger-border-radius);
+    }
+
+    .ui-hamburger:focus-visible {
+      outline: var(--hamburger-focus-outline);
+      outline-offset: 2px;
+    }
+
+    .ui-hamburger__line {
+      display: block;
+      width: var(--hamburger-line-width);
+      height: var(--hamburger-line-height);
+      background-color: var(--hamburger-line-color);
+      border-radius: 4px;
+      transition: transform var(--hamburger-transition-duration) var(--hamburger-transition-easing),
+                  opacity var(--hamburger-transition-duration) ease;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    /* Open state */
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(1) {
+      transform: translateY(calc(var(--hamburger-line-height) + var(--hamburger-spacing))) rotate(45deg);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(3) {
+      transform: translateY(calc(-1 * (var(--hamburger-line-height) + var(--hamburger-spacing)))) rotate(-45deg);
+    }
+
+    /* Reduced motion fallback */
+    @media (prefers-reduced-motion: reduce) {
+      .ui-hamburger__line {
+        transition: none;
+      }
+    }
+
+    /* Mobile menu panel (existing) */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid var(--glass-border);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.3s ease;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu .nav-link {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .mobile-menu .nav-cta {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
 
     /* ---------- HERO ---------- */
@@ -710,37 +860,59 @@
       transform: translateY(0);
     }
 
-    /* Mobile optimizations – refined for perfect fit */
+    /* Mobile optimizations */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 60px;
       }
-      .about-grid, .why-grid {
-        grid-template-columns: 1fr;
-      }
+      
       .navbar {
         padding: 0.5rem 1rem;
       }
+      
       .logo-small {
         width: 40px;
       }
+      
       .brand-name {
         font-size: 1.2rem;
       }
+      
+      /* Hide desktop navigation on mobile */
       .nav-links {
-        gap: 0.5rem;
+        display: none;
       }
-      .nav-link {
-        font-size: 0.8rem;
+      
+      /* Show hamburger icon */
+      .ui-hamburger {
+        display: flex;
       }
-      .nav-cta {
-        padding: 0.3rem 1rem;
-        font-size: 0.8rem;
+      
+      .about-grid, .why-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
-      .logo-container {
-        width: min(200px, 50vw);
-        height: min(200px, 50vw);
+      
+      .services-grid {
+        gap: 1.5rem;
       }
+      
+      .project-card {
+        height: 300px;
+      }
+      
+      .stats-grid {
+        gap: 2rem;
+      }
+      
+      .stat-number {
+        font-size: 3rem;
+      }
+      
+      .contact-email {
+        font-size: 1.8rem;
+      }
+      
       .scroll-top {
         width: 50px;
         height: 50px;
@@ -748,9 +920,11 @@
         bottom: 1rem;
         right: 1rem;
       }
+      
       .cursor-glow {
         display: none;
       }
+      
       #volumetric-canvas {
         display: none;
       }
@@ -759,6 +933,9 @@
     @media (min-width: 701px) {
       body, .btn-primary, .nav-cta, .scroll-top {
         cursor: none;
+      }
+      .ui-hamburger {
+        display: none !important;
       }
     }
     ::selection {
@@ -773,11 +950,27 @@
   <canvas id="three-canvas"></canvas>
   <canvas id="volumetric-canvas"></canvas>
 
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mobile-menu-close" id="closeMenu">&times;</span>
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="contact.html" class="nav-cta">soar</a>
+  </div>
+
   <nav class="navbar">
     <div class="logo-group">
       <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small">
       <span class="brand-name">AERION</span>
     </div>
+    
+    <!-- Desktop Navigation -->
     <div class="nav-links">
       <a href="index.html" class="nav-link active">Home</a>
       <a href="about.html" class="nav-link">About</a>
@@ -786,6 +979,13 @@
       <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-cta">soar</a>
     </div>
+    
+    <!-- Hamburger Icon (Primary Recommended) -->
+    <button class="ui-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+    </button>
   </nav>
 
   <main>
@@ -1246,9 +1446,51 @@
     })();
   </script>
 
-  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top -->
+  <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top + Hamburger Menu JS -->
   <script>
     (function() {
+      // Hamburger Menu Functionality
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+      const closeMenu = document.getElementById('closeMenu');
+      
+      if (hamburger && mobileMenu && menuOverlay && closeMenu) {
+        function openMenu() {
+          hamburger.setAttribute('aria-expanded', 'true');
+          mobileMenu.classList.add('active');
+          menuOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        }
+        
+        function closeMenuFunc() {
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('active');
+          menuOverlay.classList.remove('active');
+          document.body.style.overflow = ''; // Restore scrolling
+        }
+        
+        hamburger.addEventListener('click', () => {
+          const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+          if (isOpen) {
+            closeMenuFunc();
+          } else {
+            openMenu();
+          }
+        });
+        
+        closeMenu.addEventListener('click', closeMenuFunc);
+        menuOverlay.addEventListener('click', closeMenuFunc);
+
+        // Close with Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMenuFunc();
+          }
+        });
+      }
+
+      // Cursor glow
       const cursor = document.getElementById('cursorGlow');
       if (cursor && window.innerWidth > 700) {
         document.addEventListener('mousemove', (e) => {
@@ -1262,6 +1504,7 @@
         });
       }
 
+      // Magnetic buttons
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
       magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
@@ -1276,6 +1519,7 @@
         });
       });
 
+      // 3D Tilt
       const tiltCards = document.querySelectorAll('[data-tilt]');
       tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -1294,6 +1538,7 @@
         });
       });
 
+      // Parallax
       const aboutVisual = document.querySelector('.about-visual');
       if (aboutVisual) {
         window.addEventListener('scroll', () => {
@@ -1304,6 +1549,7 @@
         });
       }
 
+      // Scroll to top
       const scrollTopBtn = document.getElementById('scrollTop');
       window.addEventListener('scroll', () => {
         if (window.scrollY > 500) {
@@ -1316,6 +1562,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
+      // Fade-up observer
       const faders = document.querySelectorAll('.fade-up');
       const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1326,6 +1573,7 @@
       }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
       faders.forEach(el => fadeObserver.observe(el));
 
+      // Stats counters
       const statNumbers = document.querySelectorAll('.stat-number');
       const counterObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -1351,6 +1599,7 @@
       }, { threshold: 0.6 });
       statNumbers.forEach(el => counterObserver.observe(el));
 
+      // Smooth scroll for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
