@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AERION Portfolio · Real Projects That Made a Difference</title>
-<meta name="description" content="See AERION's work – web apps, AI dashboards, headless commerce, and design systems. Real results for real businesses.">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-M9EGZLSRY9');
-</script>
+  <title>AERION Projects · Web Apps, AI Dashboards & Design Systems</title>
+  <meta name="description" content="See AERION's work – web apps, AI dashboards, headless commerce, and design systems. Real results for real businesses.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9EGZLSRY9');
+  </script>
   <!-- modern font stack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +25,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none; /* hide default cursor – we'll use custom */
     }
 
     html {
@@ -175,7 +173,6 @@
       border-radius: 80px;
       font-weight: 600;
       font-size: 1.3rem;
-      cursor: none;
       transition: var(--transition);
       text-decoration: none;
       display: inline-block;
@@ -288,7 +285,6 @@
       transition: var(--transition);
       text-decoration: none;
       font-size: 1rem;
-      cursor: none;
     }
     .nav-cta:hover {
       background: var(--gold);
@@ -296,220 +292,27 @@
       box-shadow: 0 0 30px var(--gold);
     }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    /* ---------- PAGE HEADER ---------- */
+    .page-header {
+      padding-top: calc(var(--navbar-height) + 4rem);
       text-align: center;
-      padding: var(--navbar-height) 1.5rem 0;
-      box-sizing: border-box;
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
     }
-
-    /* ---------- LOGO ANIMATION CONTAINER ---------- */
-    .logo-container {
-      position: relative;
-      width: min(500px, 70vw);
-      height: min(500px, 70vw);
-      margin-bottom: 1.5rem;
-      z-index: 3;
-    }
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    #eagleLogo {
-      position: absolute;
-      width: 85%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      animation: eagleEntrance 2.2s cubic-bezier(.17,.67,.4,1.3) forwards;
-      filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
-    }
-    @keyframes eagleEntrance {
-      0% {
-        transform: translate(-50%,-50%) scale(3);
-        opacity: 0;
-        filter: blur(20px);
-      }
-      60% {
-        transform: translate(-50%,-50%) scale(0.7);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%,-50%) scale(1);
-        filter: blur(0);
-      }
-    }
-
-    /* static fallback for reduced motion */
-    .static-fallback {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-    }
-    .static-fallback img {
-      width: 60%;
-      filter: drop-shadow(0 0 15px #ffd70066);
-    }
-    .static-fallback .static-ring {
-      position: absolute;
-      width: 80%;
-      height: 80%;
-      border: 2px solid transparent;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #ffd700, #c0c0c0) border-box;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .logo-container canvas,
-      .logo-container #eagleLogo {
-        display: none;
-      }
-      .logo-container .static-fallback {
-        display: flex;
-      }
-    }
-
-    .hero-tagline {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 300;
-      color: #b0b8cc;
-      margin-bottom: 2.5rem;
-      max-width: 900px;
-      text-shadow: 0 0 20px rgba(212,175,55,0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
-    }
-
-    /* ---------- ABOUT (homepage preview) ---------- */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-    .about-content p {
-      font-size: 1.5rem;
-      color: #b8c0d0;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-    .gold-chip {
-      border-left: 5px solid var(--gold);
-      padding: 1.2rem 2rem;
-      background: rgba(212,175,55,0.05);
-      border-radius: 0 60px 60px 0;
-      font-size: 1.3rem;
-      font-weight: 300;
-    }
-    .about-visual {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: translateZ(0);
-      will-change: transform;
-    }
-    .eagle-glow {
-      width: 100%;
-      max-width: 400px;
-      aspect-ratio: 1/1;
-      background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.1s ease-out;
-    }
-    .eagle-glow img {
-      width: 80%;
-      filter: drop-shadow(0 0 30px var(--gold));
-    }
-    /* ---------- SERVICES CARDS ---------- */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-      margin-top: 2rem;
-    }
-    .service-card {
-      padding: 3.5rem 2rem;
-      text-align: center;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-xl);
-      transition: var(--transition);
-    }
-    .service-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-15px);
-    }
-    .service-icon {
-      font-size: 5rem;
-      line-height: 1;
-      margin-bottom: 1.8rem;
-      filter: drop-shadow(0 0 20px var(--gold));
-    }
-    .service-card h3 {
-      font-size: 2.2rem;
+    .page-header h1 {
       margin-bottom: 1rem;
     }
-    .service-card p {
-      color: #a0a8b8;
-      font-size: 1.1rem;
+    .lead {
+      font-size: 1.5rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      color: #b0b8cc;
     }
-    /* ---------- WHY GRID ---------- */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
-    }
-    .why-item {
-      padding: 2.8rem;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(8px);
-      border-radius: var(--radius-lg);
-      border-left: 4px solid var(--gold);
-      transition: var(--transition);
-    }
-    .why-item:hover {
-      border-left-width: 8px;
-      background: rgba(212,175,55,0.05);
-    }
-    .why-item strong {
-      color: var(--gold);
-      font-size: 1.8rem;
-      display: block;
-      margin-bottom: 0.8rem;
-    }
-    /* ---------- PROJECTS ---------- */
+
+    /* ---------- PROJECTS PAGE SPECIFIC ---------- */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
+      margin-top: 2rem;
     }
     .project-card {
       height: 380px;
@@ -525,6 +328,7 @@
       overflow: hidden;
       transform-style: preserve-3d;
       perspective: 1000px;
+      cursor: pointer;
     }
     .project-card::before {
       content: '';
@@ -549,120 +353,49 @@
       z-index: 2;
       transform: translateZ(15px);
     }
-    /* ---------- TESTIMONIALS ---------- */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-    .testimonial-card {
-      padding: 2.8rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      transition: var(--transition);
-    }
-    .testimonial-card p {
-      font-size: 1.3rem;
-      font-style: italic;
-      margin: 1.5rem 0;
-      color: #d0d8ec;
-    }
-    .client-name {
-      color: var(--gold);
-      font-weight: 600;
-      font-size: 1.2rem;
-    }
-    /* ---------- STATS ---------- */
-    .stats-grid {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 3rem;
-      text-align: center;
-    }
-    .stat-item {
-      flex: 1 1 180px;
-    }
-    .stat-number {
-      font-size: 5rem;
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-      text-shadow: 0 0 30px var(--gold);
-    }
-    .stat-label {
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #a0a8c0;
-    }
-    /* ---------- INNOVATION LAB ---------- */
-    .lab-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-    .lab-card {
-      padding: 3.5rem 2rem;
-      background: rgba(20, 22, 30, 0.7);
-      backdrop-filter: blur(12px);
-      border: 1px dashed rgba(212,175,55,0.5);
-      border-radius: var(--radius-lg);
-      text-align: center;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .lab-card::after {
-      content: '';
-      position: absolute;
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, rgba(212,175,55,0.2) 0%, transparent 70%);
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
       opacity: 0;
-      transition: opacity 0.4s;
+      pointer-events: none;
+      transition: opacity 0.3s;
     }
-    .lab-card:hover {
-      border-style: solid;
-      border-color: var(--gold);
-      transform: scale(1.02) translateY(-6px);
-      background: rgba(212,175,55,0.08);
-    }
-    .lab-card:hover::after {
+    .lightbox.visible {
       opacity: 1;
+      pointer-events: auto;
     }
-    .lab-card .coming-soon {
-      font-size: 2rem;
-      font-weight: 300;
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid var(--gold);
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(212,175,55,0.3);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
       color: var(--gold);
-      letter-spacing: 2px;
-      position: relative;
-      z-index: 2;
+      font-size: 4rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      line-height: 1;
     }
-    /* ---------- CONTACT ---------- */
-    .contact-center {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+    .lightbox-close:hover {
+      transform: scale(1.2);
     }
-    .contact-email {
-      font-size: 3rem;
-      font-weight: 300;
-      color: var(--gold);
-      text-decoration: none;
-      border-bottom: 2px dotted;
-      padding-bottom: 8px;
-      transition: var(--transition);
-      word-break: break-all;
-    }
-    .contact-email:hover {
-      color: white;
-      border-bottom-color: white;
-    }
+
     footer {
       border-top: 1px solid rgba(212,175,55,0.2);
       padding: 3rem 2rem;
@@ -689,7 +422,6 @@
       justify-content: center;
       color: var(--gold);
       font-size: 2rem;
-      cursor: none;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s;
@@ -714,12 +446,11 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Mobile optimizations */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 70px;
-      }
-      .about-grid, .why-grid {
-        grid-template-columns: 1fr;
       }
       .navbar {
         padding: 0.5rem 1.5rem;
@@ -740,12 +471,19 @@
         padding: 0.4rem 1.2rem;
         font-size: 0.9rem;
       }
-      .contact-email {
-        font-size: 2rem;
+      .page-header h1 {
+        font-size: clamp(3rem, 10vw, 5rem);
       }
-      .logo-container {
-        width: min(200px, 50vw);
-        height: min(200px, 50vw);
+      .project-card {
+        height: 300px;
+      }
+      .project-card h3 {
+        font-size: 1.8rem;
+      }
+      .lightbox-close {
+        font-size: 3rem;
+        top: 1rem;
+        right: 1rem;
       }
       .scroll-top {
         width: 50px;
@@ -754,15 +492,16 @@
         bottom: 1rem;
         right: 1rem;
       }
-      body, .btn-primary, .nav-cta, .scroll-top {
-        cursor: auto;
-      }
       .cursor-glow {
         display: none;
       }
+      #volumetric-canvas {
+        display: none;
+      }
     }
+
     @media (min-width: 701px) {
-      body, .btn-primary, .nav-cta, .scroll-top {
+      body, .btn-primary, .nav-cta, .scroll-top, .project-card {
         cursor: none;
       }
     }
@@ -771,57 +510,16 @@
       color: #030305;
     }
   </style>
-  <style>
-    /* Lightbox styles (add to existing CSS) */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .lightbox.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border: 3px solid var(--gold);
-      border-radius: 20px;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      color: var(--gold);
-      font-size: 3rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .lightbox-close:hover {
-      transform: scale(1.2);
-    }
-  </style>
 </head>
 <body>
-  <!-- same navbar, active on Projects -->
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scroll-top" id="scrollTop">↑</div>
   <canvas id="three-canvas"></canvas>
   <canvas id="volumetric-canvas"></canvas>
 
-   <nav class="navbar">
+  <nav class="navbar">
     <div class="logo-group">
-      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23D4AF37\' /%3E%3Ctext x=\'50\' y=\'70\' font-size=\'60\' text-anchor=\'middle\' fill=\'%23000000\' font-family=\'Arial\'%3E🦅%3C/text%3E%3C/svg%3E'">
+      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small">
       <span class="brand-name">AERION</span>
     </div>
     <div class="nav-links">
@@ -834,21 +532,21 @@
     </div>
   </nav>
 
-  <!-- Lightbox container -->
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span class="lightbox-close" id="lightboxClose">&times;</span>
     <img src="" alt="" id="lightboxImg">
   </div>
 
   <main>
-    <section class="page-header" style="padding-top: calc(var(--navbar-height) + 4rem); text-align: center;">
+    <section class="page-header">
       <h1>Our Work</h1>
-      <p class="lead" style="font-size: 1.5rem; max-width: 800px; margin: 1rem auto;">Real projects that made a real difference. Click to enlarge.</p>
+      <p class="lead">Real projects that made a real difference. Click to enlarge.</p>
     </section>
 
     <section class="section-container">
-      <div class="projects-grid">
-        <!-- Each project card has a data-image attribute with a placeholder image URL -->
+      <div class="projects-grid" id="projectsGrid">
+        <!-- Project cards with data-image attributes (placeholder images) -->
         <div class="project-card fade-up" data-tilt data-image="https://via.placeholder.com/800x600/1a1c28/D4AF37?text=ORION+Platform">
           <h3>ORION platform</h3>
           <p>web app · 2026</p>
@@ -869,122 +567,41 @@
     </section>
   </main>
 
-<footer>
-      <span>© 2026 AERION — digital innovation studio</span>
-      <span style="color:var(--gold);">🦅 rise above storms</span>
-      <span>privacy · terms · careers</span>
-    </footer>
-  </main>
+  <footer>
+    <span>© 2026 AERION — digital innovation studio</span>
+    <span style="color:var(--gold);">🦅 rise above storms</span>
+    <span>privacy · terms · careers</span>
+  </footer>
 
-  <!-- CUSTOM ANIMATION SCRIPT (particles + rings) -->
+  <!-- Lightbox script -->
   <script>
     (function() {
-      const pCanvas = document.getElementById("bgParticles");
-      if (!pCanvas) return;
-      const pCtx = pCanvas.getContext("2d");
-      const ringsCanvas = document.getElementById("rings");
-      const ctx = ringsCanvas.getContext("2d");
-      const container = document.querySelector('.logo-container');
-      const resizeCanvases = () => {
-        if (!container) return;
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-        pCanvas.width = w;
-        pCanvas.height = h;
-        ringsCanvas.width = w;
-        ringsCanvas.height = h;
-      };
-      window.addEventListener('resize', resizeCanvases);
-      resizeCanvases();
-      let particles = [];
-      for(let i = 0; i < 60; i++) {
-        particles.push({
-          x: Math.random() * pCanvas.width,
-          y: Math.random() * pCanvas.height,
-          size: Math.random() * 2,
-          speed: Math.random() * 0.3 + 0.1
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const projectCards = document.querySelectorAll('.project-card[data-image]');
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          const imgUrl = card.getAttribute('data-image');
+          lightboxImg.src = imgUrl;
+          lightbox.classList.add('visible');
         });
-      }
-      function drawParticles() {
-        if (!pCtx) return;
-        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-        particles.forEach(p => {
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          pCtx.fillStyle = "rgba(212,175,55,0.6)";
-          pCtx.fill();
-          p.y -= p.speed;
-          if (p.y < 0) {
-            p.y = pCanvas.height;
-          }
-        });
-        requestAnimationFrame(drawParticles);
-      }
-      drawParticles();
-      let angle = 0;
-      let baseSize = 340;
-      function energyLines(cx, cy) {
-        let lineLength = 170 * (ringsCanvas.width / baseSize);
-        for (let i = 0; i < 4; i++) {
-          ctx.beginPath();
-          ctx.moveTo(cx, cy);
-          let x = cx + Math.cos(i * Math.PI / 2) * lineLength;
-          let y = cy + Math.sin(i * Math.PI / 2) * lineLength;
-          ctx.lineTo(x, y);
-          ctx.strokeStyle = "rgba(212,175,55,0.3)";
-          ctx.lineWidth = 2;
-          ctx.stroke();
+      });
+
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('visible');
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('visible');
         }
-      }
-      function shimmer(cx, cy) {
-        let inner = 20 * (ringsCanvas.width / baseSize);
-        let outer = 120 * (ringsCanvas.width / baseSize);
-        let grad = ctx.createRadialGradient(cx, cy, inner, cx, cy, outer);
-        grad.addColorStop(0, "rgba(255,255,255,0.6)");
-        grad.addColorStop(1, "rgba(255,255,255,0)");
-        ctx.beginPath();
-        ctx.arc(cx, cy, outer, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-      }
-      function draw() {
-        ctx.clearRect(0, 0, ringsCanvas.width, ringsCanvas.height);
-        let cx = ringsCanvas.width / 2;
-        let cy = ringsCanvas.height / 2;
-        let goldRingRadius = 120 * (ringsCanvas.width / baseSize);
-        let silverRingRadius = 150 * (ringsCanvas.width / baseSize);
-        energyLines(cx, cy);
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle);
-        ctx.beginPath();
-        ctx.arc(0, 0, goldRingRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = "#D4AF37";
-        ctx.lineWidth = 4;
-        ctx.shadowColor = "#D4AF37";
-        ctx.shadowBlur = 20;
-        ctx.stroke();
-        ctx.restore();
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(-angle * 1.2);
-        ctx.beginPath();
-        ctx.arc(0, 0, silverRingRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = "#C0C0C0";
-        ctx.lineWidth = 3;
-        ctx.shadowColor = "#C0C0C0";
-        ctx.shadowBlur = 15;
-        ctx.stroke();
-        ctx.restore();
-        shimmer(cx, cy);
-        angle += 0.01;
-        requestAnimationFrame(draw);
-      }
-      draw();
+      });
     })();
   </script>
 
-  <!-- THREE.JS BACKGROUND (particle field) -->
+  <!-- THREE.JS BACKGROUND (optimized) -->
   <script>
     (function() {
       const canvas = document.getElementById('three-canvas');
@@ -994,12 +611,13 @@
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.z = 30;
 
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, powerPreference: "high-performance" });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+      // OPTIMIZED PARTICLE FIELD (800 particles)
       const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 2000;
+      const particlesCount = 800;
       const posArray = new Float32Array(particlesCount * 3);
       const colorArray = new Float32Array(particlesCount * 3);
 
@@ -1054,6 +672,9 @@
       const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
       scene.add(particlesMesh);
 
+      const ambientLight = new THREE.AmbientLight(0x404060);
+      scene.add(ambientLight);
+
       let mouseX = 0, mouseY = 0;
       window.addEventListener('mousemove', (e) => {
         mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -1078,13 +699,13 @@
     })();
   </script>
 
-  <!-- VOLUMETRIC LIGHT SHADER -->
+  <!-- VOLUMETRIC LIGHT SHADER (optimized – 16 steps) -->
   <script>
     (function() {
       const canvas = document.getElementById('volumetric-canvas');
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
       const scene = new THREE.Scene();
       const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -1109,7 +730,6 @@
           uniform vec2 mouse;
           uniform vec2 resolution;
 
-          // Simplex 3D noise (by Ian McEwan, Ashima Arts)
           vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
           vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
           vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -1183,7 +803,7 @@
             vec3 rayOrigin = vec3(lightPos, 0.0);
             
             float density = 0.0;
-            float steps = 32.0;
+            float steps = 16.0;
             for (float i = 0.0; i < steps; i++) {
               float t = i / steps * 2.0;
               vec3 pos = rayOrigin + rayDir * t;
@@ -1230,9 +850,8 @@
   <!-- ENHANCEMENTS: magnetic buttons, cursor, tilt, parallax, scroll-top -->
   <script>
     (function() {
-      // ---------- CUSTOM CURSOR ----------
       const cursor = document.getElementById('cursorGlow');
-      if (cursor) {
+      if (cursor && window.innerWidth > 700) {
         document.addEventListener('mousemove', (e) => {
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
@@ -1244,10 +863,10 @@
         });
       }
 
-      // ---------- MAGNETIC BUTTONS ----------
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
       magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return;
           const rect = btn.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
           const y = e.clientY - rect.top - rect.height / 2;
@@ -1258,10 +877,10 @@
         });
       });
 
-      // ---------- 3D TILT ON PROJECT CARDS ----------
       const tiltCards = document.querySelectorAll('[data-tilt]');
       tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return;
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
@@ -1276,7 +895,6 @@
         });
       });
 
-      // ---------- SCROLL PARALLAX (About section) ----------
       const aboutVisual = document.querySelector('.about-visual');
       if (aboutVisual) {
         window.addEventListener('scroll', () => {
@@ -1287,7 +905,6 @@
         });
       }
 
-      // ---------- SCROLL TO TOP BUTTON ----------
       const scrollTopBtn = document.getElementById('scrollTop');
       window.addEventListener('scroll', () => {
         if (window.scrollY > 500) {
@@ -1300,7 +917,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // ---------- FADE-UP OBSERVER ----------
       const faders = document.querySelectorAll('.fade-up');
       const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1311,7 +927,6 @@
       }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
       faders.forEach(el => fadeObserver.observe(el));
 
-      // ---------- STATS COUNTERS ----------
       const statNumbers = document.querySelectorAll('.stat-number');
       const counterObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -1337,7 +952,6 @@
       }, { threshold: 0.6 });
       statNumbers.forEach(el => counterObserver.observe(el));
 
-      // ---------- SMOOTH SCROLL FOR ANCHOR LINKS ----------
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
@@ -1351,35 +965,5 @@
       });
     })();
   </script>
-
-  <!-- Add lightbox functionality -->
-  <script>
-    (function() {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
-      const lightboxClose = document.getElementById('lightboxClose');
-      const projectCards = document.querySelectorAll('.project-card[data-image]');
-
-      projectCards.forEach(card => {
-        card.addEventListener('click', () => {
-          const imgUrl = card.getAttribute('data-image');
-          lightboxImg.src = imgUrl;
-          lightbox.classList.add('visible');
-        });
-      });
-
-      lightboxClose.addEventListener('click', () => {
-        lightbox.classList.remove('visible');
-      });
-
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-          lightbox.classList.remove('visible');
-        }
-      });
-    })();
-  </script>
-
-  <!-- Copy all other scripts from index.html -->
 </body>
 </html>
