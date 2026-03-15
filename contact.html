@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AERION · Contact & Start a Project</title>
+  <meta name="description" content="Ready to build something unstoppable? Contact AERION to discuss your project. Let's create digital experiences that soar.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9EGZLSRY9');
+  </script>
+  <!-- modern font stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <!-- Three.js for backgrounds -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* ---------- RESET & GLOBAL ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #030305;
+      color: #eceff2;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #f5d97a;
+      --gold-deep: #a8872e;
+      --glass-bg: rgba(18, 20, 28, 0.65);
+      --glass-border: rgba(212, 175, 55, 0.18);
+      --glass-border-hover: rgba(212, 175, 55, 0.45);
+      --black-soft: #12141c;
+      --radius-xl: 36px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --transition: all 0.5s cubic-bezier(0.2, 0.75, 0.3, 1);
+      --navbar-height: 90px;
+
+      /* Hamburger variables */
+      --hamburger-size: 40px;
+      --hamburger-line-height: 3px;
+      --hamburger-line-width: 30px;
+      --hamburger-line-color: var(--gold);
+      --hamburger-transition-duration: 0.3s;
+      --hamburger-transition-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --hamburger-spacing: 8px;
+      --hamburger-border-radius: 4px;
+      --hamburger-focus-outline: 2px solid var(--gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --hamburger-transition-duration: 0s;
+      }
+    }
+
+    /* ---------- CUSTOM CURSOR ---------- */
+    .cursor-glow {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.6) 0%, rgba(212,175,55,0) 80%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-glow.hover {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, rgba(212,175,55,0.9) 0%, rgba(212,175,55,0) 80%);
+    }
+
+    /* ---------- BACKGROUND CANVASES ---------- */
+    /* Volumetric light – behind everything */
+    #volumetric-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* Three.js particle sphere – floats freely, centered, with mobile offset */
+    #three-canvas {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(80vmin, 900px);
+      height: min(80vmin, 900px);
+      z-index: 1;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* Logo animation container – not used on contact, but kept for consistency */
+    .logo-container {
+      position: relative;
+      width: min(500px, 70vw);
+      height: min(500px, 70vw);
+      margin-bottom: 1.5rem;
+      z-index: 10;
+    }
+
+    /* ---------- NAVBAR LOGO ANIMATION ---------- */
+    @keyframes logoFloat {
+      0% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 12px var(--gold));
+      }
+      50% {
+        transform: translateY(-4px) scale(1.02);
+        filter: drop-shadow(0 0 20px var(--gold-light));
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 12px var(--gold));
+      }
+    }
+
+    .logo-small {
+      width: 80px;
+      height: auto;
+      filter: drop-shadow(0 0 12px var(--gold));
+      transition: transform 0.3s ease;
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    .logo-small:hover {
+      animation: none;
+      transform: scale(1.05);
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(4.5rem, 16vw, 9rem);
+      font-weight: 700;
+      background: linear-gradient(145deg, #ffffff, #d0d5e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 0 30px rgba(212,175,55,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s;
+    }
+
+    h2 {
+      font-size: clamp(3rem, 7vw, 4.8rem);
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 4px;
+    }
+
+    .section-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+      position: relative;
+      z-index: 5;
+    }
+    @media (min-width: 768px) {
+      .section-container {
+        padding: 9rem 3rem;
+      }
+    }
+
+    /* ---------- GLASS CARD + FLOATING ---------- */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px) saturate(200%);
+      -webkit-backdrop-filter: blur(14px) saturate(200%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+      box-shadow: 0 25px 50px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,175,55,0.1) inset, 0 0 30px rgba(212,175,55,0.1);
+    }
+    .glass-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 35px 60px -20px #000, 0 0 0 1px rgba(212,175,55,0.3) inset, 0 0 50px rgba(212,175,55,0.3);
+    }
+
+    .float {
+      animation: float 8s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px) scale(1.02); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* ---------- BUTTON PRIMARY ---------- */
+    .btn-primary {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 1.2rem 3.5rem;
+      border-radius: 80px;
+      font-weight: 600;
+      font-size: 1.3rem;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+      background: rgba(212, 175, 55, 0.02);
+      box-shadow: 0 0 30px rgba(212,175,55,0.2);
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+      position: relative;
+      z-index: 5;
+    }
+    .btn-primary:hover {
+      background: var(--gold);
+      color: #030305;
+      border-color: var(--gold-light);
+      box-shadow: 0 0 60px rgba(212,175,55,0.8);
+      transform: scale(1.06);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2.5rem;
+      z-index: 100;
+      background: rgba(8, 8, 12, 0.3);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      transition: var(--transition);
+      height: var(--navbar-height);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff, #c0c0d0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: text-shadow 0.3s;
+    }
+
+    .brand-name:hover {
+      text-shadow: 0 0 20px var(--gold);
+    }
+
+    /* Desktop navigation */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: #b0b8cc;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: var(--gold);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      padding: 0.5rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: #030305;
+      box-shadow: 0 0 30px var(--gold);
+    }
+
+    /* Hamburger menu (hidden on desktop) */
+    .ui-hamburger {
+      display: none;
+      all: unset;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: var(--hamburger-size);
+      height: var(--hamburger-size);
+      padding: calc((var(--hamburger-size) - var(--hamburger-line-height)*3 - var(--hamburger-spacing)*2) / 2);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      box-sizing: content-box;
+      transition: background-color 0.2s;
+      border-radius: var(--hamburger-border-radius);
+    }
+
+    .ui-hamburger:focus-visible {
+      outline: var(--hamburger-focus-outline);
+      outline-offset: 2px;
+    }
+
+    .ui-hamburger__line {
+      display: block;
+      width: var(--hamburger-line-width);
+      height: var(--hamburger-line-height);
+      background-color: var(--hamburger-line-color);
+      border-radius: 4px;
+      transition: transform var(--hamburger-transition-duration) var(--hamburger-transition-easing),
+                  opacity var(--hamburger-transition-duration) ease;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(1) {
+      transform: translateY(calc(var(--hamburger-line-height) + var(--hamburger-spacing))) rotate(45deg);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(3) {
+      transform: translateY(calc(-1 * (var(--hamburger-line-height) + var(--hamburger-spacing)))) rotate(-45deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ui-hamburger__line {
+        transition: none;
+      }
+    }
+
+    /* Mobile menu panel */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid var(--glass-border);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.3s ease;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu .nav-link {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .mobile-menu .nav-cta {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ---------- PAGE HEADER ---------- */
+    .page-header {
+      padding-top: calc(var(--navbar-height) + 4rem);
+      text-align: center;
+    }
+    .page-header h1 {
+      margin-bottom: 1rem;
+    }
+    .lead {
+      font-size: 1.5rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      color: #b0b8cc;
+    }
+
+    /* ---------- CONTACT PAGE SPECIFIC ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+    .contact-info p {
+      font-size: 1.2rem;
+      color: #b0b8cc;
+      margin: 2rem 0;
+    }
+    .contact-details {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+    .contact-details p {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .contact-details strong {
+      color: var(--gold);
+    }
+    .contact-details a {
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px dotted var(--gold);
+    }
+    .contact-details a:hover {
+      color: var(--gold);
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
+      padding: 1rem 1.5rem;
+      color: white;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.2);
+    }
+    .contact-form textarea {
+      border-radius: 30px;
+      resize: vertical;
+    }
+    .contact-form .btn-primary {
+      align-self: flex-start;
+    }
+
+    footer {
+      border-top: 1px solid rgba(212,175,55,0.2);
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      color: #6a7080;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(8px);
+    }
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      box-shadow: 0 0 20px rgba(212,175,55,0.3);
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-top:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: scale(1.1);
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 700px) {
+      :root {
+        --navbar-height: 60px;
+      }
+      
+      .navbar {
+        padding: 0.5rem 1rem;
+      }
+      
+      .logo-small {
+        width: 40px;
+        animation: logoFloat 4s ease-in-out infinite;
+      }
+      
+      .brand-name {
+        font-size: 1.2rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .ui-hamburger {
+        display: flex;
+      }
+      
+      /* Sphere matches size on index (same as logo container) */
+      #three-canvas {
+        width: min(250px, 60vw);
+        height: min(250px, 60vw);
+        top: calc(50% + var(--navbar-height)/2);
+      }
+      
+      .page-header h1 {
+        font-size: clamp(3rem, 10vw, 5rem);
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .contact-details {
+        padding: 1.5rem;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      
+      .contact-form .btn-primary {
+        align-self: stretch;
+        text-align: center;
+      }
+      
+      .scroll-top {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 1rem;
+        right: 1rem;
+      }
+      
+      .cursor-glow {
+        display: none;
+      }
+      
+      #volumetric-canvas {
+        opacity: 0.5;
+      }
+    }
+
+    @media (min-width: 701px) {
+      body, .btn-primary, .nav-cta, .scroll-top, .contact-form input, .contact-form textarea, .contact-form button {
+        cursor: none;
+      }
+      .ui-hamburger {
+        display: none !important;
+      }
+    }
+    ::selection {
+      background: var(--gold);
+      color: #030305;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="scroll-top" id="scrollTop">↑</div>
+  <canvas id="three-canvas"></canvas>
+  <canvas id="volumetric-canvas"></canvas>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mobile-menu-close" id="closeMenu">&times;</span>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="contact.html" class="nav-cta active">soar</a>
+  </div>
+
+  <nav class="navbar">
+    <div class="logo-group">
+      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small">
+      <span class="brand-name">AERION</span>
+    </div>
+    
+    <!-- Desktop Navigation -->
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-cta active">soar</a>
+    </div>
+    
+    <!-- Hamburger Icon -->
+    <button class="ui-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+    </button>
+  </nav>
+
+  <main>
+    <section class="page-header">
+      <h1>Start a Project</h1>
+      <p class="lead">Let's build something unstoppable together.</p>
+    </section>
+
+    <section class="section-container">
+      <div class="contact-grid">
+        <div class="contact-info fade-up">
+          <h2>Get in touch</h2>
+          <p>We're always excited to hear about new ideas. Whether you're a startup, a growing business, or a dreamer with a vision – reach out.</p>
+          <div class="contact-details">
+            <p><strong>Email:</strong> <a href="mailto:soar@aeriontech.com">soar@aeriontech.com</a></p>
+            <p><strong>Follow us:</strong> <span style="color: #b0b8cc;">@aerion (Twitter, LinkedIn, Instagram)</span></p>
+          </div>
+        </div>
+        <div class="contact-form fade-up">
+          <!-- REPLACE WITH YOUR FORMSPREE ENDPOINT -->
+          <form action="https://formspree.io/f/your-form-id" method="POST">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Your email" required>
+            <textarea name="message" placeholder="Tell us about your project" rows="5" required></textarea>
+            <button type="submit" class="btn-primary">Send message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 AERION — digital innovation studio</span>
+    <span style="color:var(--gold);">🦅 rise above storms</span>
+    <span>privacy · terms · careers</span>
+  </footer>
+
+  <!-- THREE.JS BACKGROUND (optimized) -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('three-canvas');
+      const resizeRenderer = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (width === 0 || height === 0) return;
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+      camera.position.set(0, 0, 35);
+      camera.lookAt(0, 0, 0);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 800;
+      const posArray = new Float32Array(particlesCount * 3);
+      const colorArray = new Float32Array(particlesCount * 3);
+
+      for (let i = 0; i < particlesCount * 3; i += 3) {
+        const radius = 15;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+        posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
+        posArray[i+2] = radius * Math.cos(phi);
+
+        const mix = Math.random();
+        const r = 212/255 + (192/255 - 212/255) * mix;
+        const g = 175/255 + (192/255 - 175/255) * mix;
+        const b = 55/255 + (192/255 - 55/255) * mix;
+        colorArray[i] = r;
+        colorArray[i+1] = g;
+        colorArray[i+2] = b;
+      }
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+      function createParticleTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.7)');
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        return new THREE.CanvasTexture(canvas);
+      }
+
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.35,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending,
+        map: createParticleTexture(),
+        depthWrite: false,
+        sizeAttenuation: true
+      });
+
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+
+      const ambientLight = new THREE.AmbientLight(0x404060);
+      scene.add(ambientLight);
+
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particlesMesh.rotation.y += 0.0005;
+        particlesMesh.rotation.x += 0.0002;
+        particlesMesh.rotation.y += mouseX * 0.0005;
+        particlesMesh.rotation.x += mouseY * 0.0005;
+        renderer.render(scene, camera);
+      }
+
+      resizeRenderer();
+      animate();
+
+      window.addEventListener('resize', () => {
+        resizeRenderer();
+      });
+    })();
+  </script>
+
+  <!-- VOLUMETRIC LIGHT SHADER (dimmed) -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('volumetric-canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          mouse: { value: new THREE.Vector2(0, 0) },
+          resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          precision highp float;
+          varying vec2 vUv;
+          uniform float time;
+          uniform vec2 mouse;
+          uniform vec2 resolution;
+
+          vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+          vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+          float snoise(vec3 v) {
+            const vec2  C = vec2(1.0/6.0, 1.0/3.0);
+            const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+            vec3 i  = floor(v + dot(v, C.yyy) );
+            vec3 x0 = v - i + dot(i, C.xxx) ;
+
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min( g.xyz, l.zxy );
+            vec3 i2 = max( g.xyz, l.zxy );
+
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+
+            i = mod289(i);
+            vec4 p = permute( permute( permute( 
+                       i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                     + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                     + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+            float n_ = 0.142857142857;
+            vec3  ns = n_ * D.wyz - D.xzx;
+
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_ );
+
+            vec4 x = x_ *ns.x + ns.yyyy;
+            vec4 y = y_ *ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+
+            vec4 b0 = vec4( x.xy, y.xy );
+            vec4 b1 = vec4( x.zw, y.zw );
+
+            vec4 s0 = floor(b0)*2.0 + 1.0;
+            vec4 s1 = floor(b1)*2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+
+            vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+            vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+            vec3 p0 = vec3(a0.xy,h.x);
+            vec3 p1 = vec3(a0.zw,h.y);
+            vec3 p2 = vec3(a1.xy,h.z);
+            vec3 p3 = vec3(a1.zw,h.w);
+
+            vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+            p0 *= norm.x;
+            p1 *= norm.y;
+            p2 *= norm.z;
+            p3 *= norm.w;
+
+            vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+          }
+
+          void main() {
+            vec2 uv = vUv;
+            vec2 c = uv - 0.5;
+            vec2 lightPos = mouse * 0.2;
+            
+            vec3 rayDir = normalize(vec3(c - lightPos, 1.0));
+            vec3 rayOrigin = vec3(lightPos, 0.0);
+            
+            float density = 0.0;
+            float steps = 16.0;
+            for (float i = 0.0; i < steps; i++) {
+              float t = i / steps * 2.0;
+              vec3 pos = rayOrigin + rayDir * t;
+              float n = snoise(vec3(pos.xy * 3.0 + time * 0.2, pos.z * 2.0));
+              density += max(0.0, n) * 0.15;
+            }
+            
+            float lightIntensity = exp(-density * 1.5);
+            vec3 gold = vec3(0.83, 0.69, 0.22);
+            vec3 color = gold * lightIntensity;
+            color += vec3(mouse.x * 0.03, mouse.y * 0.03, 0.0);
+            
+            gl_FragColor = vec4(color, lightIntensity * 0.25);
+          }
+        `,
+        transparent: true
+      });
+
+      const geometry = new THREE.PlaneGeometry(2, 2);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        material.uniforms.time.value += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        material.uniforms.mouse.value.set(
+          (e.clientX / window.innerWidth - 0.5) * 2,
+          (e.clientY / window.innerHeight - 0.5) * 2
+        );
+      });
+    })();
+  </script>
+
+  <!-- ENHANCEMENTS + Hamburger Menu JS -->
+  <script>
+    (function() {
+      // Hamburger Menu Functionality
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+      const closeMenu = document.getElementById('closeMenu');
+      
+      if (hamburger && mobileMenu && menuOverlay && closeMenu) {
+        function openMenu() {
+          hamburger.setAttribute('aria-expanded', 'true');
+          mobileMenu.classList.add('active');
+          menuOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenuFunc() {
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('active');
+          menuOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        
+        hamburger.addEventListener('click', () => {
+          const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+          if (isOpen) {
+            closeMenuFunc();
+          } else {
+            openMenu();
+          }
+        });
+        
+        closeMenu.addEventListener('click', closeMenuFunc);
+        menuOverlay.addEventListener('click', closeMenuFunc);
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMenuFunc();
+          }
+        });
+      }
+
+      // Cursor glow
+      const cursor = document.getElementById('cursorGlow');
+      if (cursor && window.innerWidth > 700) {
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        });
+        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .project-card, .lab-card, .service-card, .why-item, .testimonial-card, .scroll-top');
+        interactive.forEach(el => {
+          el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+          el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+      }
+
+      // Magnetic buttons
+      const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
+      magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return;
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.02)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
+      });
+
+      // 3D Tilt (none on contact, but keep for consistency)
+      const tiltCards = document.querySelectorAll('[data-tilt]');
+      tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return;
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 10;
+          const rotateY = (centerX - x) / 10;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+
+      // Parallax (if any)
+      const aboutVisual = document.querySelector('.about-visual');
+      if (aboutVisual) {
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+          const aboutTop = aboutVisual.getBoundingClientRect().top + scrollY;
+          const offset = (scrollY - aboutTop) * 0.1;
+          aboutVisual.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // Scroll to top
+      const scrollTopBtn = document.getElementById('scrollTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Fade-up observer
+      const faders = document.querySelectorAll('.fade-up');
+      const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+      faders.forEach(el => fadeObserver.observe(el));
+
+      // Stats counters (none on contact)
+      const statNumbers = document.querySelectorAll('.stat-number');
+      const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.getAttribute('data-target'), 10);
+            if (isNaN(target)) return;
+            let current = 0;
+            const increment = target / 70;
+            const updateCounter = () => {
+              current += increment;
+              if (current < target) {
+                el.innerText = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+              } else {
+                el.innerText = target;
+              }
+            };
+            updateCounter();
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.6 });
+      statNumbers.forEach(el => counterObserver.observe(el));
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

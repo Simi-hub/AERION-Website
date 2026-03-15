@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>AERION · About Similoluwa Odubajo, 15‑Year‑Old Founder</title>
+  <meta name="description" content="Learn the story behind AERION – a digital innovation studio founded by Similoluwa Odubajo at age 15. Vision, mission, and the future.">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="AERION · About Similoluwa Odubajo">
+  <meta property="og:description" content="Meet the 15‑year‑old founder building the future. Vision, mission, and the story behind AERION.">
+  <meta property="og:image" content="https://aeriontech.com/assets/sleek-golden-eagle-emblem.png">
+  <meta property="og:url" content="https://aeriontech.com/about.html">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon – multiple sizes for all devices -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="mask-icon" href="assets/sleek-golden-eagle-emblem.png" color="#D4AF37">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9EGZLSRY9');
+  </script>
+  <!-- modern font stack -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <!-- Three.js for backgrounds -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* ---------- RESET & GLOBAL ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #030305;
+      color: #eceff2;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #f5d97a;
+      --gold-deep: #a8872e;
+      --glass-bg: rgba(18, 20, 28, 0.65);
+      --glass-border: rgba(212, 175, 55, 0.18);
+      --glass-border-hover: rgba(212, 175, 55, 0.45);
+      --black-soft: #12141c;
+      --radius-xl: 36px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --transition: all 0.5s cubic-bezier(0.2, 0.75, 0.3, 1);
+      --navbar-height: 90px;
+
+      /* Hamburger variables */
+      --hamburger-size: 40px;
+      --hamburger-line-height: 3px;
+      --hamburger-line-width: 30px;
+      --hamburger-line-color: var(--gold);
+      --hamburger-transition-duration: 0.3s;
+      --hamburger-transition-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --hamburger-spacing: 8px;
+      --hamburger-border-radius: 4px;
+      --hamburger-focus-outline: 2px solid var(--gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --hamburger-transition-duration: 0s;
+      }
+    }
+
+    /* ---------- CUSTOM CURSOR ---------- */
+    .cursor-glow {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.6) 0%, rgba(212,175,55,0) 80%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-glow.hover {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, rgba(212,175,55,0.9) 0%, rgba(212,175,55,0) 80%);
+    }
+
+    /* ---------- BACKGROUND CANVASES ---------- */
+    #volumetric-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    #three-canvas {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(80vmin, 900px);
+      height: min(80vmin, 900px);
+      z-index: 1;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* Logo container */
+    .logo-container {
+      position: relative;
+      width: min(500px, 70vw);
+      height: min(500px, 70vw);
+      margin-bottom: 1.5rem;
+      z-index: 10;
+    }
+
+    .logo-container canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+
+    /* ---------- MAIN LOGO ANIMATIONS ---------- */
+    @keyframes eagleEntrance {
+      0% { transform: translate(-50%,-50%) scale(3); opacity: 0; filter: blur(20px); }
+      60% { transform: translate(-50%,-50%) scale(0.7); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(1); filter: blur(0); }
+    }
+
+    @keyframes logoPulse {
+      0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 25px rgba(212,175,55,0.9)); }
+      50% { transform: translate(-50%, -50%) scale(1.02); filter: drop-shadow(0 0 40px rgba(212,175,55,1)); }
+      100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 25px rgba(212,175,55,0.9)); }
+    }
+
+    #eagleLogo {
+      position: absolute;
+      width: 85%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      animation: eagleEntrance 2.2s cubic-bezier(.17,.67,.4,1.3) forwards, logoPulse 4s ease-in-out infinite 2.5s;
+      filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
+      z-index: 2;
+    }
+
+    /* ---------- NAVBAR LOGO ANIMATION ---------- */
+    @keyframes logoFloat {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 12px var(--gold)); }
+      50% { transform: translateY(-4px) scale(1.02); filter: drop-shadow(0 0 20px var(--gold-light)); }
+      100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 12px var(--gold)); }
+    }
+
+    .logo-small {
+      width: 80px;
+      height: auto;
+      filter: drop-shadow(0 0 12px var(--gold));
+      transition: transform 0.3s ease;
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    .logo-small:hover {
+      animation: none;
+      transform: scale(1.05);
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      font-size: clamp(4.5rem, 16vw, 9rem);
+      font-weight: 700;
+      background: linear-gradient(145deg, #ffffff, #d0d5e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 0 30px rgba(212,175,55,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s;
+    }
+
+    h2 {
+      font-size: clamp(3rem, 7vw, 4.8rem);
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 4px;
+      transition: width 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    h2.fade-up.visible::after {
+      width: 120px;
+    }
+
+    .section-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* ---------- BUTTON PRIMARY ---------- */
+    .btn-primary {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 1.2rem 3.5rem;
+      border-radius: 80px;
+      font-weight: 600;
+      font-size: 1.3rem;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+      background: rgba(212, 175, 55, 0.02);
+      box-shadow: 0 0 30px rgba(212,175,55,0.2);
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+      position: relative;
+      z-index: 5;
+    }
+    .btn-primary:hover {
+      background: var(--gold);
+      color: #030305;
+      border-color: var(--gold-light);
+      box-shadow: 0 0 60px rgba(212,175,55,0.8);
+      transform: scale(1.06);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2.5rem;
+      z-index: 100;
+      background: rgba(8, 8, 12, 0.3);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      transition: var(--transition);
+      height: var(--navbar-height);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff, #c0c0d0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: text-shadow 0.3s;
+    }
+
+    .brand-name:hover {
+      text-shadow: 0 0 20px var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: #b0b8cc;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: var(--gold);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      padding: 0.5rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: #030305;
+      box-shadow: 0 0 30px var(--gold);
+    }
+
+    /* ---------- HAMBURGER – CRITICAL FIX ---------- */
+    .ui-hamburger {
+      all: unset;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: var(--hamburger-size);
+      height: var(--hamburger-size);
+      padding: calc((var(--hamburger-size) - var(--hamburger-line-height)*3 - var(--hamburger-spacing)*2) / 2);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      box-sizing: content-box;
+      border-radius: var(--hamburger-border-radius);
+    }
+
+    .ui-hamburger:focus-visible {
+      outline: var(--hamburger-focus-outline);
+      outline-offset: 2px;
+    }
+
+    .ui-hamburger__line {
+      display: block;
+      width: var(--hamburger-line-width);
+      height: var(--hamburger-line-height);
+      background-color: var(--hamburger-line-color);
+      border-radius: 4px;
+      transition: transform var(--hamburger-transition-duration) var(--hamburger-transition-easing),
+                  opacity var(--hamburger-transition-duration) ease;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(1) {
+      transform: translateY(calc(var(--hamburger-line-height) + var(--hamburger-spacing))) rotate(45deg);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .ui-hamburger[aria-expanded="true"] .ui-hamburger__line:nth-child(3) {
+      transform: translateY(calc(-1 * (var(--hamburger-line-height) + var(--hamburger-spacing)))) rotate(-45deg);
+    }
+
+    /* Desktop: hide hamburger */
+    @media (min-width: 701px) {
+      .ui-hamburger {
+        display: none !important;
+      }
+    }
+
+    /* Mobile: show hamburger */
+    @media (max-width: 700px) {
+      .ui-hamburger {
+        display: flex !important;
+      }
+    }
+
+    /* Mobile menu panel */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid var(--glass-border);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.3s ease;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu .nav-link {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .mobile-menu .nav-cta {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ---------- PAGE HEADER ---------- */
+    .page-header {
+      padding-top: calc(var(--navbar-height) + 4rem);
+      text-align: center;
+    }
+    .page-header h1 {
+      margin-bottom: 1rem;
+    }
+    .lead {
+      font-size: 1.5rem;
+      max-width: 800px;
+      margin: 1rem auto;
+      color: #b0b8cc;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* ---------- ABOUT PAGE SPECIFIC ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-content p {
+      font-size: 1.5rem;
+      color: #b8c0d0;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .gold-chip {
+      border-left: 5px solid var(--gold);
+      padding: 1.2rem 2rem;
+      background: rgba(212,175,55,0.05);
+      border-radius: 0 60px 60px 0;
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+    .about-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    /* ---------- FOUNDER SECTION – MIND‑BLOWING GLOW ---------- */
+    .founder-section {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .founder-image-wrapper {
+      position: relative;
+      width: min(320px, 80%);
+      margin: 0 auto 2rem;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .founder-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.8) 0%, rgba(212,175,55,0.3) 40%, transparent 70%);
+      filter: blur(20px);
+      animation: glowPulse 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes glowPulse {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    .founder-ring {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, var(--gold), transparent, var(--gold-light), transparent);
+      mask: radial-gradient(circle at 50% 50%, transparent 65%, black 66%);
+      animation: rotateRing 6s linear infinite, shimmer 3s ease-in-out infinite;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.5); }
+      100% { filter: brightness(1); }
+    }
+
+    .spotlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,215,0,0.3) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 4;
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      transition: background 0.05s;
+    }
+
+    .particle-canvas {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: calc(100% + 40px);
+      height: calc(100% + 40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .founder-image-wrapper::before,
+    .founder-image-wrapper::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 2;
+    }
+
+    .founder-image-wrapper::before {
+      background: radial-gradient(circle at 20% 30%, rgba(255,215,0,0.4) 0%, transparent 50%);
+      filter: blur(8px);
+    }
+
+    .founder-image-wrapper::after {
+      background: radial-gradient(circle at 80% 70%, rgba(255,215,0,0.4) 0%, transparent 50%);
+      filter: blur(8px);
+    }
+
+    .founder-image-wrapper:hover::before,
+    .founder-image-wrapper:hover::after {
+      opacity: 1;
+    }
+
+    .founder-image {
+      position: relative;
+      width: 85%;
+      height: auto;
+      border-radius: 50%;
+      z-index: 3;
+      filter: drop-shadow(0 0 30px rgba(212,175,55,0.8));
+      transition: transform 0.3s ease, filter 0.3s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .founder-image:hover {
+      filter: drop-shadow(0 0 50px rgba(212,175,55,1));
+    }
+
+    .founder-name {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .founder-title {
+      color: var(--gold);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .founder-quote {
+      color: #b0b8cc;
+      font-size: 1.2rem;
+      font-style: italic;
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+      padding: 1rem;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      animation: quoteAppear 0.8s cubic-bezier(0.2,0.9,0.3,1) forwards;
+      animation-delay: 0.3s;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    @keyframes quoteAppear {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .founder-quote::before,
+    .founder-quote::after {
+      content: '"';
+      color: var(--gold);
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+
+    .founder-quote::before {
+      margin-right: 0.3rem;
+      vertical-align: top;
+    }
+    .founder-quote::after {
+      margin-left: 0.3rem;
+      vertical-align: bottom;
+    }
+
+    /* ---------- UPGRADED SECTIONS ---------- */
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      perspective: 1200px;
+    }
+    .timeline-item {
+      flex: 1 1 180px;
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.4s cubic-bezier(0.2,0.9,0.3,1), border-color 0.3s, box-shadow 0.3s;
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .timeline-item:hover {
+      transform: scale(1.08) translateY(-10px) rotateX(2deg) rotateY(2deg);
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(212,175,55,0.3), 0 20px 30px -10px black;
+    }
+    .timeline-item:hover::before {
+      opacity: 1;
+    }
+    .timeline-year {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold);
+      transform: translateZ(20px);
+    }
+    .timeline-desc {
+      color: #b0b8cc;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .eagle-explainer {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      border-left: 6px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+    .eagle-explainer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+      animation: rotateSlow 20s linear infinite;
+      z-index: 0;
+    }
+    @keyframes rotateSlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .eagle-image {
+      width: 150px;
+      height: auto;
+      filter: drop-shadow(0 0 30px var(--gold));
+      border-radius: 30px;
+      transition: transform 0.3s;
+      animation: floatEagle 6s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes floatEagle {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+    .eagle-image:hover {
+      transform: scale(1.1) rotate(2deg);
+    }
+    .eagle-text {
+      font-size: 1.4rem;
+      color: #b0b8cc;
+      position: relative;
+      z-index: 2;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .achievement-card {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      background: var(--glass-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .achievement-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .achievement-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(212,175,55,0.3);
+    }
+    .achievement-card:hover::before {
+      opacity: 1;
+      animation: rotateSlow 8s linear infinite;
+    }
+    .achievement-number {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 20px var(--gold);
+    }
+    .achievement-label {
+      color: #b0b8cc;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .skill-item {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--glass-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      transform-style: preserve-3d;
+      position: relative;
+    }
+    .skill-item:hover {
+      transform: translateY(-8px) scale(1.02) rotateX(2deg);
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(212,175,55,0.3);
+    }
+    .skill-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 15px var(--gold));
+      transition: transform 0.3s;
+    }
+    .skill-item:hover .skill-icon {
+      transform: scale(1.2);
+    }
+    .skill-name {
+      font-size: 1.2rem;
+      color: #d0d8ec;
+      margin-bottom: 0.5rem;
+    }
+    .skill-level {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .skill-level-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 1s ease;
+    }
+    .skill-item.visible .skill-level-fill {
+      width: var(--level, 90%);
+    }
+
+    .testimonial-card {
+      padding: 3rem;
+      background: var(--glass-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      text-align: center;
+      max-width: 800px;
+      margin: 2rem auto;
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial-card::before {
+      content: '“';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 8rem;
+      color: var(--gold);
+      opacity: 0.1;
+      font-family: serif;
+      animation: floatQuote 6s ease-in-out infinite;
+    }
+    @keyframes floatQuote {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    .testimonial-card:hover {
+      border-color: var(--gold);
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(212,175,55,0.2);
+    }
+    .testimonial-text {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #d0d8ec;
+      line-height: 1.6;
+    }
+    .testimonial-author {
+      margin-top: 2rem;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .press-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .press-badge {
+      padding: 1rem 2.5rem;
+      background: rgba(212,175,55,0.1);
+      border: 1px dashed var(--gold);
+      border-radius: 50px;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      backdrop-filter: blur(4px);
+      transition: all 0.3s cubic-bezier(0.2,0.9,0.3,1);
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .press-badge::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,215,0,0.2), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .press-badge:hover {
+      transform: scale(1.1) rotate(1deg);
+      background: rgba(212,175,55,0.2);
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(212,175,55,0.3);
+    }
+    .press-badge:hover::before {
+      opacity: 1;
+      animation: rotateSlow 4s linear infinite;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .ethos-card {
+      padding: 3rem 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ethos-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.2), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .ethos-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(212,175,55,0.3), 0 20px 40px -15px black;
+    }
+    .ethos-card:hover::before {
+      opacity: 1;
+    }
+    .ethos-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 15px var(--gold));
+      transition: transform 0.3s;
+    }
+    .ethos-card:hover .ethos-icon {
+      transform: scale(1.1);
+    }
+    .ethos-card strong {
+      font-size: 2.2rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ethos-card p {
+      color: #a0a8b8;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .ethos-card .ethos-shine {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 80%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .ethos-card:hover .ethos-shine {
+      opacity: 1;
+    }
+
+    /* ---------- FOOTER 2030 – ULTRA FUTURISTIC ---------- */
+    .footer-2030 {
+      background: rgba(5, 7, 12, 0.85);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 4rem 2rem 2rem;
+      color: #b0b8cc;
+      font-size: 1rem;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .footer-2030::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.03) 0%, transparent 30%),
+                  radial-gradient(circle at 70% 60%, rgba(212,175,55,0.03) 0%, transparent 40%),
+                  radial-gradient(circle at 10% 80%, rgba(212,175,55,0.02) 0%, transparent 50%);
+      animation: footerParticles 30s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes footerParticles {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(10%, 10%) rotate(5deg); }
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .footer-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-logo {
+      width: 70px;
+      height: auto;
+      filter: drop-shadow(0 0 15px var(--gold));
+      transition: transform 0.3s;
+    }
+
+    .footer-logo:hover {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    .footer-brand-name {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-tagline {
+      font-size: 1.1rem;
+      color: #a0a8b8;
+      margin-bottom: 1rem;
+    }
+
+    .footer-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transition: width 0.3s;
+    }
+    .footer-title:hover::after {
+      width: 80px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .footer-links li a {
+      color: #b0b8cc;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      padding-left: 0;
+    }
+    .footer-links li a::before {
+      content: '›';
+      position: absolute;
+      left: -15px;
+      color: var(--gold);
+      opacity: 0;
+      transition: left 0.3s, opacity 0.3s;
+    }
+    .footer-links li a:hover {
+      color: white;
+      padding-left: 15px;
+    }
+    .footer-links li a:hover::before {
+      left: 0;
+      opacity: 1;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.2,0.9,0.3,1);
+      backdrop-filter: blur(4px);
+    }
+    .social-link:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 0 30px var(--gold);
+    }
+
+    .footer-newsletter {
+      display: flex;
+      margin-top: 0.5rem;
+    }
+    .footer-newsletter input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-right: none;
+      border-radius: 40px 0 0 40px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .footer-newsletter input:focus {
+      border-color: var(--gold);
+    }
+    .footer-newsletter button {
+      padding: 0 1.5rem;
+      background: rgba(212,175,55,0.2);
+      border: 1px solid var(--gold);
+      border-left: none;
+      border-radius: 0 40px 40px 0;
+      color: var(--gold);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .footer-newsletter button:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: translateX(3px);
+    }
+
+    .footer-bottom {
+      max-width: 1440px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: #8088a0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-back-to-top {
+      color: var(--gold);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gold);
+      border-radius: 40px;
+      transition: all 0.3s;
+    }
+    .footer-back-to-top:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px var(--gold);
+    }
+
+    /* ---------- SCROLL TOP BUTTON ---------- */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 99;
+      box-shadow: 0 0 20px rgba(212,175,55,0.3);
+      cursor: pointer;
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-top:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: scale(1.1);
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- MOBILE OPTIMIZATIONS – CRITICAL FIX ---------- */
+    @media (max-width: 700px) {
+      :root {
+        --navbar-height: 60px;
+      }
+      
+      .navbar {
+        padding: 0.5rem 1rem;
+      }
+      
+      .logo-small {
+        width: 40px;
+      }
+      
+      .brand-name {
+        font-size: 1.2rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      /* Adjust Three.js sphere so it doesn't cover content */
+      #three-canvas {
+        width: min(200px, 50vw);
+        height: min(200px, 50vw);
+        top: calc(50% + var(--navbar-height)/2);
+        opacity: 0.4; /* make it less distracting */
+      }
+      
+      .logo-container {
+        width: min(200px, 50vw);
+        height: min(200px, 50vw);
+      }
+      
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .page-header h1 {
+        font-size: clamp(3rem, 10vw, 5rem);
+      }
+      
+      .timeline {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .eagle-explainer {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .eagle-image {
+        width: 120px;
+      }
+      
+      .achievement-number {
+        font-size: 3rem;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .press-grid {
+        gap: 1rem;
+      }
+      
+      .press-badge {
+        padding: 0.6rem 1.5rem;
+        font-size: 1.1rem;
+      }
+      
+      .why-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .founder-image-wrapper:hover::before,
+      .founder-image-wrapper:hover::after {
+        opacity: 0;
+      }
+      
+      .particle-canvas {
+        display: none;
+      }
+      
+      .scroll-top {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 1rem;
+        right: 1rem;
+      }
+      
+      .cursor-glow {
+        display: none;
+      }
+      
+      #volumetric-canvas {
+        opacity: 0.5;
+      }
+      
+      /* Reduce section padding on mobile */
+      .section-container {
+        padding: 4rem 1.5rem;
+      }
+    }
+
+    @media (min-width: 701px) {
+      body, .btn-primary, .nav-cta, .scroll-top {
+        cursor: none;
+      }
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: #030305;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="scroll-top" id="scrollTop">↑</div>
+  <canvas id="three-canvas"></canvas>
+  <canvas id="volumetric-canvas"></canvas>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mobile-menu-close" id="closeMenu">&times;</span>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="contact.html" class="nav-cta">soar</a>
+  </div>
+
+  <nav class="navbar">
+    <div class="logo-group">
+      <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="logo-small">
+      <span class="brand-name">AERION</span>
+    </div>
+    
+    <!-- Desktop Navigation -->
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-cta">soar</a>
+    </div>
+    
+    <!-- Hamburger Icon – hidden on desktop via CSS -->
+    <button class="ui-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+      <span class="ui-hamburger__line"></span>
+    </button>
+  </nav>
+
+  <main>
+    <section class="page-header">
+      <h1>About AERION</h1>
+      <p class="lead" style="color: var(--gold);">Visionary. Builder. 15 years old.</p>
+    </section>
+
+    <!-- Founder section -->
+    <section class="section-container">
+      <div class="about-grid">
+        <div class="about-content fade-up">
+          <h2>Similoluwa Odubajo</h2>
+          <p>At 15, most people are just figuring out high school. Similoluwa was building the future. AERION is not just a company – it's proof that age is no barrier to vision, skill, and world‑class execution.</p>
+          <p>What started as a fascination with code and design quickly became a mission: to help businesses rise above the noise and build digital experiences that actually matter. Every line of code, every pixel, every interaction on this site was crafted with that same obsession for excellence.</p>
+          <p>Similoluwa's goal? To make AERION the most respected digital innovation studio on the planet – and to show the world that the next generation is already here, building at a level that rivals the best.</p>
+          <div class="gold-chip">✦ future billionaire mindset</div>
+        </div>
+        <div class="about-visual fade-up">
+          <div class="founder-section">
+            <div class="founder-image-wrapper">
+              <div class="founder-ring"></div>
+              <div class="founder-glow"></div>
+              <canvas class="particle-canvas" width="400" height="400"></canvas>
+              <div class="spotlight"></div>
+              <img src="assets/founder-image.png" alt="Similoluwa Odubajo" class="founder-image">
+            </div>
+            <h3 class="founder-name">Similoluwa Odubajo</h3>
+            <p class="founder-title">Founder & Creative Director</p>
+            <p class="founder-quote">“The only way to do great work is to love what you do. And I love building the impossible.”</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Journey -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">My Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item fade-up">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-desc">Started coding at 12</div>
+        </div>
+        <div class="timeline-item fade-up">
+          <div class="timeline-year">2021</div>
+          <div class="timeline-desc">First freelance website</div>
+        </div>
+        <div class="timeline-item fade-up">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-desc">Founded AERION</div>
+        </div>
+        <div class="timeline-item fade-up">
+          <div class="timeline-year">2026</div>
+          <div class="timeline-desc">10+ projects launched</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why the Eagle? -->
+    <section class="section-container">
+      <h2 class="fade-up">Why the Eagle?</h2>
+      <div class="eagle-explainer fade-up">
+        <img src="assets/real-eagle.png" alt="Eagle soaring" class="eagle-image" loading="lazy">
+        <div class="eagle-text">An eagle soars above storms – it doesn't avoid them, it rises above. That's AERION: resilient, unstoppable, always climbing higher. The eagle represents strength, vision, and the bigger picture.</div>
+      </div>
+    </section>
+
+    <!-- By the Numbers -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">By the Numbers</h2>
+      <div class="achievements-grid" id="achievements">
+        <div class="achievement-card fade-up">
+          <div class="achievement-number" data-target="20">0</div>
+          <div class="achievement-label">websites launched</div>
+        </div>
+        <div class="achievement-card fade-up">
+          <div class="achievement-number" data-target="15">0</div>
+          <div class="achievement-label">happy clients</div>
+        </div>
+        <div class="achievement-card fade-up">
+          <div class="achievement-number" data-target="100">0</div>
+          <div class="achievement-label">client satisfaction</div>
+        </div>
+        <div class="achievement-card fade-up">
+          <div class="achievement-number">∞</div>
+          <div class="achievement-label">ambition</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Craft & Tools -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">Craft & Tools</h2>
+      <div class="skills-grid">
+        <div class="skill-item fade-up" data-level="90">
+          <div class="skill-icon">⚛️</div>
+          <div class="skill-name">React</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 90%"></div></div>
+        </div>
+        <div class="skill-item fade-up" data-level="85">
+          <div class="skill-icon">🖌️</div>
+          <div class="skill-name">Figma</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 85%"></div></div>
+        </div>
+        <div class="skill-item fade-up" data-level="80">
+          <div class="skill-icon">📦</div>
+          <div class="skill-name">Node.js</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 80%"></div></div>
+        </div>
+        <div class="skill-item fade-up" data-level="75">
+          <div class="skill-icon">🌀</div>
+          <div class="skill-name">Three.js</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 75%"></div></div>
+        </div>
+        <div class="skill-item fade-up" data-level="85">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-name">Next.js</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 85%"></div></div>
+        </div>
+        <div class="skill-item fade-up" data-level="95">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-name">UI/UX</div>
+          <div class="skill-level"><div class="skill-level-fill" style="--level: 95%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kind Words -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">Kind Words</h2>
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-text">“Similoluwa doesn't just build websites – he builds experiences. His attention to detail and obsession with quality are unmatched. A true visionary.”</p>
+        <p class="testimonial-author">— Jamie Chen, CEO of Luma</p>
+      </div>
+    </section>
+
+    <!-- As Seen In -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">As Seen In</h2>
+      <div class="press-grid">
+        <span class="press-badge fade-up">TechCrunch (future)</span>
+        <span class="press-badge fade-up">Forbes 30 Under 30 (soon)</span>
+        <span class="press-badge fade-up">The Next Web</span>
+        <span class="press-badge fade-up">Product Hunt</span>
+      </div>
+    </section>
+
+    <!-- The AERION Ethos -->
+    <section class="section-container">
+      <h2 class="fade-up" style="text-align: center;">The AERION Ethos</h2>
+      <div class="why-grid">
+        <div class="ethos-card fade-up">
+          <div class="ethos-icon">🔥</div>
+          <strong>Obsession</strong>
+          <p>We don't just meet expectations – we shatter them. Every pixel, every line of code, perfected.</p>
+          <div class="ethos-shine"></div>
+        </div>
+        <div class="ethos-card fade-up">
+          <div class="ethos-icon">⚡</div>
+          <strong>Speed</strong>
+          <p>Lightning fast delivery, zero compromise on quality. Launch in days, not months.</p>
+          <div class="ethos-shine"></div>
+        </div>
+        <div class="ethos-card fade-up">
+          <div class="ethos-icon">🚀</div>
+          <strong>Innovation</strong>
+          <p>We live at the edge of what's possible. AI, spatial web, and beyond.</p>
+          <div class="ethos-shine"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section-container cta-section">
+      <h2 class="fade-up">Ready to build something unstoppable?</h2>
+      <a href="contact.html" class="btn-primary fade-up">Start a project</a>
+    </section>
+  </main>
+
+  <!-- FOOTER – 2030 TRENDING DESIGN -->
+  <footer class="footer-2030">
+    <div class="footer-grid">
+      <!-- Brand Column -->
+      <div class="footer-col brand-col">
+        <div class="footer-logo-wrapper">
+          <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="footer-logo">
+          <span class="footer-brand-name">AERION</span>
+        </div>
+        <p class="footer-tagline">Rise above storms. Build beyond limits.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4 class="footer-title">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-col">
+        <h4 class="footer-title">What We Do</h4>
+        <ul class="footer-links">
+          <li><a href="#">Web Development</a></li>
+          <li><a href="#">AI & Automation</a></li>
+          <li><a href="#">UI/UX Design</a></li>
+          <li><a href="#">Performance</a></li>
+          <li><a href="#">Innovation Lab</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect & Newsletter -->
+      <div class="footer-col">
+        <h4 class="footer-title">Connect</h4>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">🔗</a>
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+        </div>
+        <h4 class="footer-title" style="margin-top: 2rem;">Newsletter</h4>
+        <form class="footer-newsletter" action="#" method="post">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">→</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="copyright">© <span id="current-year"></span> AERION — digital innovation studio</span>
+      <a href="#" class="footer-back-to-top" id="footerBackToTop">↑ Back to top</a>
+    </div>
+  </footer>
+
+  <!-- THREE.JS BACKGROUND (optimized) -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('three-canvas');
+      if (!canvas) return;
+      const resizeRenderer = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (width === 0 || height === 0) return;
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+      camera.position.set(0, 0, 35);
+      camera.lookAt(0, 0, 0);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 600;
+      const posArray = new Float32Array(particlesCount * 3);
+      const colorArray = new Float32Array(particlesCount * 3);
+
+      for (let i = 0; i < particlesCount * 3; i += 3) {
+        const radius = 15;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+        posArray[i+1] = radius * Math.sin(phi) * Math.sin(theta);
+        posArray[i+2] = radius * Math.cos(phi);
+
+        const mix = Math.random();
+        const r = 212/255 + (192/255 - 212/255) * mix;
+        const g = 175/255 + (192/255 - 175/255) * mix;
+        const b = 55/255 + (192/255 - 55/255) * mix;
+        colorArray[i] = r;
+        colorArray[i+1] = g;
+        colorArray[i+2] = b;
+      }
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+      function createParticleTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.5, 'rgba(255,255,255,0.7)');
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        return new THREE.CanvasTexture(canvas);
+      }
+
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.35,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending,
+        map: createParticleTexture(),
+        depthWrite: false,
+        sizeAttenuation: true
+      });
+
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+
+      const ambientLight = new THREE.AmbientLight(0x404060);
+      scene.add(ambientLight);
+
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particlesMesh.rotation.y += 0.0005;
+        particlesMesh.rotation.x += 0.0002;
+        particlesMesh.rotation.y += mouseX * 0.0005;
+        particlesMesh.rotation.x += mouseY * 0.0005;
+        renderer.render(scene, camera);
+      }
+
+      resizeRenderer();
+      animate();
+
+      window.addEventListener('resize', () => {
+        resizeRenderer();
+      });
+    })();
+  </script>
+
+  <!-- VOLUMETRIC LIGHT SHADER (dimmed) -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('volumetric-canvas');
+      if (!canvas) return;
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          mouse: { value: new THREE.Vector2(0, 0) },
+          resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          precision highp float;
+          varying vec2 vUv;
+          uniform float time;
+          uniform vec2 mouse;
+          uniform vec2 resolution;
+
+          vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+          vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+          float snoise(vec3 v) {
+            const vec2  C = vec2(1.0/6.0, 1.0/3.0);
+            const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+            vec3 i  = floor(v + dot(v, C.yyy) );
+            vec3 x0 = v - i + dot(i, C.xxx) ;
+
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min( g.xyz, l.zxy );
+            vec3 i2 = max( g.xyz, l.zxy );
+
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+
+            i = mod289(i);
+            vec4 p = permute( permute( permute( 
+                       i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                     + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                     + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+            float n_ = 0.142857142857;
+            vec3  ns = n_ * D.wyz - D.xzx;
+
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_ );
+
+            vec4 x = x_ *ns.x + ns.yyyy;
+            vec4 y = y_ *ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+
+            vec4 b0 = vec4( x.xy, y.xy );
+            vec4 b1 = vec4( x.zw, y.zw );
+
+            vec4 s0 = floor(b0)*2.0 + 1.0;
+            vec4 s1 = floor(b1)*2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+
+            vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+            vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+            vec3 p0 = vec3(a0.xy,h.x);
+            vec3 p1 = vec3(a0.zw,h.y);
+            vec3 p2 = vec3(a1.xy,h.z);
+            vec3 p3 = vec3(a1.zw,h.w);
+
+            vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+            p0 *= norm.x;
+            p1 *= norm.y;
+            p2 *= norm.z;
+            p3 *= norm.w;
+
+            vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+          }
+
+          void main() {
+            vec2 uv = vUv;
+            vec2 c = uv - 0.5;
+            vec2 lightPos = mouse * 0.2;
+            
+            vec3 rayDir = normalize(vec3(c - lightPos, 1.0));
+            vec3 rayOrigin = vec3(lightPos, 0.0);
+            
+            float density = 0.0;
+            float steps = 16.0;
+            for (float i = 0.0; i < steps; i++) {
+              float t = i / steps * 2.0;
+              vec3 pos = rayOrigin + rayDir * t;
+              float n = snoise(vec3(pos.xy * 3.0 + time * 0.2, pos.z * 2.0));
+              density += max(0.0, n) * 0.15;
+            }
+            
+            float lightIntensity = exp(-density * 1.5);
+            vec3 gold = vec3(0.83, 0.69, 0.22);
+            vec3 color = gold * lightIntensity;
+            color += vec3(mouse.x * 0.03, mouse.y * 0.03, 0.0);
+            
+            gl_FragColor = vec4(color, lightIntensity * 0.25);
+          }
+        `,
+        transparent: true
+      });
+
+      const geometry = new THREE.PlaneGeometry(2, 2);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        material.uniforms.time.value += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        material.uniforms.mouse.value.set(
+          (e.clientX / window.innerWidth - 0.5) * 2,
+          (e.clientY / window.innerHeight - 0.5) * 2
+        );
+      });
+    })();
+  </script>
+
+  <!-- ENHANCEMENTS + Hamburger Menu JS + Counters + Skill Bars -->
+  <script>
+    (function() {
+      // Hamburger Menu Functionality
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+      const closeMenu = document.getElementById('closeMenu');
+      
+      if (hamburger && mobileMenu && menuOverlay && closeMenu) {
+        function openMenu() {
+          hamburger.setAttribute('aria-expanded', 'true');
+          mobileMenu.classList.add('active');
+          menuOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenuFunc() {
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('active');
+          menuOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        
+        hamburger.addEventListener('click', () => {
+          const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+          if (isOpen) {
+            closeMenuFunc();
+          } else {
+            openMenu();
+          }
+        });
+        
+        closeMenu.addEventListener('click', closeMenuFunc);
+        menuOverlay.addEventListener('click', closeMenuFunc);
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMenuFunc();
+          }
+        });
+      }
+
+      // Cursor glow
+      const cursor = document.getElementById('cursorGlow');
+      if (cursor && window.innerWidth > 700) {
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        });
+        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .testimonial-card, .scroll-top, .ethos-card, .timeline-item, .achievement-card, .skill-item, .press-badge, .social-link, .footer-back-to-top');
+        interactive.forEach(el => {
+          el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+          el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+      }
+
+      // Magnetic buttons
+      const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top, .footer-back-to-top');
+      magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          if (window.innerWidth <= 700) return;
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.02)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
+      });
+
+      // Parallax for about visual
+      const aboutVisual = document.querySelector('.about-visual');
+      if (aboutVisual) {
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+          const aboutTop = aboutVisual.getBoundingClientRect().top + scrollY;
+          const offset = (scrollY - aboutTop) * 0.1;
+          aboutVisual.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // Founder effects (magnetic + spotlight)
+      const founderWrapper = document.querySelector('.founder-image-wrapper');
+      const founderImg = document.querySelector('.founder-image');
+      const spotlight = document.querySelector('.spotlight');
+
+      if (founderWrapper && window.innerWidth > 700) {
+        founderWrapper.addEventListener('mousemove', (e) => {
+          const rect = founderWrapper.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          const moveX = Math.min(Math.max(x * 0.1, -10), 10);
+          const moveY = Math.min(Math.max(y * 0.1, -10), 10);
+          founderImg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+
+          if (spotlight) {
+            const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
+            const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+            spotlight.style.setProperty('--x', xPercent + '%');
+            spotlight.style.setProperty('--y', yPercent + '%');
+          }
+        });
+
+        founderWrapper.addEventListener('mouseleave', () => {
+          founderImg.style.transform = '';
+        });
+      }
+
+      // Particle canvas – optimized
+      (function setupParticles() {
+        const canvas = document.querySelector('.particle-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        const particles = [];
+        const particleCount = 15;
+        let animationFrame;
+        let isVisible = true;
+
+        document.addEventListener('visibilitychange', () => {
+          isVisible = !document.hidden;
+          if (isVisible) animate();
+        });
+
+        function resize() {
+          const wrapper = canvas.parentElement;
+          width = wrapper.clientWidth + 40;
+          height = wrapper.clientHeight + 40;
+          canvas.width = width;
+          canvas.height = height;
+        }
+        resize();
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2 + 1,
+            speedX: (Math.random() - 0.5) * 0.3,
+            speedY: (Math.random() - 0.5) * 0.3,
+          });
+        }
+
+        function animate() {
+          if (!isVisible) return;
+          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
+          particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.x < 0 || p.x > width) p.speedX *= -1;
+            if (p.y < 0 || p.y > height) p.speedY *= -1;
+          });
+          animationFrame = requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          resize();
+          particles.forEach(p => {
+            p.x = Math.random() * width;
+            p.y = Math.random() * height;
+          });
+        });
+      })();
+
+      // Scroll to top – floating button
+      const scrollTopBtn = document.getElementById('scrollTop');
+      if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            scrollTopBtn.classList.add('visible');
+          } else {
+            scrollTopBtn.classList.remove('visible');
+          }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Fade-up observer + skill bar + counter triggers
+      const faders = document.querySelectorAll('.fade-up');
+      const achievementNumbers = document.querySelectorAll('.achievement-number[data-target]');
+      const skillItems = document.querySelectorAll('.skill-item');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+
+            // If it's a skill item, trigger the skill bar fill (already handled by CSS)
+            // If it's an achievement card with counter, start counting
+            if (entry.target.classList.contains('achievement-card')) {
+              const numEl = entry.target.querySelector('.achievement-number[data-target]');
+              if (numEl) {
+                const target = parseInt(numEl.getAttribute('data-target'), 10);
+                if (!isNaN(target)) {
+                  let current = 0;
+                  const increment = target / 70;
+                  const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                      numEl.innerText = Math.ceil(current);
+                      requestAnimationFrame(updateCounter);
+                    } else {
+                      numEl.innerText = target;
+                    }
+                  };
+                  updateCounter();
+                }
+              }
+            }
+          }
+        });
+      }, { threshold: 0.3, rootMargin: '0px 0px -30px 0px' });
+
+      faders.forEach(el => observer.observe(el));
+      document.querySelectorAll('.achievement-card').forEach(el => observer.observe(el));
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Footer dynamic year
+      const yearSpan = document.getElementById('current-year');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Footer back to top
+      const footerBackToTop = document.getElementById('footerBackToTop');
+      if (footerBackToTop) {
+        footerBackToTop.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
