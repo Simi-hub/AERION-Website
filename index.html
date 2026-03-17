@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>AERION · Digital Innovation Studio for Startups & Visionaries</title>
   <meta name="description" content="AERION builds world‑class websites, AI apps, and digital solutions. Founded by a 15‑year‑old visionary. Rise above storms.">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="AERION · Digital Innovation Studio">
+  <meta property="og:description" content="We build world‑class websites, AI apps, and digital solutions. Founded by a 15‑year‑old visionary.">
+  <meta property="og:image" content="https://aeriontech.com/assets/sleek-golden-eagle-emblem.png">
+  <meta property="og:url" content="https://aeriontech.com">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon – multiple sizes for all devices -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/sleek-golden-eagle-emblem.png">
+  <link rel="mask-icon" href="assets/sleek-golden-eagle-emblem.png" color="#D4AF37">
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
   <script>
@@ -95,7 +110,6 @@
     }
 
     /* ---------- BACKGROUND CANVASES ---------- */
-    /* Volumetric light – behind everything */
     #volumetric-canvas {
       position: fixed;
       top: 0;
@@ -107,7 +121,6 @@
       opacity: 0.8;
     }
 
-    /* Three.js particle sphere – floats freely, centered, with mobile offset */
     #three-canvas {
       position: fixed;
       top: 50%;
@@ -120,7 +133,7 @@
       background: transparent;
     }
 
-    /* Logo animation container – on top of everything */
+    /* Logo animation container */
     .logo-container {
       position: relative;
       width: min(500px, 70vw);
@@ -141,34 +154,15 @@
 
     /* ---------- MAIN LOGO ANIMATIONS ---------- */
     @keyframes eagleEntrance {
-      0% {
-        transform: translate(-50%,-50%) scale(3);
-        opacity: 0;
-        filter: blur(20px);
-      }
-      60% {
-        transform: translate(-50%,-50%) scale(0.7);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%,-50%) scale(1);
-        filter: blur(0);
-      }
+      0% { transform: translate(-50%,-50%) scale(3); opacity: 0; filter: blur(20px); }
+      60% { transform: translate(-50%,-50%) scale(0.7); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(1); filter: blur(0); }
     }
 
     @keyframes logoPulse {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-        filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.02);
-        filter: drop-shadow(0 0 40px rgba(212,175,55,1));
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
-      }
+      0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 25px rgba(212,175,55,0.9)); }
+      50% { transform: translate(-50%, -50%) scale(1.02); filter: drop-shadow(0 0 40px rgba(212,175,55,1)); }
+      100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 25px rgba(212,175,55,0.9)); }
     }
 
     #eagleLogo {
@@ -177,26 +171,16 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      animation: eagleEntrance 2.2s cubic-bezier(.17,.67,.4,1.3) forwards,
-                 logoPulse 4s ease-in-out infinite 2.5s;
+      animation: eagleEntrance 2.2s cubic-bezier(.17,.67,.4,1.3) forwards, logoPulse 4s ease-in-out infinite 2.5s;
       filter: drop-shadow(0 0 25px rgba(212,175,55,0.9));
       z-index: 2;
     }
 
     /* ---------- NAVBAR LOGO ANIMATION ---------- */
     @keyframes logoFloat {
-      0% {
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 0 12px var(--gold));
-      }
-      50% {
-        transform: translateY(-4px) scale(1.02);
-        filter: drop-shadow(0 0 20px var(--gold-light));
-      }
-      100% {
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 0 12px var(--gold));
-      }
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 12px var(--gold)); }
+      50% { transform: translateY(-4px) scale(1.02); filter: drop-shadow(0 0 20px var(--gold-light)); }
+      100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 12px var(--gold)); }
     }
 
     .logo-small {
@@ -217,6 +201,7 @@
       font-weight: 600;
       letter-spacing: -0.03em;
       line-height: 1.1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     h1 {
@@ -244,10 +229,14 @@
       position: absolute;
       bottom: -8px;
       left: 0;
-      width: 120px;
+      width: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--gold), transparent);
       border-radius: 4px;
+      transition: width 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    h2.fade-up.visible::after {
+      width: 120px;
     }
 
     .section-container {
@@ -359,7 +348,6 @@
       text-shadow: 0 0 20px var(--gold);
     }
 
-    /* Desktop navigation */
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -420,9 +408,8 @@
       box-shadow: 0 0 30px var(--gold);
     }
 
-    /* Hamburger menu (hidden on desktop) */
+    /* ---------- HAMBURGER ---------- */
     .ui-hamburger {
-      display: none;
       all: unset;
       flex-direction: column;
       justify-content: space-between;
@@ -434,7 +421,6 @@
       border: none;
       cursor: pointer;
       box-sizing: content-box;
-      transition: background-color 0.2s;
       border-radius: var(--hamburger-border-radius);
     }
 
@@ -468,9 +454,15 @@
       transform: translateY(calc(-1 * (var(--hamburger-line-height) + var(--hamburger-spacing)))) rotate(-45deg);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .ui-hamburger__line {
-        transition: none;
+    @media (min-width: 701px) {
+      .ui-hamburger {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .ui-hamburger {
+        display: flex !important;
       }
     }
 
@@ -602,7 +594,7 @@
       animation: fadeUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
     }
 
-    /* ---------- ABOUT (homepage preview) ---------- */
+    /* ---------- ABOUT PREVIEW ---------- */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -645,6 +637,7 @@
       width: 80%;
       filter: drop-shadow(0 0 30px var(--gold));
     }
+
     /* ---------- SERVICES CARDS ---------- */
     .services-grid {
       display: grid;
@@ -659,17 +652,35 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.2), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
     }
     .service-card:hover {
       border-color: var(--gold);
-      transform: translateY(-15px);
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 0 40px rgba(212,175,55,0.3);
+    }
+    .service-card:hover::before {
+      opacity: 1;
     }
     .service-icon {
       font-size: 5rem;
       line-height: 1;
       margin-bottom: 1.8rem;
       filter: drop-shadow(0 0 20px var(--gold));
+      transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
     }
     .service-card h3 {
       font-size: 2.2rem;
@@ -679,7 +690,8 @@
       color: #a0a8b8;
       font-size: 1.1rem;
     }
-    /* ---------- WHY GRID ---------- */
+
+    /* ---------- WHY GRID (upgraded) ---------- */
     .why-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -687,15 +699,30 @@
     }
     .why-item {
       padding: 2.8rem;
-      background: rgba(0,0,0,0.3);
+      background: var(--glass-bg);
       backdrop-filter: blur(8px);
       border-radius: var(--radius-lg);
       border-left: 4px solid var(--gold);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .why-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
     }
     .why-item:hover {
       border-left-width: 8px;
-      background: rgba(212,175,55,0.05);
+      background: rgba(212,175,55,0.08);
+      box-shadow: 0 0 30px rgba(212,175,55,0.3);
+      transform: translateY(-5px);
+    }
+    .why-item:hover::before {
+      opacity: 1;
     }
     .why-item strong {
       color: var(--gold);
@@ -703,7 +730,8 @@
       display: block;
       margin-bottom: 0.8rem;
     }
-    /* ---------- PROJECTS ---------- */
+
+    /* ---------- PROJECTS (upgraded) ---------- */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -718,7 +746,7 @@
       justify-content: flex-end;
       padding: 2.5rem;
       border: 1px solid rgba(212,175,55,0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
@@ -732,6 +760,11 @@
       opacity: 0;
       transition: opacity 0.5s;
       pointer-events: none;
+    }
+    .project-card:hover {
+      transform: scale(1.02) translateY(-10px);
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(212,175,55,0.3);
     }
     .project-card:hover::before {
       opacity: 1;
@@ -747,7 +780,8 @@
       z-index: 2;
       transform: translateZ(15px);
     }
-    /* ---------- TESTIMONIALS ---------- */
+
+    /* ---------- TESTIMONIALS (upgraded) ---------- */
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -759,7 +793,30 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial-card::before {
+      content: '“';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 8rem;
+      color: var(--gold);
+      opacity: 0.1;
+      font-family: serif;
+      animation: floatQuote 6s ease-in-out infinite;
+    }
+    @keyframes floatQuote {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    .testimonial-card:hover {
+      border-color: var(--gold);
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(212,175,55,0.2);
     }
     .testimonial-card p {
       font-size: 1.3rem;
@@ -772,7 +829,8 @@
       font-weight: 600;
       font-size: 1.2rem;
     }
-    /* ---------- STATS ---------- */
+
+    /* ---------- STATS (upgraded) ---------- */
     .stats-grid {
       display: flex;
       justify-content: space-around;
@@ -796,7 +854,8 @@
       letter-spacing: 2px;
       color: #a0a8c0;
     }
-    /* ---------- INNOVATION LAB ---------- */
+
+    /* ---------- INNOVATION LAB (upgraded) ---------- */
     .lab-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -809,7 +868,7 @@
       border: 1px dashed rgba(212,175,55,0.5);
       border-radius: var(--radius-lg);
       text-align: center;
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
       position: relative;
       overflow: hidden;
     }
@@ -829,6 +888,7 @@
       border-color: var(--gold);
       transform: scale(1.02) translateY(-6px);
       background: rgba(212,175,55,0.08);
+      box-shadow: 0 0 30px rgba(212,175,55,0.3);
     }
     .lab-card:hover::after {
       opacity: 1;
@@ -841,6 +901,7 @@
       position: relative;
       z-index: 2;
     }
+
     /* ---------- CONTACT ---------- */
     .contact-center {
       text-align: center;
@@ -861,17 +922,236 @@
       color: white;
       border-bottom-color: white;
     }
-    footer {
+
+    /* ---------- FOOTER 2030 – ULTRA FUTURISTIC ---------- */
+    .footer-2030 {
+      background: rgba(5, 7, 12, 0.85);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 4rem 2rem 2rem;
+      color: #b0b8cc;
+      font-size: 1rem;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .footer-2030::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.03) 0%, transparent 30%),
+                  radial-gradient(circle at 70% 60%, rgba(212,175,55,0.03) 0%, transparent 40%),
+                  radial-gradient(circle at 10% 80%, rgba(212,175,55,0.02) 0%, transparent 50%);
+      animation: footerParticles 30s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes footerParticles {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(10%, 10%) rotate(5deg); }
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .footer-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-logo {
+      width: 70px;
+      height: auto;
+      filter: drop-shadow(0 0 15px var(--gold));
+      transition: transform 0.3s;
+    }
+
+    .footer-logo:hover {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    .footer-brand-name {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-tagline {
+      font-size: 1.1rem;
+      color: #a0a8b8;
+      margin-bottom: 1rem;
+    }
+
+    .footer-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transition: width 0.3s;
+    }
+    .footer-title:hover::after {
+      width: 80px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .footer-links li a {
+      color: #b0b8cc;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      padding-left: 0;
+    }
+    .footer-links li a::before {
+      content: '›';
+      position: absolute;
+      left: -15px;
+      color: var(--gold);
+      opacity: 0;
+      transition: left 0.3s, opacity 0.3s;
+    }
+    .footer-links li a:hover {
+      color: white;
+      padding-left: 15px;
+    }
+    .footer-links li a:hover::before {
+      left: 0;
+      opacity: 1;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.2,0.9,0.3,1);
+      backdrop-filter: blur(4px);
+    }
+    .social-link:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 0 30px var(--gold);
+    }
+
+    .footer-newsletter {
+      display: flex;
+      margin-top: 0.5rem;
+    }
+    .footer-newsletter input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-right: none;
+      border-radius: 40px 0 0 40px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .footer-newsletter input:focus {
+      border-color: var(--gold);
+    }
+    .footer-newsletter button {
+      padding: 0 1.5rem;
+      background: rgba(212,175,55,0.2);
+      border: 1px solid var(--gold);
+      border-left: none;
+      border-radius: 0 40px 40px 0;
+      color: var(--gold);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .footer-newsletter button:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: translateX(3px);
+    }
+
+    .footer-bottom {
+      max-width: 1440px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
       border-top: 1px solid rgba(212,175,55,0.2);
-      padding: 3rem 2rem;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 2rem;
-      color: #6a7080;
-      background: rgba(0,0,0,0.2);
-      backdrop-filter: blur(8px);
+      gap: 1rem;
+      color: #8088a0;
+      position: relative;
+      z-index: 2;
     }
+
+    .footer-back-to-top {
+      color: var(--gold);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gold);
+      border-radius: 40px;
+      transition: all 0.3s;
+    }
+    .footer-back-to-top:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px var(--gold);
+    }
+
+    /* ---------- SCROLL TOP BUTTON ---------- */
     .scroll-top {
       position: fixed;
       bottom: 2rem;
@@ -892,6 +1172,7 @@
       transition: all 0.3s;
       z-index: 99;
       box-shadow: 0 0 20px rgba(212,175,55,0.3);
+      cursor: pointer;
     }
     .scroll-top.visible {
       opacity: 1;
@@ -902,6 +1183,7 @@
       color: #030305;
       transform: scale(1.1);
     }
+
     .fade-up {
       opacity: 0;
       transform: translateY(50px);
@@ -912,69 +1194,187 @@
       transform: translateY(0);
     }
 
-    /* Mobile optimizations */
+    /* ---------- MOBILE OPTIMIZATIONS – CENTERED & NO OVERFLOW ---------- */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 60px;
       }
-      
+
       .navbar {
         padding: 0.5rem 1rem;
       }
-      
+
       .logo-small {
         width: 40px;
         animation: logoFloat 4s ease-in-out infinite;
       }
-      
+
       .brand-name {
         font-size: 1.2rem;
       }
-      
+
       .nav-links {
         display: none;
       }
-      
+
       .ui-hamburger {
-        display: flex;
+        display: flex !important;
       }
-      
+
       #three-canvas {
-        width: min(250px, 60vw);
-        height: min(250px, 60vw);
-        top: calc(50% + var(--navbar-height)/2);
+        display: none;
       }
-      
-      .logo-container {
-        width: min(250px, 60vw);
-        height: min(250px, 60vw);
+
+      #volumetric-canvas {
+        opacity: 0.2;
       }
-      
+
+      .section-container {
+        padding: 4rem 1rem;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 12vw, 4rem);
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-tagline {
+        font-size: 1.5rem;
+      }
+
       .about-grid, .why-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
       }
-      
+
+      .about-content p {
+        font-size: 1.2rem;
+      }
+
       .services-grid {
         gap: 1.5rem;
       }
-      
+
+      .service-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .why-item {
+        padding: 2rem;
+      }
+
+      .why-item strong {
+        font-size: 1.5rem;
+      }
+
       .project-card {
         height: 300px;
+        padding: 1.5rem;
       }
-      
+
+      .project-card h3 {
+        font-size: 1.8rem;
+      }
+
       .stats-grid {
         gap: 2rem;
       }
-      
+
       .stat-number {
         font-size: 3rem;
       }
-      
+
+      .stat-label {
+        font-size: 1rem;
+      }
+
+      .lab-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .lab-card .coming-soon {
+        font-size: 1.6rem;
+      }
+
       .contact-email {
         font-size: 1.8rem;
       }
-      
+
+      /* FOOTER – fully visible and centered */
+      .footer-2030 {
+        padding: 2rem 1rem 1rem;
+        text-align: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-col {
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-logo-wrapper {
+        justify-content: center;
+      }
+
+      .footer-logo {
+        width: 60px;
+      }
+
+      .footer-brand-name {
+        font-size: 1.8rem;
+      }
+
+      .footer-tagline {
+        font-size: 1rem;
+      }
+
+      .footer-links {
+        align-items: center;
+      }
+
+      .footer-links li a {
+        padding-left: 0;
+      }
+
+      .footer-links li a::before {
+        display: none;
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+
+      .footer-newsletter {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .footer-newsletter input,
+      .footer-newsletter button {
+        font-size: 1rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+        margin-top: 2rem;
+      }
+
+      .footer-back-to-top {
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+
       .scroll-top {
         width: 50px;
         height: 50px;
@@ -982,13 +1382,33 @@
         bottom: 1rem;
         right: 1rem;
       }
-      
+
       .cursor-glow {
         display: none;
       }
-      
-      #volumetric-canvas {
-        opacity: 0.5;
+
+      /* Improve scrolling */
+      body {
+        overflow-x: hidden;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      * {
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Disable hover effects that cause lag */
+      .service-card:hover,
+      .why-item:hover,
+      .project-card:hover,
+      .testimonial-card:hover,
+      .lab-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
       }
     }
 
@@ -996,10 +1416,8 @@
       body, .btn-primary, .nav-cta, .scroll-top {
         cursor: none;
       }
-      .ui-hamburger {
-        display: none !important;
-      }
     }
+
     ::selection {
       background: var(--gold);
       color: #030305;
@@ -1084,9 +1502,21 @@
     <section class="section-container">
       <h2 class="fade-up">Services</h2>
       <div class="services-grid">
-        <div class="service-card glass-card fade-up"><div class="service-icon">🖥️</div><h3>Website Development</h3><p>High‑performance, narrative‑driven sites that convert.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">⚡</div><h3>Web Applications</h3><p>Scalable, intelligent apps with real‑time magic.</p></div>
-        <div class="service-card glass-card fade-up"><div class="service-icon">🌀</div><h3>Digital Innovation</h3><p>R&D, AI products, and futuristic prototypes.</p></div>
+        <div class="service-card glass-card fade-up">
+          <div class="service-icon">🖥️</div>
+          <h3>Website Development</h3>
+          <p>High‑performance, narrative‑driven sites that convert.</p>
+        </div>
+        <div class="service-card glass-card fade-up">
+          <div class="service-icon">⚡</div>
+          <h3>Web Applications</h3>
+          <p>Scalable, intelligent apps with real‑time magic.</p>
+        </div>
+        <div class="service-card glass-card fade-up">
+          <div class="service-icon">🌀</div>
+          <h3>Digital Innovation</h3>
+          <p>R&D, AI products, and futuristic prototypes.</p>
+        </div>
       </div>
     </section>
 
@@ -1146,13 +1576,67 @@
         <div style="margin-top:3.5rem;"><a href="contact.html" class="btn-primary">send a message</a></div>
       </div>
     </section>
-
-    <footer>
-      <span>© 2026 AERION — digital innovation studio</span>
-      <span style="color:var(--gold);">🦅 rise above storms</span>
-      <span>privacy · terms · careers</span>
-    </footer>
   </main>
+
+  <!-- FOOTER – 2030 TRENDING DESIGN -->
+  <footer class="footer-2030">
+    <div class="footer-grid">
+      <!-- Brand Column -->
+      <div class="footer-col brand-col">
+        <div class="footer-logo-wrapper">
+          <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION" class="footer-logo">
+          <span class="footer-brand-name">AERION</span>
+        </div>
+        <p class="footer-tagline">Rise above storms. Build beyond limits.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4 class="footer-title">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-col">
+        <h4 class="footer-title">What We Do</h4>
+        <ul class="footer-links">
+          <li><a href="#">Web Development</a></li>
+          <li><a href="#">AI & Automation</a></li>
+          <li><a href="#">UI/UX Design</a></li>
+          <li><a href="#">Performance</a></li>
+          <li><a href="#">Innovation Lab</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect & Newsletter -->
+      <div class="footer-col">
+        <h4 class="footer-title">Connect</h4>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">🔗</a>
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+        </div>
+        <h4 class="footer-title" style="margin-top: 2rem;">Newsletter</h4>
+        <form class="footer-newsletter" action="#" method="post">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">→</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="copyright">© <span id="current-year"></span> AERION — digital innovation studio</span>
+      <a href="#" class="footer-back-to-top" id="footerBackToTop">↑ Back to top</a>
+    </div>
+  </footer>
 
   <!-- CUSTOM ANIMATION SCRIPT (particles + rings) – runs infinitely -->
   <script>
@@ -1285,7 +1769,7 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 800;
+      const particlesCount = 600;
       const posArray = new Float32Array(particlesCount * 3);
       const colorArray = new Float32Array(particlesCount * 3);
 
@@ -1562,7 +2046,7 @@
           cursor.style.left = e.clientX + 'px';
           cursor.style.top = e.clientY + 'px';
         });
-        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .project-card, .lab-card, .service-card, .why-item, .testimonial-card, .scroll-top');
+        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .project-card, .lab-card, .service-card, .why-item, .testimonial-card, .scroll-top, .social-link, .footer-back-to-top');
         interactive.forEach(el => {
           el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
           el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
@@ -1570,7 +2054,7 @@
       }
 
       // Magnetic buttons
-      const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
+      const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top, .footer-back-to-top');
       magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
           if (window.innerWidth <= 700) return;
@@ -1618,7 +2102,7 @@
       const scrollTopBtn = document.getElementById('scrollTop');
       if (scrollTopBtn) {
         window.addEventListener('scroll', () => {
-          if (window.scrollY > 200) {
+          if (window.scrollY > 300) {
             scrollTopBtn.classList.add('visible');
           } else {
             scrollTopBtn.classList.remove('visible');
@@ -1678,6 +2162,19 @@
           }
         });
       });
+
+      // Footer dynamic year
+      const yearSpan = document.getElementById('current-year');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Footer back to top
+      const footerBackToTop = document.getElementById('footerBackToTop');
+      if (footerBackToTop) {
+        footerBackToTop.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
     })();
   </script>
 </body>
