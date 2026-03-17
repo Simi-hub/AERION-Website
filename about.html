@@ -1365,7 +1365,7 @@
       transform: translateY(0);
     }
 
-    /* ---------- MOBILE OPTIMIZATIONS – CRITICAL FIX ---------- */
+    /* ---------- MOBILE OPTIMIZATIONS – FIXED FOR PERFECT DISPLAY ---------- */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 60px;
@@ -1387,104 +1387,269 @@
         display: none;
       }
       
-      /* Adjust Three.js sphere so it doesn't cover content */
+      /* Disable heavy 3D effects on mobile for smooth scrolling */
       #three-canvas {
-        width: min(200px, 50vw);
-        height: min(200px, 50vw);
-        top: calc(50% + var(--navbar-height)/2);
-        opacity: 0.4; /* make it less distracting */
+        display: none; /* Completely hide the 3D sphere on mobile */
       }
       
-      .logo-container {
-        width: min(200px, 50vw);
-        height: min(200px, 50vw);
+      #volumetric-canvas {
+        opacity: 0.2; /* Reduce volumetric light intensity */
       }
       
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+      /* Reduce section padding */
+      .section-container {
+        padding: 3rem 1rem;
       }
       
-      .page-header h1 {
-        font-size: clamp(3rem, 10vw, 5rem);
+      h1 {
+        font-size: clamp(3rem, 12vw, 4rem);
       }
       
+      h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .lead {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+      }
+      
+      /* Founder section adjustments */
+      .founder-image-wrapper {
+        width: 70%;
+      }
+      
+      .founder-name {
+        font-size: 2rem;
+      }
+      
+      .founder-title {
+        font-size: 1.1rem;
+      }
+      
+      .founder-quote {
+        font-size: 1rem;
+        padding: 0.5rem;
+      }
+      
+      /* Timeline – stack vertically */
       .timeline {
         flex-direction: column;
         gap: 1rem;
+        perspective: none; /* Disable 3D on mobile */
       }
       
+      .timeline-item {
+        transform: none !important; /* Remove hover 3D tilt */
+        width: 100%;
+        margin: 0;
+      }
+      
+      .timeline-item:hover {
+        transform: translateY(-5px) !important; /* Simpler hover */
+      }
+      
+      /* Eagle explainer – stack */
       .eagle-explainer {
         flex-direction: column;
         text-align: center;
+        padding: 1.5rem;
       }
       
       .eagle-image {
         width: 120px;
       }
       
-      .achievement-number {
-        font-size: 3rem;
-      }
-      
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .press-grid {
-        gap: 1rem;
-      }
-      
-      .press-badge {
-        padding: 0.6rem 1.5rem;
+      .eagle-text {
         font-size: 1.1rem;
       }
       
+      /* Achievements – full width cards */
+      .achievements-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .achievement-card {
+        padding: 1.5rem;
+      }
+      
+      .achievement-number {
+        font-size: 2.5rem;
+      }
+      
+      /* Skills – 2 columns */
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+      
+      .skill-item {
+        padding: 1rem;
+      }
+      
+      .skill-icon {
+        font-size: 2rem;
+      }
+      
+      .skill-name {
+        font-size: 0.9rem;
+      }
+      
+      /* Testimonial */
+      .testimonial-card {
+        padding: 1.5rem;
+        margin: 1rem auto;
+      }
+      
+      .testimonial-text {
+        font-size: 1.1rem;
+      }
+      
+      .testimonial-author {
+        font-size: 1rem;
+      }
+      
+      /* Press badges – wrap */
+      .press-grid {
+        gap: 0.8rem;
+      }
+      
+      .press-badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      /* Ethos cards – stack */
       .why-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
       }
       
-      .founder-image-wrapper:hover::before,
-      .founder-image-wrapper:hover::after {
-        opacity: 0;
+      .ethos-card {
+        padding: 2rem 1rem;
       }
       
+      .ethos-icon {
+        font-size: 3rem;
+      }
+      
+      .ethos-card strong {
+        font-size: 1.8rem;
+      }
+      
+      /* FOOTER – FULLY VISIBLE ON MOBILE */
+      .footer-2030 {
+        padding: 2rem 1rem 1rem;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 2rem;
+      }
+      
+      .footer-col {
+        text-align: center;
+        align-items: center;
+      }
+      
+      .footer-logo-wrapper {
+        justify-content: center;
+      }
+      
+      .footer-logo {
+        width: 60px;
+      }
+      
+      .footer-brand-name {
+        font-size: 1.8rem;
+      }
+      
+      .footer-tagline {
+        font-size: 1rem;
+      }
+      
+      .footer-links {
+        align-items: center;
+      }
+      
+      .footer-links li a {
+        padding-left: 0;
+      }
+      
+      .footer-links li a::before {
+        display: none; /* Remove arrows on mobile */
+      }
+      
+      .footer-social {
+        justify-content: center;
+      }
+      
+      .footer-newsletter {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .footer-newsletter input {
+        padding: 0.6rem 1rem;
+      }
+      
+      .footer-newsletter button {
+        padding: 0 1rem;
+        font-size: 1.2rem;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+        margin-top: 2rem;
+      }
+      
+      .footer-back-to-top {
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+      
+      /* Disable heavy animations on mobile for performance */
       .particle-canvas {
         display: none;
       }
       
-      .scroll-top {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        bottom: 1rem;
-        right: 1rem;
+      .founder-ring {
+        animation: none; /* Stop ring rotation */
+        opacity: 0.3;
       }
       
-      .cursor-glow {
-        display: none;
-      }
-      
-      #volumetric-canvas {
+      .founder-glow {
+        animation: none; /* Stop glow pulse */
         opacity: 0.5;
       }
       
-      /* Reduce section padding on mobile */
-      .section-container {
-        padding: 4rem 1.5rem;
+      .spotlight {
+        display: none; /* Disable spotlight on mobile */
       }
-    }
-
-    @media (min-width: 701px) {
-      body, .btn-primary, .nav-cta, .scroll-top {
-        cursor: none;
+      
+      .ethos-shine {
+        display: none;
       }
-    }
-
-    ::selection {
-      background: var(--gold);
-      color: #030305;
+      
+      /* Improve scrolling performance */
+      * {
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Disable hover effects that cause lag */
+      .timeline-item:hover,
+      .achievement-card:hover,
+      .skill-item:hover,
+      .press-badge:hover,
+      .ethos-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
     }
   </style>
 </head>
@@ -2273,5 +2438,4 @@
     })();
   </script>
 </body>
-</html> 
- 
+</html>
