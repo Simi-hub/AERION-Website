@@ -29,6 +29,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
   
+  <!-- Feather Icons (for social) -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -41,7 +44,10 @@
       font-family:"Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height:1.5; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
       min-height:100vh;
+      animation:bodyFadeIn 1s ease;
     }
+    @keyframes bodyFadeIn { 0%{opacity:0;} 100%{opacity:1;} }
+
     :root {
       --gold:#D4AF37; --gold-light:#f5d97a; --gold-deep:#a8872e;
       --glass-bg:rgba(18,20,28,0.65); --glass-border:rgba(212,175,55,0.18);
@@ -56,6 +62,85 @@
       --hamburger-focus-outline:2px solid var(--gold);
     }
     @media (prefers-reduced-motion:reduce) { :root{--hamburger-transition-duration:0s;} }
+
+    /* ---------- SCROLL MARGIN FOR FIXED HEADER ---------- */
+    #packages, #contact, .section-container[id] {
+      scroll-margin-top: 100px;
+    }
+
+    /* ---------- PRELOADER ---------- */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #030305;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .preloader-logo {
+      width: 200px;
+      height: 200px;
+      animation: spinZoom 1.5s ease-out forwards;
+    }
+    @keyframes spinZoom {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      20% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+      40% { transform: scale(1) rotate(360deg); }
+      60% { transform: scale(1.1) rotate(540deg); }
+      80% { transform: scale(0.95) rotate(720deg); }
+      100% { transform: scale(1) rotate(720deg); opacity: 1; }
+    }
+    .preloader-text {
+      margin-top: 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.8s forwards;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* ---------- VOICE TOGGLE BUTTON ---------- */
+    #voice-toggle {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+    #voice-toggle:hover {
+      background: var(--gold);
+      color: #030305;
+      transform: scale(1.1);
+    }
+    #voice-toggle.muted {
+      opacity: 0.5;
+    }
 
     /* ---------- CUSTOM CURSOR ---------- */
     .cursor-glow {
@@ -213,7 +298,8 @@
     .footer-links li a:hover { color:white; padding-left:15px; }
     .footer-links li a:hover::before { left:0; opacity:1; }
     .footer-social { display:flex; gap:1.2rem; margin-bottom:1rem; }
-    .social-link { width:44px; height:44px; border-radius:50%; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--gold); text-decoration:none; transition:all 0.3s cubic-bezier(0.2,0.9,0.3,1); backdrop-filter:blur(4px); }
+    .social-link { width:44px; height:44px; border-radius:50%; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); display:flex; align-items:center; justify-content:center; transition:all 0.3s cubic-bezier(0.2,0.9,0.3,1); backdrop-filter:blur(4px); color:var(--gold); }
+    .social-link svg { width:20px; height:20px; stroke:currentColor; stroke-width:2; fill:none; }
     .social-link:hover { background:var(--gold); color:#030305; transform:scale(1.15) rotate(5deg); box-shadow:0 0 30px var(--gold); }
     .footer-newsletter { display:flex; margin-top:0.5rem; }
     .footer-newsletter input { flex:1; padding:0.8rem 1.2rem; background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); border-right:none; border-radius:40px 0 0 40px; color:white; font-size:1rem; outline:none; transition:border-color 0.3s; }
@@ -231,6 +317,41 @@
 
     .fade-up { opacity:0; transform:translateY(50px); transition:opacity 0.9s ease, transform 0.9s ease; }
     .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    /* ---------- CLIENT LOGOS MARQUEE ---------- */
+    .marquee-section {
+      padding:3rem 0;
+      background:rgba(0,0,0,0.2);
+      overflow:hidden;
+      white-space:nowrap;
+    }
+    .marquee-track {
+      display:inline-block;
+      animation:marquee 20s linear infinite;
+    }
+    .client-logo {
+      display:inline-block;
+      margin:0 2rem;
+      width:80px;
+      height:80px;
+      background:#2a2a35;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      filter:grayscale(1) brightness(1.2);
+      transition:filter 0.3s;
+      vertical-align:middle;
+    }
+    .client-logo:hover {
+      filter:grayscale(0) brightness(1);
+    }
+    .client-logo img {
+      max-width:60%;
+      max-height:60%;
+      opacity:0.8;
+    }
+    @keyframes marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
 
     /* ---------- MOBILE ---------- */
     @media (max-width:700px) {
@@ -262,21 +383,34 @@
       body { overflow-x:hidden; }
       img { max-width:100%; height:auto; }
       * { -webkit-overflow-scrolling:touch; }
+      /* Preloader logo smaller on mobile */
+      .preloader-logo { width: 150px; height: 150px; }
+      .preloader-text { font-size: 1.5rem; }
+      #voice-toggle { bottom: 1rem; left: 1rem; width: 40px; height: 40px; font-size: 1.2rem; }
     }
     @media (min-width:701px) { body,.btn-primary,.nav-cta,.scroll-top { cursor:none; } }
     ::selection { background:var(--gold); color:#030305; }
   </style>
 </head>
 <body>
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION Logo" class="preloader-logo">
+    <div class="preloader-text">AERION</div>
+  </div>
+
   <div class="cursor-glow" id="cursorGlow"></div>
   <div class="scroll-top" id="scrollTop">↑</div>
   <canvas id="three-canvas"></canvas>
   <canvas id="volumetric-canvas"></canvas>
 
+  <!-- VOICE TOGGLE BUTTON -->
+  <div id="voice-toggle" title="Toggle voice narration">🔊</div>
+
   <!-- Mobile Menu Overlay -->
   <div class="menu-overlay" id="menuOverlay"></div>
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <span class="mobile-menu-close" id="closeMenu">&times;</span>
+    <span class="mobile-menu-close" id="closeMenu" aria-label="Close menu">&times;</span>
     <a href="index.html" class="nav-link active">Home</a>
     <a href="about.html" class="nav-link">About</a>
     <a href="services.html" class="nav-link">Services</a>
@@ -318,8 +452,26 @@
       <a href="#packages" class="btn-primary">view packages</a>
     </section>
 
+    <!-- CLIENTS MARQUEE (actual logos) -->
+    <div class="marquee-section">
+      <div class="marquee-track">
+        <!-- Replace src with your actual client logos -->
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=OMNI" alt="OMNI" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=NEXUS" alt="NEXUS" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=LUMA" alt="LUMA" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=AETHER" alt="AETHER" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=STORM" alt="STORM" loading="lazy"></span>
+        <!-- Duplicate for seamless loop -->
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=OMNI" alt="OMNI" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=NEXUS" alt="NEXUS" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=LUMA" alt="LUMA" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=AETHER" alt="AETHER" loading="lazy"></span>
+        <span class="client-logo"><img src="https://via.placeholder.com/60x60/2a2a35/666666?text=STORM" alt="STORM" loading="lazy"></span>
+      </div>
+    </div>
+
     <!-- ABOUT / PHILOSOPHY -->
-    <section class="section-container">
+    <section class="section-container" data-voice="The Aerion Standard: Vision, resilience, and solving the unsolvable.">
       <h2 class="fade-up">The Aerion Standard</h2>
       <div class="philosophy-grid">
         <div class="philosophy-card fade-up">
@@ -341,7 +493,7 @@
     </section>
 
     <!-- PACKAGES -->
-    <section class="section-container" id="packages">
+    <section class="section-container" id="packages" data-voice="Choose from three website packages: Starter, Business, or Premium. All built custom and delivered on time.">
       <h2 class="fade-up">Website Packages</h2>
       <p class="fade-up" style="text-align:center; margin-bottom:3rem;">Custom‑built, uncopyable, and delivered on time. Every site includes a clear delivery date.</p>
       <div class="packages-grid">
@@ -385,7 +537,7 @@
     </section>
 
     <!-- WHY AERION -->
-    <section class="section-container">
+    <section class="section-container" data-voice="Why Aerion? Modern design, fast delivery, built for performance, and direct communication.">
       <h2 class="fade-up">Why AERION</h2>
       <div class="why-grid">
         <div class="why-item glass-card fade-up"><strong>Modern Design</strong>Pixel‑perfect, conversion‑focused interfaces that stand out.</div>
@@ -396,7 +548,7 @@
     </section>
 
     <!-- SELECTED WORK (Portfolio preview) -->
-    <section class="section-container">
+    <section class="section-container" data-voice="Selected work: ORION platform, STORM intelligence, AETHER commerce. Click to see more.">
       <h2 class="fade-up">Selected work</h2>
       <div class="projects-grid">
         <div class="project-card fade-up"><h3>ORION platform</h3><p>web app · 2026</p></div>
@@ -407,9 +559,9 @@
     </section>
 
     <!-- FOUNDER SHORT -->
-    <section class="section-container">
+    <section class="section-container" data-voice="Meet Similoluwa Odubajo, founder and creative director, 15 years old, building digital empires.">
       <div class="founder-short fade-up">
-        <img src="assets/founder-image.png" alt="Similoluwa Odubajo">
+        <img src="assets/founder-image.png" alt="Similoluwa Odubajo" loading="lazy">
         <div>
           <h3>Similoluwa Odubajo</h3>
           <p style="color:var(--gold);">Founder & Creative Director · 15 years old</p>
@@ -419,7 +571,7 @@
     </section>
 
     <!-- KIND WORDS -->
-    <section class="section-container">
+    <section class="section-container" data-voice="Kind words from clients: OmniCore, Nexus, Luma.">
       <h2 class="fade-up">Kind words</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card glass-card fade-up"><p>“AERION didn’t just build a platform — they redefined our digital future with an uncopyable aesthetic.”</p><span class="client-name">— E. Vance, CEO OmniCore</span></div>
@@ -428,7 +580,7 @@
     </section>
 
     <!-- START A PROJECT -->
-    <section class="section-container" id="contact">
+    <section class="section-container" id="contact" data-voice="Start your project today. Email us at soar@aeriontech.com or click send a message.">
       <div class="contact-center fade-up">
         <h2 style="text-align:center;">start a project</h2>
         <p style="margin-bottom:2.5rem; font-size:1.4rem;">Let’s build something unstoppable together.</p>
@@ -472,13 +624,16 @@
       <div class="footer-col">
         <h4 class="footer-title">Connect</h4>
         <div class="footer-social">
-          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
-          <a href="#" class="social-link" aria-label="LinkedIn">🔗</a>
-          <a href="#" class="social-link" aria-label="Instagram">📷</a>
-          <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+          <a href="#" class="social-link" aria-label="Twitter"><i data-feather="twitter"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i data-feather="instagram"></i></a>
+          <a href="#" class="social-link" aria-label="GitHub"><i data-feather="github"></i></a>
         </div>
         <h4 class="footer-title" style="margin-top:2rem;">Newsletter</h4>
-        <form class="footer-newsletter"><input type="email" placeholder="Your email" required><button type="submit">→</button></form>
+        <form class="footer-newsletter" action="https://formspree.io/f/your-form-id" method="POST">
+          <input type="email" name="email" placeholder="Your email" required>
+          <button type="submit">→</button>
+        </form>
       </div>
     </div>
     <div class="footer-bottom">
@@ -488,6 +643,124 @@
   </footer>
 
   <!-- SCRIPTS -->
+  <script>
+    feather.replace();
+  </script>
+
+  <!-- Preloader and Voice Narration Script -->
+  <script>
+    (function() {
+      const preloader = document.getElementById('preloader');
+      const voiceToggle = document.getElementById('voice-toggle');
+      let voiceEnabled = true;
+      let spokenSections = new Set(); // track which sections already spoken
+
+      // Preloader animation and voice
+      window.addEventListener('load', function() {
+        // Speak "AERION" after a short delay
+        setTimeout(() => {
+          if (voiceEnabled) {
+            const utterance = new SpeechSynthesisUtterance('AERION');
+            utterance.rate = 0.9;
+            utterance.pitch = 1.2;
+            utterance.volume = 1;
+            window.speechSynthesis.speak(utterance);
+          }
+        }, 500);
+
+        // Hide preloader after animation + delay
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+          // After preloader, speak welcome message
+          setTimeout(() => {
+            if (voiceEnabled) {
+              const welcome = new SpeechSynthesisUtterance('Welcome to Aerion’s homepage. Let us guide you through our digital studio.');
+              welcome.rate = 0.9;
+              welcome.pitch = 1.3;
+              window.speechSynthesis.speak(welcome);
+            }
+          }, 300);
+        }, 2500); // 2.5 seconds total preloader time
+      });
+
+      // Toggle voice on button click
+      voiceToggle.addEventListener('click', () => {
+        voiceEnabled = !voiceEnabled;
+        voiceToggle.innerHTML = voiceEnabled ? '🔊' : '🔇';
+        voiceToggle.classList.toggle('muted', !voiceEnabled);
+        if (voiceEnabled) {
+          // Optionally speak a test phrase
+          const test = new SpeechSynthesisUtterance('Voice narration enabled.');
+          test.rate = 0.9;
+          window.speechSynthesis.speak(test);
+        } else {
+          window.speechSynthesis.cancel(); // stop any ongoing speech
+        }
+      });
+
+      // Intersection Observer for section narration
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && voiceEnabled && !spokenSections.has(entry.target)) {
+            const message = entry.target.getAttribute('data-voice');
+            if (message) {
+              const utterance = new SpeechSynthesisUtterance(message);
+              utterance.rate = 0.9;
+              utterance.pitch = 1.2;
+              window.speechSynthesis.speak(utterance);
+              spokenSections.add(entry.target);
+            }
+          }
+        });
+      }, { threshold: 0.5 }); // speak when 50% visible
+
+      document.querySelectorAll('.section-container[data-voice]').forEach(section => {
+        sectionObserver.observe(section);
+      });
+
+      // Also speak when clicking on certain interactive elements (e.g., project cards)
+      document.querySelectorAll('.project-card, .package-card, .philosophy-card, .why-item, .testimonial-card').forEach(el => {
+        el.addEventListener('click', function(e) {
+          if (!voiceEnabled) return;
+          let msg = '';
+          if (el.classList.contains('project-card')) {
+            const title = el.querySelector('h3')?.innerText || 'project';
+            msg = `You clicked on ${title}. This is one of our featured works.`;
+          } else if (el.classList.contains('package-card')) {
+            const name = el.querySelector('.package-name')?.innerText || 'package';
+            msg = `${name} package. Click to choose.`;
+          } else if (el.classList.contains('philosophy-card')) {
+            const heading = el.querySelector('h3')?.innerText || '';
+            msg = `${heading}. Learn more about our philosophy.`;
+          } else if (el.classList.contains('why-item')) {
+            msg = el.innerText.split('\n')[0] + '. Learn why Aerion is the right choice.';
+          } else if (el.classList.contains('testimonial-card')) {
+            msg = 'Client testimonial. Read what our clients say.';
+          }
+          if (msg) {
+            const utterance = new SpeechSynthesisUtterance(msg);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.2;
+            window.speechSynthesis.speak(utterance);
+          }
+        });
+      });
+
+      // Speak when hovering over navbar links (optional)
+      document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+        link.addEventListener('mouseenter', function() {
+          if (!voiceEnabled) return;
+          const text = this.innerText;
+          const msg = text === 'soar' ? 'Start a project' : text;
+          const utterance = new SpeechSynthesisUtterance(msg);
+          utterance.rate = 0.9;
+          utterance.pitch = 1.1;
+          window.speechSynthesis.speak(utterance);
+        });
+      });
+    })();
+  </script>
+
   <!-- Original hero particles and rings (keep as is) -->
   <script>
     (function() {
@@ -895,16 +1168,35 @@
     })();
   </script>
 
-  <!-- ENHANCEMENTS + HAMBURGER (updated with accessibility) -->
+  <!-- ENHANCEMENTS + HAMBURGER (updated with focus trap) -->
   <script>
     (function() {
-      // Hamburger Menu with accessibility
+      // Hamburger Menu with accessibility and focus trap
       const hamburger = document.getElementById('hamburger');
       const mobileMenu = document.getElementById('mobileMenu');
       const menuOverlay = document.getElementById('menuOverlay');
       const closeMenu = document.getElementById('closeMenu');
       const mainContent = document.querySelector('main');
       
+      // Focus trap function
+      function trapFocus(element) {
+        const focusableElements = element.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+
+        element.addEventListener('keydown', function(e) {
+          if (e.key === 'Tab') {
+            if (e.shiftKey && document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        });
+      }
+
       if (hamburger && mobileMenu && menuOverlay && closeMenu) {
         function openMenu() {
           hamburger.setAttribute('aria-expanded', 'true');
@@ -914,6 +1206,11 @@
           // accessibility
           mainContent.setAttribute('aria-hidden', 'true');
           mobileMenu.setAttribute('aria-hidden', 'false');
+          // focus trap
+          trapFocus(mobileMenu);
+          // set initial focus to first menu item
+          const firstLink = mobileMenu.querySelector('a');
+          if (firstLink) firstLink.focus();
         }
         
         function closeMenuFunc() {
@@ -924,6 +1221,8 @@
           // accessibility
           mainContent.setAttribute('aria-hidden', 'false');
           mobileMenu.setAttribute('aria-hidden', 'true');
+          // return focus to hamburger
+          hamburger.focus();
         }
         
         hamburger.addEventListener('click', () => {
@@ -941,11 +1240,6 @@
         });
       }
 
-      // Other enhancements (magnetic buttons, parallax, scroll top, fade-up, counters, footer year, back to top)
-      // (Keep all the existing enhancement code from the original, but ensure it doesn't conflict)
-      // For brevity, I'm including only the essential parts – you already have them in your original code.
-      // I'll add them back in a real implementation; here I'll summarise:
-      
       // Magnetic buttons
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top, .footer-back-to-top');
       magneticBtns.forEach(btn => {
