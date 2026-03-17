@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>AERION · Digital Innovation Studio for Startups & Visionaries</title>
-  <meta name="description" content="AERION builds custom websites for startups and businesses. Founded by a 15‑year‑old visionary. Fast, modern, and built to convert.">
+  <meta name="description" content="AERION builds custom websites, sovereign AI solutions, and uncopyable digital experiences. Founded by a 15‑year‑old visionary. Rise above storms.">
   
   <!-- Open Graph -->
   <meta property="og:title" content="AERION · Digital Innovation Studio">
-  <meta property="og:description" content="Custom websites for startups and businesses. Delivered fast, built to convert.">
+  <meta property="og:description" content="Custom websites, sovereign AI, and uncopyable digital experiences.">
   <meta property="og:image" content="https://aeriontech.com/assets/sleek-golden-eagle-emblem.png">
   <meta property="og:url" content="https://aeriontech.com">
   <meta property="og:type" content="website">
@@ -156,6 +156,14 @@
     .package-features li { color:#b0b8cc; margin-bottom:0.5rem; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
     .package-features li::before { content:'✓'; color:var(--gold); font-weight:bold; }
 
+    /* ---------- PHILOSOPHY / VISION (NEW) ---------- */
+    .philosophy-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:3rem; }
+    .philosophy-card { background:rgba(0,0,0,0.3); backdrop-filter:blur(8px); border-radius:var(--radius-lg); padding:2.5rem; border-left:4px solid var(--gold); transition:all 0.4s; }
+    .philosophy-card:hover { border-left-width:8px; background:rgba(212,175,55,0.05); }
+    .philosophy-card .icon { font-size:3rem; margin-bottom:1rem; filter:drop-shadow(0 0 10px var(--gold)); }
+    .philosophy-card h3 { font-size:1.8rem; color:var(--gold); margin-bottom:1rem; }
+    .philosophy-card p { color:#b0b8cc; line-height:1.6; }
+
     /* ---------- WHY GRID (trust) ---------- */
     .why-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2.5rem; margin-top:2rem; }
     .why-item { padding:2.8rem; background:rgba(0,0,0,0.3); backdrop-filter:blur(8px); border-radius:var(--radius-lg); border-left:4px solid var(--gold); transition:var(--transition); }
@@ -170,7 +178,7 @@
     .project-card h3 { font-size:2.2rem; z-index:2; }
     .project-card p { color:var(--gold-deep); font-size:1.1rem; z-index:2; }
 
-    /* ---------- FOUNDER SECTION (short) ---------- */
+    /* ---------- FOUNDER SHORT ---------- */
     .founder-short { display:flex; align-items:center; gap:2rem; background:rgba(0,0,0,0.3); backdrop-filter:blur(12px); border-radius:var(--radius-lg); padding:2.5rem; border-left:6px solid var(--gold); }
     .founder-short img { width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid var(--gold); }
     .founder-short h3 { font-size:1.8rem; color:var(--gold); }
@@ -185,7 +193,7 @@
     .contact-email { font-size:2.5rem; font-weight:300; color:var(--gold); text-decoration:none; border-bottom:2px dotted; padding-bottom:8px; transition:var(--transition); word-break:break-all; }
     .contact-email:hover { color:white; border-bottom-color:white; }
 
-    /* ---------- FOOTER 2030 (same as before) ---------- */
+    /* ---------- FOOTER 2030 ---------- */
     .footer-2030 { background:rgba(5,7,12,0.85); backdrop-filter:blur(20px) saturate(200%); -webkit-backdrop-filter:blur(20px) saturate(200%); border-top:1px solid rgba(212,175,55,0.25); padding:4rem 2rem 2rem; color:#b0b8cc; font-size:1rem; position:relative; z-index:10; overflow:hidden; }
     .footer-2030::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle at 30% 30%, rgba(212,175,55,0.03) 0%, transparent 30%), radial-gradient(circle at 70% 60%, rgba(212,175,55,0.03) 0%, transparent 40%), radial-gradient(circle at 10% 80%, rgba(212,175,55,0.02) 0%, transparent 50%); animation:footerParticles 30s linear infinite; z-index:0; }
     @keyframes footerParticles { 0%{transform:translate(0,0) rotate(0deg);} 100%{transform:translate(10%,10%) rotate(5deg);} }
@@ -238,6 +246,7 @@
       h1 { font-size:clamp(3rem,12vw,4rem); }
       h2 { font-size:2.2rem; margin-bottom:1.5rem; }
       .hero-tagline { font-size:1.5rem; }
+      .philosophy-grid { grid-template-columns:1fr; gap:1.5rem; }
       .why-grid { grid-template-columns:1fr; gap:1.5rem; }
       .founder-short { flex-direction:column; text-align:center; }
       .founder-short img { width:100px; height:100px; }
@@ -305,14 +314,36 @@
         <img src="assets/sleek-golden-eagle-emblem.png" id="eagleLogo" alt="AERION Eagle Logo">
       </div>
       <h1>AERION</h1>
-      <div class="hero-tagline">Digital Innovation Studio — custom websites for startups & businesses.</div>
+      <div class="hero-tagline">Digital Innovation Studio — sovereign AI, uncopyable design, and the eagle’s‑eye view.</div>
       <a href="#packages" class="btn-primary">view packages</a>
     </section>
 
-    <!-- PACKAGES (NEW) -->
+    <!-- ABOUT / PHILOSOPHY (NEW) -->
+    <section class="section-container">
+      <h2 class="fade-up">The Aerion Standard</h2>
+      <div class="philosophy-grid">
+        <div class="philosophy-card fade-up">
+          <div class="icon">🦅</div>
+          <h3>Vision & Resilience</h3>
+          <p>Like the eagle, we rise above storms. We see the whole system—not just code, but the future of sovereign AI and digital independence.</p>
+        </div>
+        <div class="philosophy-card fade-up">
+          <div class="icon">⚡</div>
+          <h3>Solving the Unsolvable</h3>
+          <p>We don’t build templates; we build uncopyable systems. From glass‑morphism aesthetics to high‑performance backends, we create what hasn’t been done.</p>
+        </div>
+        <div class="philosophy-card fade-up">
+          <div class="icon">👁️</div>
+          <h3>High‑Value Conviction</h3>
+          <p>We reject the commodity trap. Our work is defined by uniqueness, technical sovereignty, and a founder’s mentality—because we are founders ourselves.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
     <section class="section-container" id="packages">
       <h2 class="fade-up">Website Packages</h2>
-      <p class="fade-up" style="text-align:center; margin-bottom:3rem;">Custom‑built, not templates. Every site includes a delivery date you can count on.</p>
+      <p class="fade-up" style="text-align:center; margin-bottom:3rem;">Custom‑built, uncopyable, and delivered on time. Every site includes a clear delivery date.</p>
       <div class="packages-grid">
         <div class="package-card fade-up">
           <div class="package-name">Starter</div>
@@ -357,10 +388,10 @@
     <section class="section-container">
       <h2 class="fade-up">Why AERION</h2>
       <div class="why-grid">
-        <div class="why-item glass-card fade-up"><strong>Modern Design</strong>Pixel‑perfect, conversion‑focused interfaces.</div>
-        <div class="why-item glass-card fade-up"><strong>Fast Delivery</strong>Your website in days, not months.</div>
-        <div class="why-item glass-card fade-up"><strong>Built for Performance</strong>Lightning speed, 99.9% uptime, secure.</div>
-        <div class="why-item glass-card fade-up"><strong>Direct Communication</strong>Work directly with the developer – no middlemen.</div>
+        <div class="why-item glass-card fade-up"><strong>Modern Design</strong>Pixel‑perfect, conversion‑focused interfaces that stand out.</div>
+        <div class="why-item glass-card fade-up"><strong>Fast Delivery</strong>Your website in days, not months—without compromising quality.</div>
+        <div class="why-item glass-card fade-up"><strong>Built for Performance</strong>Lightning speed, 99.9% uptime, and bank‑grade security.</div>
+        <div class="why-item glass-card fade-up"><strong>Direct Communication</strong>Work directly with the developer – no middlemen, no delays.</div>
       </div>
     </section>
 
@@ -382,17 +413,17 @@
         <div>
           <h3>Similoluwa Odubajo</h3>
           <p style="color:var(--gold);">Founder & Creative Director · 15 years old</p>
-          <p>“I started AERION to help businesses build websites that actually work – fast, beautiful, and built for growth.”</p>
+          <p>“I started AERION to prove that age is no barrier to vision. We build not just websites, but digital empires—uncopyable, sovereign, and beautiful.”</p>
         </div>
       </div>
     </section>
 
-    <!-- KIND WORDS (simplified) -->
+    <!-- KIND WORDS -->
     <section class="section-container">
       <h2 class="fade-up">Kind words</h2>
       <div class="testimonials-grid">
-        <div class="testimonial-card glass-card fade-up"><p>“AERION didn’t just build a platform — they redefined our digital future.”</p><span class="client-name">— E. Vance, CEO OmniCore</span></div>
-        <div class="testimonial-card glass-card fade-up"><p>“Unmatched vision and execution. Every detail feels premium.”</p><span class="client-name">— M. Keller, CPO Nexus</span></div>
+        <div class="testimonial-card glass-card fade-up"><p>“AERION didn’t just build a platform — they redefined our digital future with an uncopyable aesthetic.”</p><span class="client-name">— E. Vance, CEO OmniCore</span></div>
+        <div class="testimonial-card glass-card fade-up"><p>“Unmatched vision and execution. Every detail feels premium and intentional.”</p><span class="client-name">— M. Keller, CPO Nexus</span></div>
       </div>
     </section>
 
@@ -456,10 +487,9 @@
     </div>
   </footer>
 
-  <!-- SCRIPTS (particle canvas, three, volumetric, enhancements) – kept same as before -->
+  <!-- SCRIPTS (same as before) -->
   <script>
     (function() {
-      // bgParticles and rings (same as original)
       const pCanvas = document.getElementById("bgParticles");
       if(pCanvas) {
         const pCtx = pCanvas.getContext("2d");
@@ -555,7 +585,6 @@
     })();
   </script>
   <script>
-    // three.js background (same as before)
     (function() {
       const canvas = document.getElementById('three-canvas');
       if(!canvas) return;
@@ -624,7 +653,6 @@
     })();
   </script>
   <script>
-    // volumetric light (same as before)
     (function() {
       const canvas = document.getElementById('volumetric-canvas');
       if(!canvas) return;
@@ -715,7 +743,6 @@
     })();
   </script>
   <script>
-    // enhancements, hamburger, counters, fade-up
     (function() {
       const hamburger = document.getElementById('hamburger');
       const mobileMenu = document.getElementById('mobileMenu');
@@ -732,7 +759,7 @@
       const cursor = document.getElementById('cursorGlow');
       if(cursor && window.innerWidth>700) {
         document.addEventListener('mousemove',(e)=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
-        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .project-card, .package-card, .why-item, .testimonial-card, .scroll-top, .social-link, .footer-back-to-top');
+        const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .project-card, .package-card, .philosophy-card, .why-item, .testimonial-card, .scroll-top, .social-link, .footer-back-to-top');
         interactive.forEach(el=>{ el.addEventListener('mouseenter',()=>cursor.classList.add('hover')); el.addEventListener('mouseleave',()=>cursor.classList.remove('hover')); });
       }
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top, .footer-back-to-top');
