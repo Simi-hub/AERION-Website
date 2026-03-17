@@ -1365,291 +1365,322 @@
       transform: translateY(0);
     }
 
-    /* ---------- MOBILE OPTIMIZATIONS – FIXED FOR PERFECT DISPLAY ---------- */
+    /* ---------- MOBILE OPTIMIZATIONS – CENTERED, ANIMATIONS ON, NO OVERFLOW ---------- */
     @media (max-width: 700px) {
       :root {
         --navbar-height: 60px;
       }
-      
+
       .navbar {
         padding: 0.5rem 1rem;
       }
-      
+
       .logo-small {
         width: 40px;
       }
-      
+
       .brand-name {
         font-size: 1.2rem;
       }
-      
+
       .nav-links {
         display: none;
       }
-      
-      /* Disable heavy 3D effects on mobile for smooth scrolling */
+
+      /* Hide heavy 3D canvas but keep glow/ring animations */
       #three-canvas {
-        display: none; /* Completely hide the 3D sphere on mobile */
+        display: none;
       }
-      
+
       #volumetric-canvas {
-        opacity: 0.2; /* Reduce volumetric light intensity */
+        opacity: 0.2;
       }
-      
-      /* Reduce section padding */
+
       .section-container {
         padding: 3rem 1rem;
       }
-      
+
       h1 {
-        font-size: clamp(3rem, 12vw, 4rem);
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
       }
-      
+
       h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
         margin-bottom: 1.5rem;
       }
-      
+
       .lead {
         font-size: 1.2rem;
-        padding: 0 1rem;
+        padding: 0;
       }
-      
-      /* Founder section adjustments */
+
+      /* Founder section – centered, proper size, animations kept */
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .founder-section {
+        max-width: 100%;
+      }
+
       .founder-image-wrapper {
-        width: 70%;
+        width: 70%; /* Slightly larger */
+        margin: 0 auto 1.5rem;
       }
-      
+
+      .founder-image {
+        width: 100%;
+        height: auto;
+      }
+
+      /* Keep animations on mobile as requested */
+      .founder-ring {
+        animation: rotateRing 6s linear infinite, shimmer 3s ease-in-out infinite; /* re-enabled */
+        opacity: 0.7;
+      }
+
+      .founder-glow {
+        animation: glowPulse 4s ease-in-out infinite; /* re-enabled */
+      }
+
+      .spotlight {
+        display: block; /* re-enabled (if needed, but may impact performance) */
+      }
+
+      .particle-canvas {
+        display: none; /* keep particles off for performance */
+      }
+
       .founder-name {
         font-size: 2rem;
+        text-align: center;
       }
-      
+
       .founder-title {
         font-size: 1.1rem;
+        text-align: center;
       }
-      
+
       .founder-quote {
         font-size: 1rem;
         padding: 0.5rem;
+        text-align: center;
       }
-      
-      /* Timeline – stack vertically */
+
+      /* Timeline – stack and center */
       .timeline {
         flex-direction: column;
         gap: 1rem;
-        perspective: none; /* Disable 3D on mobile */
+        perspective: none;
       }
-      
+
       .timeline-item {
-        transform: none !important; /* Remove hover 3D tilt */
         width: 100%;
-        margin: 0;
+        margin: 0 auto;
+        transform: none !important;
       }
-      
+
       .timeline-item:hover {
-        transform: translateY(-5px) !important; /* Simpler hover */
+        transform: translateY(-5px) !important;
       }
-      
-      /* Eagle explainer – stack */
+
+      /* Eagle explainer – stack and center */
       .eagle-explainer {
         flex-direction: column;
         text-align: center;
         padding: 1.5rem;
+        align-items: center;
       }
-      
+
       .eagle-image {
         width: 120px;
+        margin-bottom: 1rem;
       }
-      
+
       .eagle-text {
         font-size: 1.1rem;
       }
-      
-      /* Achievements – full width cards */
+
+      /* Achievements – single column, centered */
       .achievements-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
-      
+
       .achievement-card {
         padding: 1.5rem;
+        text-align: center;
       }
-      
+
       .achievement-number {
         font-size: 2.5rem;
       }
-      
-      /* Skills – 2 columns */
+
+      /* Skills – 2 columns, centered */
       .skills-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.8rem;
       }
-      
+
       .skill-item {
         padding: 1rem;
+        text-align: center;
       }
-      
+
       .skill-icon {
         font-size: 2rem;
       }
-      
+
       .skill-name {
         font-size: 0.9rem;
       }
-      
-      /* Testimonial */
+
+      /* Testimonial – centered */
       .testimonial-card {
         padding: 1.5rem;
-        margin: 1rem auto;
+        text-align: center;
       }
-      
+
       .testimonial-text {
         font-size: 1.1rem;
       }
-      
+
       .testimonial-author {
         font-size: 1rem;
       }
-      
-      /* Press badges – wrap */
+
+      /* Press badges – wrap and center */
       .press-grid {
         gap: 0.8rem;
+        justify-content: center;
       }
-      
+
       .press-badge {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
       }
-      
-      /* Ethos cards – stack */
+
+      /* Ethos cards – stack and center */
       .why-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
-      
+
       .ethos-card {
         padding: 2rem 1rem;
+        text-align: center;
       }
-      
+
       .ethos-icon {
         font-size: 3rem;
       }
-      
+
       .ethos-card strong {
         font-size: 1.8rem;
       }
-      
-      /* FOOTER – FULLY VISIBLE ON MOBILE */
+
+      .ethos-shine {
+        display: none; /* optional performance */
+      }
+
+      /* FOOTER – fully visible and centered */
       .footer-2030 {
         padding: 2rem 1rem 1rem;
+        text-align: center;
       }
-      
+
       .footer-grid {
-        grid-template-columns: 1fr; /* Single column */
+        grid-template-columns: 1fr;
         gap: 2rem;
       }
-      
+
       .footer-col {
-        text-align: center;
         align-items: center;
+        text-align: center;
       }
-      
+
       .footer-logo-wrapper {
         justify-content: center;
       }
-      
+
       .footer-logo {
         width: 60px;
       }
-      
+
       .footer-brand-name {
         font-size: 1.8rem;
       }
-      
+
       .footer-tagline {
         font-size: 1rem;
       }
-      
+
       .footer-links {
         align-items: center;
       }
-      
+
       .footer-links li a {
         padding-left: 0;
       }
-      
+
       .footer-links li a::before {
-        display: none; /* Remove arrows on mobile */
+        display: none;
       }
-      
+
       .footer-social {
         justify-content: center;
       }
-      
+
       .footer-newsletter {
         width: 100%;
         max-width: 300px;
         margin: 0 auto;
       }
-      
-      .footer-newsletter input {
-        padding: 0.6rem 1rem;
-      }
-      
+
+      .footer-newsletter input,
       .footer-newsletter button {
-        padding: 0 1rem;
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
-      
+
       .footer-bottom {
         flex-direction: column;
         text-align: center;
         gap: 0.8rem;
         margin-top: 2rem;
       }
-      
+
       .footer-back-to-top {
         display: inline-block;
         margin-top: 0.5rem;
       }
-      
-      /* Disable heavy animations on mobile for performance */
-      .particle-canvas {
-        display: none;
+
+      /* Prevent horizontal overflow */
+      body {
+        overflow-x: hidden;
       }
-      
-      .founder-ring {
-        animation: none; /* Stop ring rotation */
-        opacity: 0.3;
+
+      img {
+        max-width: 100%;
+        height: auto;
       }
-      
-      .founder-glow {
-        animation: none; /* Stop glow pulse */
-        opacity: 0.5;
-      }
-      
-      .spotlight {
-        display: none; /* Disable spotlight on mobile */
-      }
-      
-      .ethos-shine {
-        display: none;
-      }
-      
-      /* Improve scrolling performance */
+
+      /* Improve scrolling */
       * {
         -webkit-overflow-scrolling: touch;
       }
-      
-      /* Disable hover effects that cause lag */
-      .timeline-item:hover,
-      .achievement-card:hover,
-      .skill-item:hover,
-      .press-badge:hover,
-      .ethos-card:hover {
-        transform: none !important;
-        box-shadow: none !important;
+    }
+
+    /* Desktop cursor */
+    @media (min-width: 701px) {
+      body, .btn-primary, .nav-cta, .scroll-top {
+        cursor: none;
       }
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: #030305;
     }
   </style>
 </head>
