@@ -20,6 +20,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/sleek-golden-eagle-emblem.png">
   <link rel="mask-icon" href="assets/sleek-golden-eagle-emblem.png" color="#D4AF37">
 
+  <!-- Preload main logo with high priority for LCP -->
+  <link rel="preload" as="image" href="assets/sleek-golden-eagle-emblem.png" fetchpriority="high">
+
   <!-- Google tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9EGZLSRY9"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-M9EGZLSRY9');</script>
@@ -229,6 +232,57 @@
     .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:var(--navbar-height) 1.5rem 0; box-sizing:border-box; position:relative; overflow:hidden; z-index:5; }
     .hero-tagline { font-size:clamp(1.8rem,5vw,2.8rem); font-weight:300; color:#b0b8cc; margin-bottom:2.5rem; max-width:900px; text-shadow:0 0 20px rgba(212,175,55,0.3); opacity:0; transform:translateY(20px); animation:fadeUp 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards 0.35s; }
 
+    /* ---------- TRUST STATS (NEW) ---------- */
+    .trust-stats {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin: 2rem 0 3rem;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 1rem;
+      color: #b0b8cc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ---------- SCARCITY BADGE (NEW) ---------- */
+    .scarcity-badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid var(--gold);
+      border-radius: 40px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      margin: 1rem 0;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ---------- WHATSAPP CTA (NEW) ---------- */
+    .whatsapp-cta {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 1.2rem;
+      border-bottom: 1px dotted transparent;
+      transition: border-color 0.3s;
+    }
+    .whatsapp-cta:hover {
+      border-bottom-color: var(--gold);
+    }
+
     /* ---------- PACKAGES ---------- */
     .packages-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:2rem; margin-top:2rem; }
     .package-card { background:var(--glass-bg); backdrop-filter:blur(16px); border:1px solid var(--glass-border); border-radius:var(--radius-xl); padding:2.5rem 2rem; text-align:center; transition:all 0.4s; }
@@ -263,11 +317,144 @@
     .project-card h3 { font-size:2.2rem; z-index:2; }
     .project-card p { color:var(--gold-deep); font-size:1.1rem; z-index:2; }
 
-    /* ---------- FOUNDER SHORT ---------- */
-    .founder-short { display:flex; align-items:center; gap:2rem; background:rgba(0,0,0,0.3); backdrop-filter:blur(12px); border-radius:var(--radius-lg); padding:2.5rem; border-left:6px solid var(--gold); }
-    .founder-short img { width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid var(--gold); }
-    .founder-short h3 { font-size:1.8rem; color:var(--gold); }
-    .founder-short p { color:#b0b8cc; margin-top:0.5rem; }
+    /* ========== UPGRADED FOUNDER SECTION ========== */
+    .founder-short {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      border-left: 6px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+    }
+    .founder-short::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.1) 0%, transparent 70%);
+      animation: rotateSlow 30s linear infinite;
+      z-index: 0;
+    }
+    .founder-image-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: visible;
+      z-index: 5;
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease;
+    }
+    .founder-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      filter: drop-shadow(0 0 20px rgba(212,175,55,0.5));
+      transition: filter 0.3s, transform 0.3s;
+    }
+    /* Glowing ring behind image */
+    .founder-ring {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, var(--gold), transparent, var(--gold-light), transparent);
+      mask: radial-gradient(circle at 50% 50%, transparent 65%, black 66%);
+      animation: rotateRing 6s linear infinite, shimmer 3s ease-in-out infinite;
+      z-index: -1;
+      opacity: 0.7;
+    }
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes shimmer {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.5); }
+      100% { filter: brightness(1); }
+    }
+    /* Small floating particles around image (CSS only) */
+    .founder-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .founder-particles span {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat 4s ease-in-out infinite;
+    }
+    .founder-particles span:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+    .founder-particles span:nth-child(2) { top: 70%; left: 80%; animation-delay: 0.5s; }
+    .founder-particles span:nth-child(3) { top: 40%; left: 90%; animation-delay: 1s; }
+    .founder-particles span:nth-child(4) { top: 80%; left: 30%; animation-delay: 1.5s; }
+    .founder-particles span:nth-child(5) { top: 20%; left: 70%; animation-delay: 2s; }
+    @keyframes particleFloat {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+    .founder-text {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+    }
+    .founder-text h3 {
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      transform: translateZ(30px);
+    }
+    .founder-text .title {
+      color: var(--gold-light);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      transform: translateZ(20px);
+    }
+    .founder-text .quote {
+      color: #b0b8cc;
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.6;
+      transform: translateZ(15px);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    .founder-text .quote::before {
+      content: '“';
+      position: absolute;
+      left: 0;
+      top: -0.5rem;
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.3;
+      font-family: serif;
+    }
+
+    /* Magnetic hover effect on image */
+    .founder-image-wrapper.magnetic {
+      transition: transform 0.1s ease;
+    }
 
     /* ---------- TESTIMONIALS ---------- */
     .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem; }
@@ -370,7 +557,9 @@
       .philosophy-grid { grid-template-columns:1fr; gap:1.5rem; }
       .why-grid { grid-template-columns:1fr; gap:1.5rem; }
       .founder-short { flex-direction:column; text-align:center; }
-      .founder-short img { width:100px; height:100px; }
+      .founder-image-wrapper { width: 150px; height: 150px; }
+      .founder-text .quote::before { left: 50%; transform: translateX(-50%); top: -2rem; }
+      .founder-text .quote { padding-left: 0; }
       .packages-grid { gap:1.5rem; }
       .footer-grid { grid-template-columns:1fr; gap:2rem; text-align:center; }
       .footer-col { align-items:center; }
@@ -387,15 +576,51 @@
       .preloader-logo { width: 150px; height: 150px; }
       .preloader-text { font-size: 1.5rem; }
       #voice-toggle { bottom: 1rem; left: 1rem; width: 40px; height: 40px; font-size: 1.2rem; }
+      .trust-stats { gap: 2rem; }
+      .stat-number { font-size: 2.5rem; }
     }
     @media (min-width:701px) { body,.btn-primary,.nav-cta,.scroll-top { cursor:none; } }
     ::selection { background:var(--gold); color:#030305; }
   </style>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AERION",
+    "url": "https://aeriontech.com",
+    "logo": "https://aeriontech.com/assets/sleek-golden-eagle-emblem.png",
+    "sameAs": [
+      "https://twitter.com/aerion",
+      "https://linkedin.com/company/aerion",
+      "https://instagram.com/aerion"
+    ],
+    "description": "Digital innovation studio building custom websites, sovereign AI solutions, and uncopyable digital experiences.",
+    "founder": {
+      "@type": "Person",
+      "name": "Similoluwa Odubajo",
+      "age": "15"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Starter Website Package",
+    "description": "1–3 page custom website with modern design and basic SEO.",
+    "price": "80000",
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://aeriontech.com#packages"
+  }
+  </script>
 </head>
 <body>
   <!-- PRELOADER -->
   <div id="preloader">
-    <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION Logo" class="preloader-logo">
+    <img src="assets/sleek-golden-eagle-emblem.png" alt="AERION Logo" class="preloader-logo" fetchpriority="high">
     <div class="preloader-text">AERION</div>
   </div>
 
@@ -445,12 +670,29 @@
       <div class="logo-container">
         <canvas id="bgParticles"></canvas>
         <canvas id="rings"></canvas>
-        <img src="assets/sleek-golden-eagle-emblem.png" id="eagleLogo" alt="AERION Eagle Logo">
+        <img src="assets/sleek-golden-eagle-emblem.png" id="eagleLogo" alt="AERION Eagle Logo" fetchpriority="high">
       </div>
       <h1>AERION</h1>
       <div class="hero-tagline">Digital Innovation Studio — sovereign AI, uncopyable design, and the eagle’s‑eye view.</div>
-      <a href="#packages" class="btn-primary">view packages</a>
+      <!-- Upgraded CTA -->
+      <a href="#packages" class="btn-primary">Start Your Project →</a>
     </section>
+
+    <!-- Trust stats (new) -->
+    <div class="trust-stats fade-up">
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">projects delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">client satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">active clients</div>
+      </div>
+    </div>
 
     <!-- CLIENTS MARQUEE (actual logos) -->
     <div class="marquee-section">
@@ -501,6 +743,8 @@
           <div class="package-name">Starter</div>
           <div class="package-price">₦80,000 <span></span></div>
           <div class="package-delivery">Delivery: 7 days</div>
+          <!-- Scarcity badge -->
+          <div class="scarcity-badge">Only 3 slots this month</div>
           <ul class="package-features">
             <li>1–3 pages</li>
             <li>Modern responsive design</li>
@@ -513,6 +757,7 @@
           <div class="package-name">Business</div>
           <div class="package-price">₦150,000 <span></span></div>
           <div class="package-delivery">Delivery: 14 days</div>
+          <div class="scarcity-badge">Only 5 slots this month</div>
           <ul class="package-features">
             <li>5–10 pages</li>
             <li>Custom UI/UX</li>
@@ -525,6 +770,7 @@
           <div class="package-name">Premium</div>
           <div class="package-price">₦300,000 <span></span></div>
           <div class="package-delivery">Delivery: 30 days</div>
+          <div class="scarcity-badge">Only 2 slots this month</div>
           <ul class="package-features">
             <li>Unlimited pages</li>
             <li>E‑commerce / membership</li>
@@ -558,14 +804,20 @@
       <div style="text-align:center; margin-top:2rem;"><a href="projects.html" class="btn-primary" style="padding:0.8rem 2.5rem;">View all projects</a></div>
     </section>
 
-    <!-- FOUNDER SHORT -->
+    <!-- UPGRADED FOUNDER SHORT -->
     <section class="section-container" data-voice="Meet Similoluwa Odubajo, founder and creative director, 15 years old, building digital empires.">
       <div class="founder-short fade-up">
-        <img src="assets/founder-image.png" alt="Similoluwa Odubajo" loading="lazy">
-        <div>
+        <div class="founder-image-wrapper" id="founderImageWrapper">
+          <div class="founder-ring"></div>
+          <div class="founder-particles">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <img src="assets/founder-image.png" alt="Similoluwa Odubajo" loading="lazy">
+        </div>
+        <div class="founder-text">
           <h3>Similoluwa Odubajo</h3>
-          <p style="color:var(--gold);">Founder & Creative Director · 15 years old</p>
-          <p>“I started AERION to prove that age is no barrier to vision. We build not just websites, but digital empires—uncopyable, sovereign, and beautiful.”</p>
+          <div class="title">Founder & Creative Director · 15 years old</div>
+          <div class="quote">I started AERION to prove that age is no barrier to vision. We build not just websites, but digital empires—uncopyable, sovereign, and beautiful.</div>
         </div>
       </div>
     </section>
@@ -585,6 +837,10 @@
         <h2 style="text-align:center;">start a project</h2>
         <p style="margin-bottom:2.5rem; font-size:1.4rem;">Let’s build something unstoppable together.</p>
         <a href="mailto:soar@aeriontech.com" class="contact-email">soar@aeriontech.com</a>
+        <!-- WhatsApp CTA (placeholder – replace number) -->
+        <div style="margin-top:1.5rem;">
+          <a href="https://wa.me/234XXXXXXXXX" class="whatsapp-cta" target="_blank" rel="noopener noreferrer">Chat on WhatsApp →</a>
+        </div>
         <div style="margin-top:3rem;"><a href="contact.html" class="btn-primary">send a message</a></div>
       </div>
     </section>
@@ -653,25 +909,20 @@
       const preloader = document.getElementById('preloader');
       const voiceToggle = document.getElementById('voice-toggle');
       let voiceEnabled = true;
-      let spokenSections = new Set(); // track which sections already spoken
+      let spokenSections = new Set();
 
-      // Preloader animation and voice
       window.addEventListener('load', function() {
-        // Speak "AERION" after a short delay
         setTimeout(() => {
           if (voiceEnabled) {
             const utterance = new SpeechSynthesisUtterance('AERION');
             utterance.rate = 0.9;
             utterance.pitch = 1.2;
-            utterance.volume = 1;
             window.speechSynthesis.speak(utterance);
           }
         }, 500);
 
-        // Hide preloader after animation + delay
         setTimeout(() => {
           preloader.classList.add('hidden');
-          // After preloader, speak welcome message
           setTimeout(() => {
             if (voiceEnabled) {
               const welcome = new SpeechSynthesisUtterance('Welcome to Aerion’s homepage. Let us guide you through our digital studio.');
@@ -680,25 +931,22 @@
               window.speechSynthesis.speak(welcome);
             }
           }, 300);
-        }, 2500); // 2.5 seconds total preloader time
+        }, 2500);
       });
 
-      // Toggle voice on button click
       voiceToggle.addEventListener('click', () => {
         voiceEnabled = !voiceEnabled;
         voiceToggle.innerHTML = voiceEnabled ? '🔊' : '🔇';
         voiceToggle.classList.toggle('muted', !voiceEnabled);
         if (voiceEnabled) {
-          // Optionally speak a test phrase
           const test = new SpeechSynthesisUtterance('Voice narration enabled.');
           test.rate = 0.9;
           window.speechSynthesis.speak(test);
         } else {
-          window.speechSynthesis.cancel(); // stop any ongoing speech
+          window.speechSynthesis.cancel();
         }
       });
 
-      // Intersection Observer for section narration
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && voiceEnabled && !spokenSections.has(entry.target)) {
@@ -712,13 +960,12 @@
             }
           }
         });
-      }, { threshold: 0.5 }); // speak when 50% visible
+      }, { threshold: 0.5 });
 
       document.querySelectorAll('.section-container[data-voice]').forEach(section => {
         sectionObserver.observe(section);
       });
 
-      // Also speak when clicking on certain interactive elements (e.g., project cards)
       document.querySelectorAll('.project-card, .package-card, .philosophy-card, .why-item, .testimonial-card').forEach(el => {
         el.addEventListener('click', function(e) {
           if (!voiceEnabled) return;
@@ -746,7 +993,6 @@
         });
       });
 
-      // Speak when hovering over navbar links (optional)
       document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
         link.addEventListener('mouseenter', function() {
           if (!voiceEnabled) return;
@@ -757,6 +1003,29 @@
           utterance.pitch = 1.1;
           window.speechSynthesis.speak(utterance);
         });
+      });
+    })();
+  </script>
+
+  <!-- Magnetic effect for founder image (3D tilt) -->
+  <script>
+    (function() {
+      const wrapper = document.getElementById('founderImageWrapper');
+      if (!wrapper || window.innerWidth <= 700) return;
+
+      wrapper.addEventListener('mousemove', (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 15;
+        const rotateY = (centerX - x) / 15;
+        wrapper.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      wrapper.addEventListener('mouseleave', () => {
+        wrapper.style.transform = '';
       });
     })();
   </script>
