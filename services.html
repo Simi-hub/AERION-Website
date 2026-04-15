@@ -28,8 +28,8 @@
     }
 
     html {
-      scroll-behavior: smooth;
       overflow-x: hidden;
+      /* removed scroll-behavior: smooth; */
     }
 
     body {
@@ -91,6 +91,25 @@
       width: 70px;
       height: 70px;
       background: radial-gradient(circle, rgba(212,175,55,0.9) 0%, rgba(212,175,55,0) 80%);
+    }
+
+    /* Dot cursor */
+    .cursor-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      box-shadow: 0 0 8px var(--gold);
+    }
+    .cursor-dot.hover {
+      width: 12px;
+      height: 12px;
+      background: var(--gold-light);
     }
 
     /* ---------- BACKGROUND CANVASES ---------- */
@@ -582,6 +601,38 @@
       transform: translateY(0);
     }
 
+    /* ---------- ADDITIONAL ELITE ENHANCEMENTS ---------- */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      z-index: 10000;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 10px var(--gold);
+    }
+    .floating {
+      animation: floatIcon 6s ease-in-out infinite;
+    }
+    @keyframes floatIcon {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+    .glass-card {
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    .glass-card:hover {
+      backdrop-filter: blur(20px) saturate(220%);
+      box-shadow: 0 30px 60px -20px #000, 0 0 0 1px rgba(212,175,55,0.4) inset, 0 0 50px rgba(212,175,55,0.4);
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #030305; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
     /* Mobile optimizations */
     @media (max-width: 700px) {
       :root {
@@ -636,7 +687,7 @@
         right: 1rem;
       }
       
-      .cursor-glow {
+      .cursor-glow, .cursor-dot {
         display: none;
       }
       
@@ -1001,7 +1052,7 @@
     })();
   </script>
 
-  <!-- ENHANCEMENTS + Hamburger Menu JS -->
+  <!-- ORIGINAL ENHANCEMENTS + Hamburger Menu JS (modified) -->
   <script>
     (function() {
       // Hamburger Menu Functionality
@@ -1044,7 +1095,8 @@
         });
       }
 
-      // Cursor glow
+      // OLD CURSOR GLOW (commented out – replaced by new liquid glow below)
+      /*
       const cursor = document.getElementById('cursorGlow');
       if (cursor && window.innerWidth > 700) {
         document.addEventListener('mousemove', (e) => {
@@ -1057,6 +1109,7 @@
           el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
       }
+      */
 
       // Magnetic buttons
       const magneticBtns = document.querySelectorAll('.btn-primary, .nav-cta, .scroll-top');
@@ -1162,6 +1215,232 @@
           const targetEl = document.querySelector(targetId);
           if (targetEl) {
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- NEW ENHANCEMENTS: KINETIC TYPOGRAPHY, LIQUID GLOW CURSOR, BENTO MAGNETIC -->
+  <!-- KINETIC TYPOGRAPHY -->
+  <script>
+    (function kineticTypography() {
+      if (window.innerWidth <= 700) return;
+      const headers = document.querySelectorAll('h1, h2');
+      headers.forEach(header => {
+        const text = header.innerText;
+        if (!text) return;
+        const chars = text.split('');
+        header.innerHTML = '';
+        chars.forEach((char, index) => {
+          const span = document.createElement('span');
+          span.textContent = char === ' ' ? '\u00A0' : char;
+          span.style.display = 'inline-block';
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(40px) blur(10px)';
+          span.style.transition = `opacity 0.6s cubic-bezier(0.2,0.9,0.3,1), transform 0.6s cubic-bezier(0.2,0.9,0.3,1), filter 0.6s cubic-bezier(0.2,0.9,0.3,1)`;
+          span.style.transitionDelay = `${index * 0.04}s`;
+          header.appendChild(span);
+        });
+      });
+      const kineticObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const spans = entry.target.querySelectorAll('span');
+            spans.forEach(span => { span.style.opacity = '1'; span.style.transform = 'translateY(0) blur(0)'; });
+            kineticObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5, rootMargin: '0px 0px -50px 0px' });
+      document.querySelectorAll('h1, h2').forEach(header => kineticObserver.observe(header));
+    })();
+  </script>
+
+  <!-- LIQUID GLOW CURSOR (enhanced) -->
+  <script>
+    (function liquidGlowCursor() {
+      const cursor = document.getElementById('cursorGlow');
+      if (!cursor || window.innerWidth <= 700) return;
+      let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+      document.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
+      function animateCursor() {
+        currentX += (targetX - currentX) * 0.12;
+        currentY += (targetY - currentY) * 0.12;
+        cursor.style.left = currentX + 'px'; cursor.style.top = currentY + 'px';
+        const cards = document.querySelectorAll('.glass-card');
+        let minDist = 300;
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const cardCenterX = rect.left + rect.width / 2;
+          const cardCenterY = rect.top + rect.height / 2;
+          const dx = targetX - cardCenterX, dy = targetY - cardCenterY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < minDist) minDist = dist;
+        });
+        let intensity = Math.max(0.4, Math.min(1.0, 1.0 - (minDist / 300)));
+        cursor.style.background = `radial-gradient(circle, rgba(212,175,55,${intensity}) 0%, rgba(212,175,55,0) 80%)`;
+        cursor.style.width = (40 + intensity * 20) + 'px';
+        cursor.style.height = (40 + intensity * 20) + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+      const interactive = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .scroll-top, .social-link, .footer-back-to-top, .service-card, .glass-card');
+      interactive.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    })();
+  </script>
+
+  <!-- DOT CURSOR (additional) -->
+  <script>
+    (function dotCursor() {
+      const dot = document.createElement('div');
+      dot.className = 'cursor-dot';
+      document.body.appendChild(dot);
+      if (window.innerWidth <= 700) {
+        dot.style.display = 'none';
+        return;
+      }
+      let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+      document.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
+      function animate() {
+        currentX += (targetX - currentX) * 0.2;
+        currentY += (targetY - currentY) * 0.2;
+        dot.style.left = currentX + 'px';
+        dot.style.top = currentY + 'px';
+        requestAnimationFrame(animate);
+      }
+      animate();
+      const interactives = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .scroll-top, .social-link, .footer-back-to-top, .glass-card');
+      interactives.forEach(el => {
+        el.addEventListener('mouseenter', () => dot.classList.add('hover'));
+        el.addEventListener('mouseleave', () => dot.classList.remove('hover'));
+      });
+    })();
+  </script>
+
+  <!-- BENTO MAGNETIC HOVER (for service cards and glass cards) -->
+  <script>
+    (function bentoMagnetic() {
+      if (window.innerWidth <= 700) return;
+      const cards = document.querySelectorAll('.service-card, .glass-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left, y = e.clientY - rect.top;
+          const centerX = rect.width / 2, centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 15, rotateY = (centerX - x) / 15;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+      });
+    })();
+  </script>
+
+  <!-- GSAP + LENIS + SCROLLTRIGGER ENHANCEMENTS (fixed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script>
+    (function eliteEnhancements() {
+      // --- Smooth Scroll (Lenis) ---
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: true,
+        touchMultiplier: 1.5,
+        gestureOrientation: 'vertical',
+        infinite: false,
+      });
+
+      // Connect ScrollTrigger to Lenis
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // Refresh ScrollTrigger after Lenis is ready
+      lenis.on('scroll', ScrollTrigger.update);
+      ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+          return arguments.length ? lenis.scrollTo(value, { immediate: true }) : lenis.scroll;
+        },
+        getBoundingClientRect() {
+          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        },
+        pinType: document.body.style.transform ? 'transform' : 'fixed'
+      });
+      ScrollTrigger.refresh();
+
+      // --- Scroll Progress Bar ---
+      const progressBar = document.createElement('div');
+      progressBar.className = 'scroll-progress';
+      document.body.appendChild(progressBar);
+      lenis.on('scroll', () => {
+        const winScroll = lenis.scroll;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+      });
+
+      // --- Floating Icons ---
+      document.querySelectorAll('.service-icon, .service-card h3, .lead, .project-card h3, .project-card p, .blog-card h3, .blog-date, .read-more, .contact-email, .btn-primary, .contact-details strong, .skill-icon, .ethos-icon, .founder-name, .founder-title, .timeline-year, .achievement-number, .press-badge').forEach(icon => {
+        icon.classList.add('floating');
+      });
+
+      // --- GSAP ScrollTrigger Staggered Reveals ---
+      gsap.registerPlugin(ScrollTrigger);
+      const cardGroups = [
+        '.service-card', '.project-card', '.blog-card', '.philosophy-card', '.package-card',
+        '.why-item', '.case-card', '.testimonial-card', '.timeline-item', '.achievement-card',
+        '.skill-item', '.ethos-card', '.contact-info', '.contact-form', '.contact-details'
+      ];
+      cardGroups.forEach(selector => {
+        gsap.utils.toArray(selector).forEach((card, i) => {
+          if (!card.classList.contains('visible')) {
+            gsap.fromTo(card, 
+              { autoAlpha: 0, y: 50 },
+              {
+                autoAlpha: 1, y: 0,
+                duration: 0.8,
+                delay: i * 0.05,
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 85%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          }
+        });
+      });
+
+      // Parallax for page header
+      const pageHeader = document.querySelector('.page-header');
+      if (pageHeader) {
+        gsap.to(pageHeader, {
+          y: '15%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pageHeader,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      }
+
+      // Fix for anchor links to work with Lenis
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            lenis.scrollTo(targetEl, { offset: -100, duration: 1.2 });
           }
         });
       });
