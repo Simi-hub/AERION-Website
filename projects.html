@@ -155,15 +155,23 @@ body{background:var(--bg);color:#ecf0f8;font-family:'Outfit',sans-serif;-webkit-
 
 /* FILTER BAR */
 .filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:clamp(2rem,4vh,3.5rem);}
-.filter-btn{padding:.52rem 1.2rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.72rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:40px;border:1px solid rgba(212,175,55,.2);background:transparent;color:rgba(180,200,230,.55);cursor:pointer;transition:all .35s var(--sp);}
+.filter-btn{padding:.52rem 1.2rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.72rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:40px;border:1px solid rgba(212,175,55,.2);background:transparent;color:rgba(180,200,230,.55);cursor:pointer;transition:border-color .25s var(--eo),color .25s var(--eo),background .25s var(--eo),transform .2s var(--sp),box-shadow .25s var(--eo);-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .filter-btn:hover{border-color:rgba(212,175,55,.45);color:var(--gl);}
+.filter-btn:active{transform:scale(.94);opacity:.82;}
 .filter-btn.active{background:rgba(212,175,55,.12);border-color:var(--g);color:var(--g);box-shadow:0 0 14px rgba(212,175,55,.12);}
+@media(max-width:768px){
+  .filter-btn{padding:.58rem 1.1rem;font-size:.68rem;-webkit-tap-highlight-color:transparent;}
+  .filter-btn:active{transform:scale(.93);background:rgba(212,175,55,.1);border-color:rgba(212,175,55,.35);color:var(--gl);transition:transform .12s var(--sp),background .12s,border-color .12s,color .12s;}
+}
 
 /* PROJECT CARDS — EXPANDED */
 .proj-list{display:flex;flex-direction:column;gap:clamp(3rem,6vh,6rem);}
 
-.proj-item{position:relative;border-radius:clamp(16px,2.5vw,30px);border:1px solid rgba(212,175,55,.14);background:rgba(8,8,18,.82);backdrop-filter:blur(18px);overflow:hidden;transition:border-color .5s,box-shadow .5s;}
+.proj-item{position:relative;border-radius:clamp(16px,2.5vw,30px);border:1px solid rgba(212,175,55,.14);background:rgba(8,8,18,.82);backdrop-filter:blur(18px);overflow:hidden;transition:border-color .5s,box-shadow .5s;-webkit-tap-highlight-color:transparent;}
 .proj-item:hover{border-color:rgba(212,175,55,.38);box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 50px rgba(212,175,55,.1);}
+@media(max-width:768px){
+  .proj-item:active{border-color:rgba(212,175,55,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 18px rgba(212,175,55,.07);transform:scale(.993);transition:transform .15s var(--sp),border-color .15s,box-shadow .15s;}
+}
 
 /* top accent line */
 .proj-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gd),var(--g),var(--gl));transform:scaleX(0);transform-origin:left;transition:transform .65s var(--sp);}
@@ -245,11 +253,13 @@ body{background:var(--bg);color:#ecf0f8;font-family:'Outfit',sans-serif;-webkit-
 
 /* CTA STRIP inside project card */
 .proj-cta{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:1.8rem;padding-top:1.4rem;border-top:1px solid rgba(212,175,55,.08);}
-.proj-link-btn{position:relative;display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.74rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#020200;text-decoration:none;border:none;border-radius:100px;cursor:pointer;overflow:hidden;background:linear-gradient(135deg,var(--gl),var(--g),var(--gd));box-shadow:0 3px 16px rgba(212,175,55,.3);transition:all .4s var(--sp);}
+.proj-link-btn{position:relative;display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.74rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#020200;text-decoration:none;border:none;border-radius:100px;cursor:pointer;overflow:hidden;background:linear-gradient(135deg,var(--gl),var(--g),var(--gd));box-shadow:0 3px 16px rgba(212,175,55,.3);transition:all .4s var(--sp);-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .proj-link-btn::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.42),transparent);transform:skewX(-15deg);transition:left .55s;}
 .proj-link-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 7px 24px rgba(212,175,55,.45);}.proj-link-btn:hover::before{left:130%;}
-.proj-link-ghost{display:inline-flex;align-items:center;gap:.4rem;padding:.68rem 1.4rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.74rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g);text-decoration:none;border:1.5px solid rgba(212,175,55,.3);border-radius:100px;cursor:pointer;background:transparent;transition:all .35s var(--sp);}
+.proj-link-btn:active{transform:scale(.96);box-shadow:0 2px 10px rgba(212,175,55,.3);transition:transform .1s var(--sp),box-shadow .1s;}
+.proj-link-ghost{display:inline-flex;align-items:center;gap:.4rem;padding:.68rem 1.4rem;font-family:'Cinzel',serif;font-size:clamp(.62rem,.78vw,.74rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g);text-decoration:none;border:1.5px solid rgba(212,175,55,.3);border-radius:100px;cursor:pointer;background:transparent;transition:all .35s var(--sp);-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .proj-link-ghost:hover{border-color:var(--g);background:rgba(212,175,55,.07);transform:translateY(-2px);}
+.proj-link-ghost:active{transform:scale(.96);background:rgba(212,175,55,.1);border-color:var(--g);transition:transform .1s var(--sp),background .1s,border-color .1s;}
 
 /* CLOSING CTA */
 .cta-close{position:relative;overflow:hidden;border-radius:clamp(16px,2.5vw,30px);border:1px solid rgba(212,175,55,.22);background:rgba(8,8,18,.9);backdrop-filter:blur(18px);padding:clamp(2.5rem,5vw,5rem) clamp(1.5rem,4vw,4rem);text-align:center;}
@@ -526,7 +536,7 @@ body{background:var(--bg);color:#ecf0f8;font-family:'Outfit',sans-serif;-webkit-
       <span class="stat-l">Delivery Window</span>
     </div>
     <div class="stat-cell">
-      <span class="stat-n" data-count="0" id="deadlineCount" style="font-size:clamp(1.8rem,3vw,2.8rem);">0</span>
+      <span class="stat-n" data-count="0" id="deadlineCount" style="font-size:clamp(1.8rem,3vw,2.8rem);">—</span>
       <span class="stat-l">Missed Deadlines</span>
     </div>
     <div class="stat-cell">
@@ -1145,34 +1155,82 @@ document.getElementById('thm').addEventListener('click',function(){
   document.querySelectorAll('.sh').forEach(h=>sh.observe(h));
 })();
 
-// STAT COUNTERS
+// STAT COUNTERS — handles all values including 0 (zero missed deadlines counter)
 (function(){
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;
-      const el=entry.target,t=parseFloat(el.dataset.count);if(isNaN(t))return;
-      const isF=t%1!==0,st=performance.now();
-      (function tick(now){const p=Math.min((now-st)/1400,1),e=1-Math.pow(1-p,3);el.textContent=isF?(t*e).toFixed(1):Math.round(t*e);if(p<1)requestAnimationFrame(tick);})(st);
+      const el=entry.target;
+      const t=parseFloat(el.dataset.count);
+      if(isNaN(t))return;
+      // For t===0: animate a brief flicker (0→3→0) to make the "0" feel earned
+      const isZero=t===0;
+      const isF=!isZero&&t%1!==0;
+      const peak=isZero?3:t;
+      const dur=isZero?900:1400;
+      const st=performance.now();
+      (function tick(now){
+        const p=Math.min((now-st)/dur,1);
+        const e=isZero
+          // arc: rises then falls back to 0
+          ? Math.sin(p*Math.PI)
+          : 1-Math.pow(1-p,3);
+        const val=isZero?Math.round(peak*e):isF?(t*e).toFixed(1):Math.round(t*e);
+        el.textContent=val;
+        if(p<1)requestAnimationFrame(tick);
+        else el.textContent=isF?t.toFixed(1):Math.round(t);
+      })(st);
       obs.unobserve(el);
     });
   },{threshold:.5});
   document.querySelectorAll('[data-count]').forEach(el=>obs.observe(el));
 })();
 
-// PROJECT FILTER
+// PROJECT FILTER — snappy, no-flicker, --sp easing
 (function(){
   const btns=document.querySelectorAll('.filter-btn');
   const items=document.querySelectorAll('.proj-item');
+  const DUR=260; // ms — fast but perceptible
+  let activeFilter='all';
+
+  // Pre-set transition on all items once
+  items.forEach(item=>{
+    item.style.transition=`opacity ${DUR}ms cubic-bezier(.2,.9,.4,1), transform ${DUR}ms cubic-bezier(.2,.9,.4,1)`;
+  });
+
   btns.forEach(btn=>{
     btn.addEventListener('click',()=>{
+      const f=btn.dataset.filter;
+      if(f===activeFilter)return; // no-op if same filter
+      activeFilter=f;
+
       btns.forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      const f=btn.dataset.filter;
+
       items.forEach(item=>{
         const show=f==='all'||item.dataset.cat===f;
-        item.style.transition='opacity .45s ease, transform .45s ease';
-        if(show){item.style.opacity='1';item.style.transform='translateY(0)';item.style.display='';}
-        else{item.style.opacity='0';item.style.transform='translateY(24px)';setTimeout(()=>{if(btn.classList.contains('active')&&(f!=='all'&&item.dataset.cat!==f))item.style.display='none';},450);}
+        if(show){
+          // Make visible before animating in
+          item.style.display='';
+          // Force reflow so transition fires
+          item.offsetHeight; // eslint-disable-line no-unused-expressions
+          item.style.opacity='1';
+          item.style.transform='translateY(0)';
+          item.style.pointerEvents='';
+        } else {
+          item.style.opacity='0';
+          item.style.transform='translateY(18px)';
+          item.style.pointerEvents='none';
+          // Hide after fade completes — store timeout ref to cancel if filter changes fast
+          const tid=parseInt(item.dataset.tid||'0');
+          clearTimeout(tid);
+          item.dataset.tid=setTimeout(()=>{
+            // Only hide if still filtered out
+            if(activeFilter!=='all'&&item.dataset.cat!==activeFilter){
+              item.style.display='none';
+            }
+          },DUR+20);
+        }
       });
     });
   });
