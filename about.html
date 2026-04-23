@@ -336,6 +336,20 @@ body{background:var(--bg);color:#ecf0f8;font-family:'Outfit',sans-serif;-webkit-
     padding-top:calc(var(--nh) + 1.8rem)!important;
     padding-bottom:3.5rem!important;
   }
+  .story-timeline{padding-left:1.4rem;}
+  .story-timeline::before{left:0;}
+  .tl-dot{left:-1.85rem;width:10px;height:10px;}
+  .tl-item{padding-left:.5rem;margin-bottom:clamp(1.3rem,4vh,2rem);}
+  .tl-year{font-size:.62rem;letter-spacing:.1em;}
+  .tl-title{font-size:.9rem;}
+  .tl-body{font-size:.78rem;line-height:1.62;}
+  .sec{padding-left:1rem!important;padding-right:1rem!important;}
+  .phil-grid,.stack-grid{gap:.75rem;}
+  .stack-card{padding:.85rem .7rem;}
+  .str-card{flex-direction:column;gap:.65rem;padding:1rem;}
+  .str-icon{font-size:1.4rem;}
+  .found-wrap{padding:1.4rem 1rem!important;}
+  .found-img-area{max-width:200px!important;}
 }
 </style>
 </head>
@@ -494,7 +508,7 @@ body{background:var(--bg);color:#ecf0f8;font-family:'Outfit',sans-serif;-webkit-
         <span style="font-size:clamp(.58rem,.72vw,.68rem);color:rgba(140,160,200,.5);text-transform:uppercase;letter-spacing:.12em;margin-top:.3rem;">Continents</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;padding:0 clamp(1.4rem,3vw,2.8rem);border-left:1px solid rgba(212,175,55,.1);">
-        <span style="font-family:'Cinzel',serif;font-size:clamp(1.7rem,3vw,2.6rem);font-weight:900;color:var(--gl);line-height:1;">0</span>
+        <span style="font-family:'Cinzel',serif;font-size:clamp(1.7rem,3vw,2.6rem);font-weight:900;color:var(--gl);line-height:1;" data-c="0">0</span>
         <span style="font-size:clamp(.58rem,.72vw,.68rem);color:rgba(140,160,200,.5);text-transform:uppercase;letter-spacing:.12em;margin-top:.3rem;">Missed Deadlines</span>
       </div>
     </div>
@@ -1101,7 +1115,7 @@ document.getElementById('thm').addEventListener('click',function(){
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;
-      const el=entry.target,t=parseFloat(el.dataset.c||el.dataset.count);if(!t)return;
+      const el=entry.target,t=parseFloat(el.dataset.c!==undefined?el.dataset.c:el.dataset.count);if(isNaN(t))return;
       const isF=t%1!==0,st=performance.now();
       (function tick(now){const p=Math.min((now-st)/1400,1),e=1-Math.pow(1-p,3);el.textContent=isF?(t*e).toFixed(1):Math.round(t*e);if(p<1)requestAnimationFrame(tick);})(st);
       obs.unobserve(el);
